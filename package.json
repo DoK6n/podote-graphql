@@ -1,0 +1,22 @@
+{
+  "name": "podote-v2",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "pnpm dlx only-allow pnpm",
+    "dev:fe": "pnpm --filter @podote-v2/frontend dev",
+    "dev:be": "pnpm --filter @podote-v2/backend start:dev"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=16.16.0",
+    "npm": ">=7.16.0"
+  },
+  "packageManager": "pnpm@7.16.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
