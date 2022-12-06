@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "pnpm dlx only-allow pnpm",
-    "dev:fe": "pnpm --filter @podote-v2/frontend dev",
-    "dev:be": "pnpm --filter @podote-v2/backend start:dev"
+    "client:run": "pnpm --filter @podote-v2/client",
+    "client:add": "pnpm add --filter @podote-v2/client",
+    "client:remove": "pnpm remove --filter @podote-v2/client",
+    "server:run": "pnpm --filter @podote-v2/server",
+    "server:add": "pnpm add --filter @podote-v2/server",
+    "server:remove": "pnpm remove --filter @podote-v2/server"
   },
   "workspaces": [
     "packages/*"
