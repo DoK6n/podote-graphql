@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-const SvgLogo = (props: SVGProps<SVGSVGElement>) => (
+export const SvgLogo = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width='15'
     height='15'
@@ -52,5 +52,3 @@ const SvgLogo = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export default SvgLogo;

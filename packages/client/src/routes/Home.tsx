@@ -13,11 +13,11 @@ function Home() {
   return (
     <>
       <MobileHeader
-        title={
-          <div>
-            <Logo /> Podote
-          </div>
-        }
+        // title={
+        //   <div>
+        //     <Logo /> Podote
+        //   </div>
+        // }
       />
       <Block>
         <Outlet />

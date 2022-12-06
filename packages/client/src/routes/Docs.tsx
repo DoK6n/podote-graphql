@@ -1,6 +1,8 @@
 import { LoaderFunction, Outlet, useLoaderData } from 'react-router-dom';
 import { Block, FullCard } from '../components/base';
+import GoBackButton from '../components/GoBackButton';
 import MobileHeader from '../components/Header';
+import { useGoBack } from '../hooks/useGoBack';
 import { getDataById } from '../lib/data';
 
 export const docsLoader: LoaderFunction = async ({ request }) => {
@@ -16,10 +18,13 @@ interface LoaderResult {
 function Docs() {
   const { docsId } = useLoaderData() as LoaderResult;
   const data = getDataById(Number(docsId));
-
+  const goBack = useGoBack();
   return (
     <>
-      <MobileHeader title={<div>Docs</div>} />
+      <MobileHeader
+        title={<div>Docs</div>}
+        headerLeft={<GoBackButton onClick={goBack} />}
+      />
       <Block>
         <FullCard>
           todo / {data.title} / 제목

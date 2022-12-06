@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { colors } from '../styles/colors';
 import { TodoInput, TodoItem, TodoList } from '../components/todo';
 import { DropdownButton } from '../components/dropdown';
+import { css } from '@emotion/react';
 
 export const todoLoader: LoaderFunction = async ({ request }) => {
   return { data };
@@ -24,7 +25,7 @@ function Todo() {
       <MobileHeader
         title={
           <div>
-            <Logo /> Todo
+            <Logo width={24} height={24} /> Todo
           </div>
         }
       />

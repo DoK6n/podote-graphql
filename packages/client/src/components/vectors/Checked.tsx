@@ -1,7 +1,7 @@
 import { SVGProps } from 'react';
 import { colors } from '../../styles/colors';
 
-const SvgChecked = (props: SVGProps<SVGSVGElement>) => (
+export const SvgChecked = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width='18'
     height='18'
@@ -15,5 +15,3 @@ const SvgChecked = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export default SvgChecked;
