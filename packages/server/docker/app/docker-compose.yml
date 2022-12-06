@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  podote_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '8002:3001'
+    container_name: podote_server
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ap-northeast-2
+        awslogs-group: /aws/ec2/podote-server
+        awslogs-stream: apilogs
+        awslogs-datetime-format: \%Y-%m-%d %H:%M:%S\]
+        tag: '{{.Name}}-{{.ID}}'
+    restart: unless-stopped

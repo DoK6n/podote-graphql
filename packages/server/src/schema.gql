@@ -1,0 +1,103 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type SnsType {
+  id: Int!
+  name: String!
+}
+
+type User {
+  id: String!
+  email: String!
+  name: String!
+  snsTypeId: Float!
+}
+
+type UserWithSnsType {
+  id: String!
+  email: String!
+  name: String!
+  snsTypeId: Float!
+  snsType: String!
+}
+
+type Todo {
+  id: String!
+  orderKey: Float!
+  document: JSON
+  done: Boolean!
+  editable: Boolean!
+  isRemoved: Boolean!
+  userId: String!
+  createdDt: DateTime!
+  updatedDt: DateTime
+  removedDt: DateTime
+  user: User!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  retrieveAllTodos: [Todo!]
+  retrieveTodo(id: String!): Todo
+  retrieveRemovedTodo(id: String!): Todo
+  retrieveAllRemovedTodo: [Todo!]
+  retrieveAllUsers: [User!]
+  retrieveUserById: UserWithSnsType!
+  snsType(name: String!): SnsType!
+}
+
+type Mutation {
+  addNewTodo(data: CreateTodoInput!): Todo
+  editTodoDocument(data: UpdateTodoDocumentInput!): Todo
+  editTodoDone(data: UpdateTodoDoneInput!): Todo
+  switchTodoOrder(data: UpdateTodoOrderkeyInput!): [Todo!]!
+  removeTodo(data: TodoIdInput!): Todo
+  recycleRemovedTodo(data: TodoIdInput!): Todo
+  deleteRemovedTodo(data: TodoIdInput!): [Todo!]
+  deleteAllRemovedTodos: [Todo!]
+  addUser(data: CreateUserInput!): User!
+}
+
+input CreateTodoInput {
+  document: JSON
+}
+
+input UpdateTodoDocumentInput {
+  id: String!
+  document: JSON
+}
+
+input UpdateTodoDoneInput {
+  id: String!
+  done: Boolean!
+}
+
+input UpdateTodoOrderkeyInput {
+  TodoIdOrderKey: [TodoIdOrderKey!]!
+}
+
+input TodoIdOrderKey {
+  id: String!
+  orderKey: Float!
+}
+
+input TodoIdInput {
+  id: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  snsTypeName: String!
+  createDt: DateTime!
+}

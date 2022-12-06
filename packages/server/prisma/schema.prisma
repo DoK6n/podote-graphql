@@ -1,0 +1,46 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String
+  snsTypeId Int       @map("sns_type_id")
+  createdDt DateTime  @default(now()) @map("created_dt")
+  updatedDt DateTime? @updatedAt @map("updated_dt")
+  todos     Todo[]
+  snsType   SnsType   @relation(fields: [snsTypeId], references: [id])
+
+  @@map("user")
+}
+
+model SnsType {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  user User[]
+
+  @@map("sns_type")
+}
+
+model Todo {
+  id        String    @id @default(uuid())
+  orderKey  Int       @default(0) @map("order_key")
+  document  Json?
+  done      Boolean   @default(false) @map("done")
+  editable  Boolean   @default(false) @map("editable")
+  isRemoved Boolean   @default(false) @map("is_removed")
+  userId    String    @map("user_id")
+  createdDt DateTime  @default(now()) @map("created_dt")
+  updatedDt DateTime? @updatedAt @map("updated_dt")
+  removedDt DateTime? @map("removed_dt")
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("todo")
+}
