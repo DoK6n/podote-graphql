@@ -3,6 +3,7 @@ import GoDocsButton from '../GoDocsButton';
 import { IconButton } from '../base';
 import { Checked, Unchecked } from '../vectors';
 import { useState } from 'react';
+import { colors } from '../../styles/colors';
 
 interface Props {
   title: string;
