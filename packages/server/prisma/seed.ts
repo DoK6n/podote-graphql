@@ -2,42 +2,37 @@ import { PrismaClient, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
-  {
-    name: 'Dokyun',
-    email: 'Dok6n@email.io',
-    snsType: {
-      create: {
-        name: 'google.com',
-      },
-    },
-    todos: {
-      create: [
-        {
-          document: {
-            type: 'doc',
-            content: [
-              {
-                type: 'heading',
-                attrs: { level: 1 },
-                content: [{ type: 'text', text: 'Hello World' }],
-              },
-            ],
-          },
-        },
-      ],
-    },
-  },
-];
+const document = {
+  type: 'doc',
+  content: [
+    {
+      type: 'heading',
+      attrs: { level: 1 },
+      content: [{ type: 'text', text: 'Hello World' }],
+    }
+  ]
+};
+
+// const userData: Prisma.UserCreateInput[] = [
+//   {
+//     name: 'Dokyun',
+//     email: 'Dok6n@email.io',
+//     snsType: {
+//       create: {
+//         name: 'google.com',
+//       },
+//     },
+//   },
+// ];
 
 async function main() {
   console.log(`Start seeding ...`);
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
-    });
-    console.log(`Created user with id: ${user.id}`);
-  }
+  // for (const u of userData) {
+  //   const user = await prisma.user.create({
+  //     data: u,
+    // });
+    // console.log(`Created user with id: ${user.id}`);
+  // }
   console.log(`Seeding finished.`);
 }
 

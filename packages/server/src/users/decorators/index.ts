@@ -1,1 +1,1 @@
-export * from './user-uid-decotator';
+export * from './user-id-decotator';

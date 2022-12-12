@@ -1,12 +1,11 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { UidGuard } from '../auth';
-import { UserUid } from '../users/decorators';
+import { UserIdGuard } from '@/auth';
+import { UserId } from '@/users/decorators';
 import {
   CreateTodoInput,
   TodoIdInput,
-  TodoIdOrderKey,
-  UpdateTodoDocumentInput,
+  UpdateTodoTitleInput,
   UpdateTodoDoneInput,
   UpdateTodoOrderkeyInput,
 } from './dto';
@@ -17,111 +16,114 @@ import { TodosService } from './todos.service';
 export class TodosResolver {
   constructor(private readonly todoService: TodosService) {}
 
-  // 유저 생성
-  @UseGuards(UidGuard)
+  // 할일 추가
+  @UseGuards(UserIdGuard)
   @Mutation(() => Todo, { nullable: true })
   async addNewTodo(
-    @UserUid() uid: string,
+    @UserId() userId: string,
     @Args('data') data: CreateTodoInput,
   ) {
-    return this.todoService.createNewTodo(uid, data);
+    return this.todoService.createNewTodo(userId, data);
   }
 
   // 할일 목록 조회
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Query(() => [Todo], { nullable: true })
-  async retrieveAllTodos(@UserUid() uid: string) {
-    return this.todoService.findAllTodosByUser(uid);
+  async retrieveAllTodos(@UserId() userId: string) {
+    return this.todoService.findAllTodosByUser(userId);
   }
 
   // 할일 항목 조회
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Query(() => Todo, { nullable: true })
   async retrieveTodo(
     @Args('id', { type: () => String }) id: string,
-    @UserUid() uid: string,
+    @UserId() userId: string,
   ) {
-    return this.todoService.findOneTodoById(id, uid);
+    return this.todoService.findOneTodoById(id, userId);
   }
 
   // 삭제한 항목 조회
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Query(() => Todo, { nullable: true })
   async retrieveRemovedTodo(
     @Args('id', { type: () => String }) id: string,
-    @UserUid() uid: string,
+    @UserId() userId: string,
   ) {
-    return this.todoService.findOneRemovedTodo(id, uid);
+    return this.todoService.findOneRemovedTodo(id, userId);
   }
 
   // 삭제한 할일 목록 조회
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Query(() => [Todo], { nullable: true })
-  async retrieveAllRemovedTodo(@UserUid() uid: string) {
-    return this.todoService.findAllRemovedTodos(uid);
+  async retrieveAllRemovedTodo(@UserId() userId: string) {
+    return this.todoService.findAllRemovedTodos(userId);
   }
 
   // 할일 항목 내용 수정
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => Todo, { nullable: true })
-  async editTodoDocument(
-    @UserUid() uid: string,
-    @Args('data') data: UpdateTodoDocumentInput,
+  async editTodoTitle(
+    @UserId() userId: string,
+    @Args('data') data: UpdateTodoTitleInput,
   ) {
-    return this.todoService.updateTodoDocumentById(uid, data);
+    return this.todoService.updateTodoTitleById(userId, data);
   }
 
   // 할일 항목 완료
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => Todo, { nullable: true })
   async editTodoDone(
-    @UserUid() uid: string,
+    @UserId() userId: string,
     @Args('data') data: UpdateTodoDoneInput,
   ) {
-    return this.todoService.updateTodoDoneById(uid, data);
+    return this.todoService.updateTodoDoneById(userId, data);
   }
 
   // 할일 항목 순서 변경
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => [Todo])
   async switchTodoOrder(
-    @UserUid() uid: string,
+    @UserId() userId: string,
     @Args('data') data: UpdateTodoOrderkeyInput,
   ) {
-    return this.todoService.updateTodoOrderkeyInput(uid, data);
+    return this.todoService.updateTodoOrderkeyInput(userId, data);
   }
 
   // 할일 항목 삭제 (soft delete)
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => Todo, { nullable: true })
-  async removeTodo(@UserUid() uid: string, @Args('data') data: TodoIdInput) {
-    return this.todoService.removeOneTodoById(uid, data);
+  async removeTodo(
+    @UserId() userId: string,
+    @Args('data') data: TodoIdInput,
+  ) {
+    return this.todoService.removeOneTodoById(userId, data);
   }
 
   // 삭제한 할일 항목 복원
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => Todo, { nullable: true })
-  async recycleRemovedTodo(
-    @UserUid() uid: string,
+  async restoreRemovedTodo(
+    @UserId() userId: string,
     @Args('data') data: TodoIdInput,
   ) {
-    return this.todoService.recycleOneRemovedTodoById(uid, data);
+    return this.todoService.restoreOneRemovedTodoById(userId, data);
   }
 
   // 할일 항목 영구 삭제
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => [Todo], { nullable: true })
   async deleteRemovedTodo(
-    @UserUid() uid: string,
+    @UserId() userId: string,
     @Args('data') data: TodoIdInput,
   ) {
-    return this.todoService.deleteOneRemovedTodoById(uid, data);
+    return this.todoService.deleteOneRemovedTodoById(userId, data);
   }
 
   // 할일 목록 전체 영구 삭제
-  @UseGuards(UidGuard)
+  @UseGuards(UserIdGuard)
   @Mutation(() => [Todo], { nullable: true })
-  async deleteAllRemovedTodos(@UserUid() uid: string) {
-    return this.todoService.deleteAllRemovedTodos(uid);
+  async deleteAllRemovedTodos(@UserId() userId: string) {
+    return this.todoService.deleteAllRemovedTodos(userId);
   }
 }

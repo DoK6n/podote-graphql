@@ -5,10 +5,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
-import {
-  createPrismaQueryEventHandler,
-  PrismaQueryEvent,
-} from 'prisma-query-log';
+import { createPrismaQueryEventHandler } from 'prisma-query-log';
 
 /**
  * NestJS 애플리케이션을 설정할 때 서비스 내의 데이터베이스 쿼리를 위해 Prisma Client API를 추상화하고 싶을 것입니다.

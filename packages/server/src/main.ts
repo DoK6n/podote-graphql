@@ -31,7 +31,7 @@ async function bootstrap() {
               🚀 Podote GraphQL Server ready at: ${
                 process.env.NODE_ENV === 'production'
                   ? 'https://api.podote.click'
-                  : `http://localhost:${PORT}`
+                  : `http://localhost:${PORT}/graphql`
               }
               ⭐️ front: https://podote.com
 

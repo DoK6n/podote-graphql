@@ -1,12 +1,15 @@
+
 import { Field, InputType } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
+import { IsString } from 'class-validator';
 import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
-export class UpdateTodoDocumentInput {
+export class CreateDocumentInput {
   @Field(() => String)
-  id: string;
+  @IsString()
+  todoId: string;
 
   @Field(() => GraphQLJSON, { nullable: true })
-  document: Prisma.JsonValue;
+  content?: Prisma.JsonValue;
 }

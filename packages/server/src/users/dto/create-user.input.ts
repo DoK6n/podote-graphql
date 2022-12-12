@@ -13,6 +13,6 @@ export class CreateUserInput {
   @Field(() => String)
   snsTypeName: string; // providerData[0].providerId = "google.com"
 
-  @Field(() => GraphQLISODateTime)
-  createDt: Date;
+  // @Field(() => GraphQLISODateTime)
+  // createDt: Date;
 }

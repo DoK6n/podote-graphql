@@ -18,28 +18,64 @@ export type Scalars = {
   JSON: any;
 };
 
+export type CreateDocumentInput = {
+  content?: InputMaybe<Scalars['JSON']>;
+  todoId: Scalars['String'];
+};
+
 export type CreateTodoInput = {
-  document?: InputMaybe<Scalars['JSON']>;
+  title: Scalars['String'];
 };
 
 export type CreateUserInput = {
-  createDt: Scalars['DateTime'];
   email: Scalars['String'];
   name: Scalars['String'];
   snsTypeName: Scalars['String'];
 };
 
+export type DeleteDocumentInput = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type Document = {
+  __typename?: 'Document';
+  content?: Maybe<Scalars['JSON']>;
+  createdDt: Scalars['DateTime'];
+  id: Scalars['String'];
+  isRemoved: Scalars['Boolean'];
+  removedDt?: Maybe<Scalars['DateTime']>;
+  todo: Todo;
+  todoId?: Maybe<Scalars['String']>;
+  updatedDt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['String'];
+};
+
+export type FindOneDocumentInput = {
+  id: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addNewDocument?: Maybe<Document>;
   addNewTodo?: Maybe<Todo>;
   addUser: User;
   deleteAllRemovedTodos?: Maybe<Array<Todo>>;
+  deleteRemovedDocument?: Maybe<Document>;
   deleteRemovedTodo?: Maybe<Array<Todo>>;
-  editTodoDocument?: Maybe<Todo>;
+  editDocumentContent?: Maybe<Document>;
   editTodoDone?: Maybe<Todo>;
-  recycleRemovedTodo?: Maybe<Todo>;
+  editTodoTitle?: Maybe<Todo>;
+  removeDocument?: Maybe<Document>;
   removeTodo?: Maybe<Todo>;
+  restoreDocument?: Maybe<Document>;
+  restoreRemovedTodo?: Maybe<Todo>;
   switchTodoOrder: Array<Todo>;
+};
+
+
+export type MutationAddNewDocumentArgs = {
+  data: CreateDocumentInput;
 };
 
 
@@ -53,13 +89,18 @@ export type MutationAddUserArgs = {
 };
 
 
+export type MutationDeleteRemovedDocumentArgs = {
+  data: DeleteDocumentInput;
+};
+
+
 export type MutationDeleteRemovedTodoArgs = {
   data: TodoIdInput;
 };
 
 
-export type MutationEditTodoDocumentArgs = {
-  data: UpdateTodoDocumentInput;
+export type MutationEditDocumentContentArgs = {
+  data: UpdateDocumentInput;
 };
 
 
@@ -68,12 +109,27 @@ export type MutationEditTodoDoneArgs = {
 };
 
 
-export type MutationRecycleRemovedTodoArgs = {
-  data: TodoIdInput;
+export type MutationEditTodoTitleArgs = {
+  data: UpdateTodoTitleInput;
+};
+
+
+export type MutationRemoveDocumentArgs = {
+  data: RemoveDocumentInput;
 };
 
 
 export type MutationRemoveTodoArgs = {
+  data: TodoIdInput;
+};
+
+
+export type MutationRestoreDocumentArgs = {
+  data: RestoreDocumentInput;
+};
+
+
+export type MutationRestoreRemovedTodoArgs = {
   data: TodoIdInput;
 };
 
@@ -87,10 +143,22 @@ export type Query = {
   retrieveAllRemovedTodo?: Maybe<Array<Todo>>;
   retrieveAllTodos?: Maybe<Array<Todo>>;
   retrieveAllUsers?: Maybe<Array<User>>;
+  retrieveDocuement?: Maybe<Document>;
+  retrieveRemovedDocument?: Maybe<Document>;
   retrieveRemovedTodo?: Maybe<Todo>;
   retrieveTodo?: Maybe<Todo>;
   retrieveUserById: UserWithSnsType;
   snsType: SnsType;
+};
+
+
+export type QueryRetrieveDocuementArgs = {
+  data: FindOneDocumentInput;
+};
+
+
+export type QueryRetrieveRemovedDocumentArgs = {
+  data: FindOneDocumentInput;
 };
 
 
@@ -108,6 +176,14 @@ export type QuerySnsTypeArgs = {
   name: Scalars['String'];
 };
 
+export type RemoveDocumentInput = {
+  id: Scalars['String'];
+};
+
+export type RestoreDocumentInput = {
+  id: Scalars['String'];
+};
+
 export type SnsType = {
   __typename?: 'SnsType';
   id: Scalars['Int'];
@@ -117,13 +193,15 @@ export type SnsType = {
 export type Todo = {
   __typename?: 'Todo';
   createdDt: Scalars['DateTime'];
-  document?: Maybe<Scalars['JSON']>;
+  document: Scalars['JSON'];
+  documentId?: Maybe<Scalars['String']>;
   done: Scalars['Boolean'];
   editable: Scalars['Boolean'];
   id: Scalars['String'];
   isRemoved: Scalars['Boolean'];
   orderKey: Scalars['Float'];
   removedDt?: Maybe<Scalars['DateTime']>;
+  title: Scalars['String'];
   updatedDt?: Maybe<Scalars['DateTime']>;
   user: User;
   userId: Scalars['String'];
@@ -138,8 +216,8 @@ export type TodoIdOrderKey = {
   orderKey: Scalars['Float'];
 };
 
-export type UpdateTodoDocumentInput = {
-  document?: InputMaybe<Scalars['JSON']>;
+export type UpdateDocumentInput = {
+  content?: InputMaybe<Scalars['JSON']>;
   id: Scalars['String'];
 };
 
@@ -152,21 +230,30 @@ export type UpdateTodoOrderkeyInput = {
   TodoIdOrderKey: Array<TodoIdOrderKey>;
 };
 
+export type UpdateTodoTitleInput = {
+  id: Scalars['String'];
+  title?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
+  documents: Scalars['JSON'];
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   snsTypeId: Scalars['Float'];
+  todos: Scalars['JSON'];
 };
 
 export type UserWithSnsType = {
   __typename?: 'UserWithSnsType';
+  documents: Scalars['JSON'];
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   snsType: Scalars['String'];
   snsTypeId: Scalars['Float'];
+  todos: Scalars['JSON'];
 };
 
 
@@ -239,22 +326,29 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CreateDocumentInput: CreateDocumentInput;
   CreateTodoInput: CreateTodoInput;
   CreateUserInput: CreateUserInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  DeleteDocumentInput: DeleteDocumentInput;
+  Document: ResolverTypeWrapper<Document>;
+  FindOneDocumentInput: FindOneDocumentInput;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  RemoveDocumentInput: RemoveDocumentInput;
+  RestoreDocumentInput: RestoreDocumentInput;
   SnsType: ResolverTypeWrapper<SnsType>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Todo: ResolverTypeWrapper<Todo>;
   TodoIdInput: TodoIdInput;
   TodoIdOrderKey: TodoIdOrderKey;
-  UpdateTodoDocumentInput: UpdateTodoDocumentInput;
+  UpdateDocumentInput: UpdateDocumentInput;
   UpdateTodoDoneInput: UpdateTodoDoneInput;
   UpdateTodoOrderkeyInput: UpdateTodoOrderkeyInput;
+  UpdateTodoTitleInput: UpdateTodoTitleInput;
   User: ResolverTypeWrapper<User>;
   UserWithSnsType: ResolverTypeWrapper<UserWithSnsType>;
 };
@@ -262,22 +356,29 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  CreateDocumentInput: CreateDocumentInput;
   CreateTodoInput: CreateTodoInput;
   CreateUserInput: CreateUserInput;
   DateTime: Scalars['DateTime'];
+  DeleteDocumentInput: DeleteDocumentInput;
+  Document: Document;
+  FindOneDocumentInput: FindOneDocumentInput;
   Float: Scalars['Float'];
   Int: Scalars['Int'];
   JSON: Scalars['JSON'];
   Mutation: {};
   Query: {};
+  RemoveDocumentInput: RemoveDocumentInput;
+  RestoreDocumentInput: RestoreDocumentInput;
   SnsType: SnsType;
   String: Scalars['String'];
   Todo: Todo;
   TodoIdInput: TodoIdInput;
   TodoIdOrderKey: TodoIdOrderKey;
-  UpdateTodoDocumentInput: UpdateTodoDocumentInput;
+  UpdateDocumentInput: UpdateDocumentInput;
   UpdateTodoDoneInput: UpdateTodoDoneInput;
   UpdateTodoOrderkeyInput: UpdateTodoOrderkeyInput;
+  UpdateTodoTitleInput: UpdateTodoTitleInput;
   User: User;
   UserWithSnsType: UserWithSnsType;
 };
@@ -286,19 +387,38 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'DateTime';
 }
 
+export type DocumentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Document'] = ResolversParentTypes['Document']> = {
+  content?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  createdDt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  isRemoved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  removedDt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  todo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType>;
+  todoId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedDt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
   name: 'JSON';
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addNewDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationAddNewDocumentArgs, 'data'>>;
   addNewTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationAddNewTodoArgs, 'data'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'data'>>;
   deleteAllRemovedTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
+  deleteRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationDeleteRemovedDocumentArgs, 'data'>>;
   deleteRemovedTodo?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<MutationDeleteRemovedTodoArgs, 'data'>>;
-  editTodoDocument?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationEditTodoDocumentArgs, 'data'>>;
+  editDocumentContent?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationEditDocumentContentArgs, 'data'>>;
   editTodoDone?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationEditTodoDoneArgs, 'data'>>;
-  recycleRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationRecycleRemovedTodoArgs, 'data'>>;
+  editTodoTitle?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationEditTodoTitleArgs, 'data'>>;
+  removeDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRemoveDocumentArgs, 'data'>>;
   removeTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationRemoveTodoArgs, 'data'>>;
+  restoreDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRestoreDocumentArgs, 'data'>>;
+  restoreRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationRestoreRemovedTodoArgs, 'data'>>;
   switchTodoOrder?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationSwitchTodoOrderArgs, 'data'>>;
 };
 
@@ -306,6 +426,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   retrieveAllRemovedTodo?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   retrieveAllTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   retrieveAllUsers?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
+  retrieveDocuement?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveDocuementArgs, 'data'>>;
+  retrieveRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedDocumentArgs, 'data'>>;
   retrieveRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedTodoArgs, 'id'>>;
   retrieveTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveTodoArgs, 'id'>>;
   retrieveUserById?: Resolver<ResolversTypes['UserWithSnsType'], ParentType, ContextType>;
@@ -320,13 +442,15 @@ export type SnsTypeResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   createdDt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  document?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  document?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  documentId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   done?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   editable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   isRemoved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   orderKey?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   removedDt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedDt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -334,24 +458,29 @@ export type TodoResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  documents?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   snsTypeId?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  todos?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserWithSnsTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserWithSnsType'] = ResolversParentTypes['UserWithSnsType']> = {
+  documents?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   snsType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   snsTypeId?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  todos?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
+  Document?: DocumentResolvers<ContextType>;
   JSON?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

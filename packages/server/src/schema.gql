@@ -12,28 +12,8 @@ type User {
   email: String!
   name: String!
   snsTypeId: Float!
-}
-
-type UserWithSnsType {
-  id: String!
-  email: String!
-  name: String!
-  snsTypeId: Float!
-  snsType: String!
-}
-
-type Todo {
-  id: String!
-  orderKey: Float!
-  document: JSON
-  done: Boolean!
-  editable: Boolean!
-  isRemoved: Boolean!
-  userId: String!
-  createdDt: DateTime!
-  updatedDt: DateTime
-  removedDt: DateTime
-  user: User!
+  documents: JSON!
+  todos: JSON!
 }
 
 """
@@ -41,10 +21,49 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
+type UserWithSnsType {
+  id: String!
+  email: String!
+  name: String!
+  snsTypeId: Float!
+  documents: JSON!
+  todos: JSON!
+  snsType: String!
+}
+
+type Todo {
+  id: String!
+  userId: String!
+  documentId: String
+  title: String!
+  done: Boolean!
+  editable: Boolean!
+  orderKey: Float!
+  createdDt: DateTime!
+  updatedDt: DateTime
+  isRemoved: Boolean!
+  removedDt: DateTime
+  document: JSON!
+  user: User!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Document {
+  id: String!
+  userId: String!
+  todoId: String
+  content: JSON
+  createdDt: DateTime!
+  updatedDt: DateTime
+  isRemoved: Boolean!
+  removedDt: DateTime
+  todo: Todo!
+  user: User!
+}
 
 type Query {
   retrieveAllTodos: [Todo!]
@@ -54,27 +73,38 @@ type Query {
   retrieveAllUsers: [User!]
   retrieveUserById: UserWithSnsType!
   snsType(name: String!): SnsType!
+  retrieveDocuement(data: FindOneDocumentInput!): Document
+  retrieveRemovedDocument(data: FindOneDocumentInput!): Document
+}
+
+input FindOneDocumentInput {
+  id: String!
 }
 
 type Mutation {
   addNewTodo(data: CreateTodoInput!): Todo
-  editTodoDocument(data: UpdateTodoDocumentInput!): Todo
+  editTodoTitle(data: UpdateTodoTitleInput!): Todo
   editTodoDone(data: UpdateTodoDoneInput!): Todo
   switchTodoOrder(data: UpdateTodoOrderkeyInput!): [Todo!]!
   removeTodo(data: TodoIdInput!): Todo
-  recycleRemovedTodo(data: TodoIdInput!): Todo
+  restoreRemovedTodo(data: TodoIdInput!): Todo
   deleteRemovedTodo(data: TodoIdInput!): [Todo!]
   deleteAllRemovedTodos: [Todo!]
   addUser(data: CreateUserInput!): User!
+  addNewDocument(data: CreateDocumentInput!): Document
+  editDocumentContent(data: UpdateDocumentInput!): Document
+  removeDocument(data: RemoveDocumentInput!): Document
+  restoreDocument(data: RestoreDocumentInput!): Document
+  deleteRemovedDocument(data: DeleteDocumentInput!): Document
 }
 
 input CreateTodoInput {
-  document: JSON
+  title: String!
 }
 
-input UpdateTodoDocumentInput {
+input UpdateTodoTitleInput {
   id: String!
-  document: JSON
+  title: String
 }
 
 input UpdateTodoDoneInput {
@@ -99,5 +129,26 @@ input CreateUserInput {
   email: String!
   name: String!
   snsTypeName: String!
-  createDt: DateTime!
+}
+
+input CreateDocumentInput {
+  todoId: String!
+  content: JSON
+}
+
+input UpdateDocumentInput {
+  id: String!
+  content: JSON
+}
+
+input RemoveDocumentInput {
+  id: String!
+}
+
+input RestoreDocumentInput {
+  id: String!
+}
+
+input DeleteDocumentInput {
+  id: String
 }

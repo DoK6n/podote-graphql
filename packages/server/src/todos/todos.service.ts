@@ -1,43 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, Todo } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   CreateTodoInput,
   TodoIdInput,
-  UpdateTodoDocumentInput,
+  UpdateTodoTitleInput,
   UpdateTodoDoneInput,
   UpdateTodoOrderkeyInput,
 } from './dto';
+import { uniqueIdGenerator } from '@/common/utils';
 
 @Injectable()
 export class TodosService {
+  private readonly logger = new Logger(TodosService.name);
   constructor(private readonly prisma: PrismaService) {}
 
-  async createNewTodo(uid: string, data: CreateTodoInput) {
-    const { document } = data;
+  async createNewTodo(userId: string, data: CreateTodoInput) {
+    const { title } = data;
     const count = await this.prisma.todo.count({
       where: {
-        userId: uid,
+        userId,
       },
     });
 
     return await this.prisma.todo.create({
       data: {
-        document: JSON.parse(JSON.stringify(document)),
+        id: uniqueIdGenerator('todo'),
+        title: title,
         orderKey: count + 1,
         user: {
           connect: {
-            id: uid,
+            id: userId,
           },
         },
       },
     });
   }
 
-  async findAllTodosByUser(uid: string) {
+  async findAllTodosByUser(userId: string) {
     return await this.prisma.todo.findMany({
       where: {
-        userId: uid,
+        userId,
         isRemoved: false,
       },
       orderBy: {
@@ -46,30 +49,30 @@ export class TodosService {
     });
   }
 
-  async findOneTodoById(id: string, uid: string) {
+  async findOneTodoById(id: string, userId: string) {
     return await this.prisma.todo.findFirst({
       where: {
         id: id,
-        userId: uid,
+        userId,
         isRemoved: false,
       },
     });
   }
 
-  async findOneRemovedTodo(id: string, uid: string) {
+  async findOneRemovedTodo(id: string, userId: string) {
     return await this.prisma.todo.findFirst({
       where: {
         id: id,
-        userId: uid,
+        userId,
         isRemoved: true,
       },
     });
   }
 
-  async findAllRemovedTodos(uid: string) {
+  async findAllRemovedTodos(userId: string) {
     return await this.prisma.todo.findMany({
       where: {
-        userId: uid,
+        userId,
         isRemoved: true,
       },
       orderBy: {
@@ -78,46 +81,53 @@ export class TodosService {
     });
   }
 
-  async updateTodoDocumentById(uid: string, data: UpdateTodoDocumentInput) {
-    const { id, document } = data;
+  async updateTodoTitleById(userId: string, data: UpdateTodoTitleInput) {
+    const { id, title } = data;
     await this.prisma.todo.updateMany({
       where: {
         id: id,
-        userId: uid,
+        userId,
         isRemoved: false,
       },
       data: {
-        document: JSON.parse(JSON.stringify(document)),
-        updatedDt: new Date(),
+        title: title,
       },
     });
-    return await this.findOneTodoById(id, uid);
+    return await this.findOneTodoById(id, userId);
   }
 
-  async updateTodoDoneById(uid: string, data: UpdateTodoDoneInput) {
+  async updateTodoDoneById(userId: string, data: UpdateTodoDoneInput) {
     const { id, done } = data;
     await this.prisma.todo.updateMany({
       where: {
         id: id,
-        userId: uid,
+        userId,
         isRemoved: false,
       },
       data: {
         done: done,
-        updatedDt: new Date(),
       },
     });
-    return await this.findOneTodoById(id, uid);
+    return await this.findOneTodoById(id, userId);
   }
 
-  async updateTodoOrderkeyInput(uid: string, data: UpdateTodoOrderkeyInput) {
+  /*
+    $queryRaw와 함께 동적 테이블 이름을 사용할 수 없습니다. 대신 다음과 같이 $queryRawUnsafe를 사용해야 합니다.
+    let userTable = 'User';
+    let result = await prisma.$queryRawUnsafe(`SELECT * FROM ${userTable}`);
+
+    $queryRawUnsafe를 사용자 입력과 함께 사용하면 SQL 주입 공격의 위험이 있습니다.
+    SQL 인젝션 공격은 기밀이거나 민감한 데이터를 수정하거나 파괴할 수 있는 데이터를 노출할 수 있습니다.
+    대신 $queryRaw 쿼리를 사용하는 것이 좋습니다. SQL 인젝션 공격에 대한 자세한 내용은 [OWASP SQL 인젝션 가이드](https://owasp.org/www-community/attacks/SQL_Injection)를 참조하세요.
+  */
+  async updateTodoOrderkeyInput(userId: string, data: UpdateTodoOrderkeyInput) {
     const { TodoIdOrderKey } = data;
     let query = Prisma.sql`UPDATE podote_schema.todo as t SET order_key = c.order_key from (values `;
 
     TodoIdOrderKey.forEach((d, i) => {
       i < TodoIdOrderKey.length - 1
-        ? (query = Prisma.sql`${query} (${d.id}, ${d.orderKey}, ${uid}), `)
-        : (query = Prisma.sql`${query} (${d.id}, ${d.orderKey}, ${uid}) `);
+        ? (query = Prisma.sql`${query} (${d.id}, ${d.orderKey}, ${userId}), `)
+        : (query = Prisma.sql`${query} (${d.id}, ${d.orderKey}, ${userId}) `);
     });
 
     query = Prisma.sql`${query}) as c (id, order_key, user_id) where c.user_id = t.user_id and c.id = t.id`;
@@ -126,53 +136,195 @@ export class TodosService {
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         // The .code property can be accessed in a type-safe manner
-        console.log(e);
+        this.logger.error(e);
+        return e;
       }
     }
-    return await this.findAllTodosByUser(uid);
+    return await this.findAllTodosByUser(userId);
   }
 
-  /**
-   * $queryRaw와 함께 동적 테이블 이름을 사용할 수 없습니다. 대신 다음과 같이 $queryRawUnsafe를 사용해야 합니다.
-   * ```js
-    let userTable = 'User'
-    let result = await prisma.$queryRawUnsafe(`SELECT * FROM ${userTable}`)
-   * ```
-   * $queryRawUnsafe를 사용자 입력과 함께 사용하면 SQL 주입 공격의 위험이 있습니다.
-   * > SQL 인젝션 공격은 기밀이거나 민감한 데이터를 수정하거나 파괴할 수 있는 데이터를 노출할 수 있습니다.
-    대신 $queryRaw 쿼리를 사용하는 것이 좋습니다. SQL 인젝션 공격에 대한 자세한 내용은 [OWASP SQL 인젝션 가이드](https://owasp.org/www-community/attacks/SQL_Injection)를 참조하세요.
-   * 
-   */
-  async removeOneTodoById(uid: string, data: TodoIdInput) {
+  async removeOneTodoById(userId: string, data: TodoIdInput) {
     const { id } = data;
-    await this.prisma
-      .$queryRaw<Todo>`UPDATE todo SET is_removed = true, removed_dt = now() WHERE id = ${id} AND user_id = ${uid}`;
+    try {
+      return await this.prisma.$transaction(async tx => {
+        // todo 지우기
+        await tx.todo.updateMany({
+          where: {
+            id,
+            userId,
+          },
+          data: {
+            isRemoved: true,
+            removedDt: new Date(),
+          },
+        });
+        // await tx.$queryRaw<Todo>`UPDATE todo SET is_removed = true, removed_dt = now() WHERE id = ${id} AND user_id = ${userId}`;
 
-    return await this.findOneRemovedTodo(id, uid);
+        // 연결된 document 조회
+        const document = await tx.document.findFirst({
+          where: {
+            todoId: id,
+            userId,
+            isRemoved: true,
+          },
+        });
+
+        if (document) {
+          // 연결된 document가 있을 경우만 document 지우는 쿼리 실행
+          await tx.document.updateMany({
+            where: {
+              id: document.id,
+              todoId: id,
+              userId,
+            },
+            data: {
+              isRemoved: true,
+              removedDt: new Date(),
+            },
+          });
+        }
+
+        return await tx.todo.findFirst({
+          where: {
+            id: id,
+            userId,
+            isRemoved: true,
+          },
+        });
+      });
+    } catch (e) {}
   }
 
-  async recycleOneRemovedTodoById(uid: string, data: TodoIdInput) {
+  async restoreOneRemovedTodoById(userId: string, data: TodoIdInput) {
     const { id } = data;
-    await this.prisma
-      .$queryRaw<Todo>`UPDATE todo SET is_removed = false, removed_dt = null WHERE id = ${id} AND user_id = ${uid}`;
+    try {
+      return await this.prisma.$transaction(async tx => {
+        // todo 복원
+        await tx.todo.updateMany({
+          where: {
+            id,
+            userId,
+          },
+          data: {
+            isRemoved: false,
+            removedDt: null,
+          },
+        });
 
-    return await this.findOneTodoById(id, uid);
+        // 연결된 document 조회
+        const document = await tx.document.findFirst({
+          where: {
+            todoId: id,
+            userId,
+            isRemoved: true,
+          },
+        });
+
+        if (document) {
+          // 연결된 document가 있을 경우만 document 복원하는 쿼리 실행
+          await tx.document.updateMany({
+            where: {
+              id: document.id,
+              todoId: id,
+              userId,
+            },
+            data: {
+              isRemoved: false,
+              removedDt: null,
+            },
+          });
+        }
+
+        return await tx.todo.findFirst({
+          where: {
+            id: id,
+            userId,
+            isRemoved: false,
+          },
+        });
+      });
+    } catch (e) {}
   }
 
-  async deleteOneRemovedTodoById(uid: string, data: TodoIdInput) {
+  async deleteOneRemovedTodoById(userId: string, data: TodoIdInput) {
     const { id } = data;
-    await this.prisma
-      .$queryRaw<Todo>`DELETE FROM todo WHERE id = ${id} AND user_id = ${uid} AND is_removed = true`;
-    return await this.findAllRemovedTodos(uid);
+    try {
+      return await this.prisma.$transaction(async tx => {
+        // 지운 todo 영구삭제
+        await tx.todo.deleteMany({
+          where: {
+            id,
+            userId,
+            isRemoved: true,
+          },
+        });
+        // await tx.$queryRaw<Todo>`DELETE FROM todo WHERE id = ${id} AND user_id = ${userId} AND is_removed = true`;
+
+        // 연결된 지운 document 조회
+        const document = await tx.document.findFirst({
+          where: {
+            todoId: id,
+            userId,
+            isRemoved: true,
+          },
+        });
+
+        if (document) {
+          // 연결된 지운 document 영구삭제
+          await tx.document.deleteMany({
+            where: {
+              id: document.id,
+              todoId: id,
+              userId,
+              isRemoved: true,
+            },
+          });
+          // await tx.$queryRaw<Document>`DELETE FROM document WHERE id = ${document.id} AND todoId = ${id} AND user_id = ${userId}`;
+        }
+
+        return await tx.todo.findMany({
+          where: {
+            userId,
+            isRemoved: true,
+          },
+          orderBy: {
+            removedDt: 'desc',
+          },
+        });
+      });
+    } catch (e) {}
   }
 
-  async deleteAllRemovedTodos(uid: string) {
-    await this.prisma.todo.deleteMany({
-      where: {
-        userId: uid,
-        isRemoved: true,
-      },
-    });
-    return await this.findAllRemovedTodos(uid);
+  async deleteAllRemovedTodos(userId: string) {
+    try {
+      return await this.prisma.$transaction(async tx => {
+        // 지운 todo 전부 영구삭제
+        await tx.todo.deleteMany({
+          where: {
+            userId,
+            isRemoved: true,
+          },
+        });
+
+        // 연결된 document 전부 영구삭제
+        await tx.document.deleteMany({
+          where: {
+            todoId: { not: null },
+            userId,
+            isRemoved: true,
+          },
+        });
+
+        return await tx.todo.findMany({
+          where: {
+            userId,
+            isRemoved: true,
+          },
+          orderBy: {
+            removedDt: 'desc',
+          },
+        });
+      });
+    } catch (e) {}
   }
 }

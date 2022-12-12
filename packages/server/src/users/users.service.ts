@@ -12,7 +12,7 @@ export class UsersService {
 
   async createUser(
     uid: string,
-    { email, name, snsTypeName, createDt }: CreateUserInput,
+    { email, name, snsTypeName }: CreateUserInput,
   ) {
     const snsType = await this.snsTypeService.findOneSNSTypeName(snsTypeName);
     return await this.prisma.user.create({
@@ -20,7 +20,6 @@ export class UsersService {
         id: uid,
         email: email,
         name: name,
-        createdDt: createDt,
         snsType: {
           connect: {
             id: snsType.id,

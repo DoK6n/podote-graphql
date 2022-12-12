@@ -10,6 +10,7 @@ import { SnsTypeModule } from './sns-type/sns-type.module';
 import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { LoggingInterceptor, HttpExceptionFilter } from './common';
 import { AppController } from './app.controller';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AppController } from './app.controller';
     TodosModule,
     UsersModule,
     SnsTypeModule,
+    DocumentsModule,
   ],
   controllers: [AppController],
   providers: [

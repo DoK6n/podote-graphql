@@ -9,6 +9,7 @@
     "client:add": "pnpm add --filter @podote-v2/client",
     "client:remove": "pnpm remove --filter @podote-v2/client",
     "server:run": "pnpm --filter @podote-v2/server",
+    "server:debug": "pnpm --filter @podote-v2/server start:debug",
     "server:add": "pnpm add --filter @podote-v2/server",
     "server:remove": "pnpm remove --filter @podote-v2/server"
   },

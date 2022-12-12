@@ -22,7 +22,6 @@ importers:
       '@types/react-dom': ^18.0.8
       '@types/react-router-dom': ^5.3.3
       '@vitejs/plugin-react': ^2.2.0
-      ArrowBack: link:@emotion-icons/typicons/ArrowBack
       react: ^18.2.0
       react-dom: ^18.2.0
       react-router-dom: ^6.4.4
@@ -39,7 +38,6 @@ importers:
       '@emotion-icons/typicons': 3.14.0_dovxhg2tvkkxkdnqyoum6wzcxm
       '@emotion/react': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
       '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
-      ArrowBack: link:@emotion-icons/typicons/ArrowBack
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.4.4_biqbaboplfbrettd7655fr4n2y
@@ -64,6 +62,7 @@ importers:
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.0.0
       '@nestjs/graphql': ^10.1.6
+      '@nestjs/mapped-types': '*'
       '@nestjs/platform-express': ^9.0.0
       '@nestjs/schematics': ^9.0.0
       '@nestjs/testing': ^9.0.0
@@ -85,7 +84,7 @@ importers:
       graphql-tools: ^8.3.12
       graphql-type-json: ^0.3.2
       jest: 28.1.2
-      nanoid: ^4.0.0
+      nanoid: ^3.0.0
       prettier: ^2.3.2
       prisma: ^4.7.1
       prisma-query-log: ^3.2.0
@@ -105,6 +104,7 @@ importers:
       '@nestjs/config': 2.2.0_2kbkxfsrhtatemqz6dhv2pefvq
       '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
       '@nestjs/graphql': 10.1.6_qvlru7mihulo7iadddklfsm6cq
+      '@nestjs/mapped-types': 1.2.0_owz3rxfszkgceewod2ym3ga2xe
       '@nestjs/platform-express': 9.2.0_pf2fb646rsvo5szivgkaevcpvi
       '@prisma/client': 4.7.1_prisma@4.7.1
       apollo-server-express: 3.11.1_graphql@16.6.0
@@ -114,7 +114,7 @@ importers:
       graphql: 16.6.0
       graphql-tools: 8.3.12_graphql@16.6.0
       graphql-type-json: 0.3.2_graphql@16.6.0
-      nanoid: 4.0.0
+      nanoid: 3.3.4
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.5.7
@@ -7768,13 +7768,6 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: true
-
-  /nanoid/4.0.0:
-    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
-    engines: {node: ^14 || ^16 || >=18}
-    hasBin: true
-    dev: false
 
   /natural-compare-lite/1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}

@@ -9,14 +9,15 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   name      String
-  snsTypeId Int       @map("sns_type_id")
-  createdDt DateTime  @default(now()) @map("created_dt")
-  updatedDt DateTime? @updatedAt @map("updated_dt")
+  snsTypeId Int        @map("sns_type_id")
+  createdDt DateTime   @default(now()) @map("created_dt")
+  updatedDt DateTime?  @updatedAt @map("updated_dt")
+  Documents Document[]
   todos     Todo[]
-  snsType   SnsType   @relation(fields: [snsTypeId], references: [id])
+  snsType   SnsType    @relation(fields: [snsTypeId], references: [id])
 
   @@map("user")
 }
@@ -30,17 +31,34 @@ model SnsType {
 }
 
 model Todo {
-  id        String    @id @default(uuid())
-  orderKey  Int       @default(0) @map("order_key")
-  document  Json?
-  done      Boolean   @default(false) @map("done")
-  editable  Boolean   @default(false) @map("editable")
-  isRemoved Boolean   @default(false) @map("is_removed")
-  userId    String    @map("user_id")
-  createdDt DateTime  @default(now()) @map("created_dt")
-  updatedDt DateTime? @updatedAt @map("updated_dt")
-  removedDt DateTime? @map("removed_dt")
-  user      User      @relation(fields: [userId], references: [id])
+  id         String    @id @default(cuid())
+  isRemoved  Boolean   @default(false) @map("is_removed")
+  userId     String    @map("user_id")
+  createdDt  DateTime  @default(now()) @map("created_dt")
+  updatedDt  DateTime? @updatedAt @map("updated_dt")
+  removedDt  DateTime? @map("removed_dt")
+  done       Boolean   @default(false) @map("done")
+  orderKey   Int       @default(0) @map("order_key")
+  editable   Boolean   @default(false) @map("editable")
+  documentId String?   @map("document_id")
+  title      String    @map("title")
+  Document   Document?
+  user       User      @relation(fields: [userId], references: [id])
 
   @@map("todo")
+}
+
+model Document {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  todoId    String?   @unique @map("todo_id")
+  content   Json?
+  createdDt DateTime  @default(now()) @map("created_dt")
+  updatedDt DateTime? @updatedAt @map("updated_dt")
+  isRemoved Boolean   @default(false) @map("is_removed")
+  removedDt DateTime? @map("removed_dt")
+  todo      Todo?     @relation(fields: [todoId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("document")
 }
