@@ -1,4 +1,9 @@
-import { LoaderFunction, Outlet, useLoaderData } from 'react-router-dom';
+import {
+  LoaderFunction,
+  Outlet,
+  redirect,
+  useLoaderData,
+} from 'react-router-dom';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/Header';
 import { data, DataType } from '../lib/data';
@@ -7,9 +12,12 @@ import styled from '@emotion/styled';
 import { colors } from '../styles/colors';
 import { TodoInput, TodoItem, TodoList } from '../components/todo';
 import { DropdownButton } from '../components/dropdown';
-import { css } from '@emotion/react';
+import { checkIsLoggedIn } from '../lib/protectRoute';
 
-export const todoLoader: LoaderFunction = async ({ request }) => {
+export const todoLoader: LoaderFunction = async () => {
+  const isLoggedIn = checkIsLoggedIn();
+  if (!isLoggedIn) return redirect('/auth/login?next=/todo');
+
   return { data };
 };
 
@@ -43,7 +51,7 @@ function Todo() {
               isDone={true}
             />
             {data ? (
-              data?.map(d => (
+              data?.map((d) => (
                 <TodoItem
                   title={d.title}
                   docsId={d.id}

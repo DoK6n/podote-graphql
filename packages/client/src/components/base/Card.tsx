@@ -1,12 +1,7 @@
-import { css } from '@emotion/react';
-import { PropsWithChildren } from 'react';
+import styled from '@emotion/styled';
 import { colors } from '../../styles/colors';
 
-function Card({ children }: PropsWithChildren) {
-  return <div css={cardStyle}>{children}</div>;
-}
-
-const cardStyle = css`
+export const Card = styled.div`
   width: 100%;
   min-height: 1rem;
   border: 1px solid ${colors.border2};
@@ -14,7 +9,4 @@ const cardStyle = css`
   display: flex;
   align-items: center;
   border-radius: 6px;
-
 `;
-
-export default Card;

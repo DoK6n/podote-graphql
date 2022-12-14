@@ -1,11 +1,10 @@
-import { css } from '@emotion/react';
-import { PropsWithChildren } from 'react';
+import styled from '@emotion/styled';
 
-function FullCard({ children }: PropsWithChildren) {
-  return <div css={docsStyle}>{children}</div>;
-}
+// function FullCard({ children }: PropsWithChildren) {
+//   return <div css={docsStyle}>{children}</div>;
+// }
 
-const docsStyle = css`
+export const FullCard = styled.div`
   width: 100%;
   border-radius: 12px;
   min-height: 100%;
@@ -13,4 +12,4 @@ const docsStyle = css`
   padding: 2rem;
 `;
 
-export default FullCard;
+// export default FullCard;

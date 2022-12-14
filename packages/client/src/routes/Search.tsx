@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import {
-  // LoaderFunction,
+  LoaderFunction,
   Outlet,
-  // useLoaderData,
+  redirect,
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
@@ -11,13 +11,17 @@ import { Block } from '../components/base';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/Header';
 import { DataType, getSearchData } from '../lib/data';
-import useDebounce from '../hooks/useDebounce';
+import { useDebounce } from '../hooks';
 import { colors } from '../styles/colors';
 import { TodoList, TodoItem } from '../components/todo';
+import { checkIsLoggedIn } from '../lib/protectRoute';
 
-// export const searchLoader: LoaderFunction = async ({ request }) => {
-//   return { };
-// };
+export const searchLoader: LoaderFunction = async ({ request }) => {
+  const isLoggedIn = checkIsLoggedIn();
+  if (!isLoggedIn) return redirect('/auth/login?next=/search');
+
+  return {};
+};
 
 // TODO 렌더링 최적화 : 검색시 불필요한 리랜더링 방지 작업
 function Search() {
@@ -39,14 +43,14 @@ function Search() {
           <input
             css={inputStyle}
             value={searchText}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={(e) => setSearchText(e.target.value)}
           />
         }
       />
       <Block>
         <TodoList>
           {data ? (
-            data?.map(d => (
+            data?.map((d) => (
               <TodoItem
                 title={d.title}
                 docsId={d.id}

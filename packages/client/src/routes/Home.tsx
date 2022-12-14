@@ -1,30 +1,60 @@
-import { LoaderFunction, Outlet } from 'react-router-dom';
-import { Block } from '../components/base';
+import styled from '@emotion/styled';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { Suspense, useEffect } from 'react';
+import { LoaderFunction, Outlet, useLoaderData } from 'react-router-dom';
+import { Block, PurpleButton } from '../components/base';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/Header';
-import { Logo } from '../components/vectors';
-
-export const homeLoader: LoaderFunction = async ({ request }) => {
-  // const url = new URL(request.url);
-  return {};
-};
+import { auth } from '../lib/firebase/firebaseClient';
+import { useAuthStore } from '../lib/store/auth';
 
 function Home() {
+  const { userState, setUserState, login, logout } = useAuthStore();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((fbUser) => {
+      if (fbUser) {
+        setUserState(fbUser);
+      }
+    });
+    console.log('[userState]', userState);
+  }, []);
+
+  const handleGoogleLogin = () => {
+    const googleProvider = new GoogleAuthProvider();
+    login(googleProvider);
+  };
+
+  const handleGoogleLogout = () => {
+    logout();
+  };
   return (
     <>
-      <MobileHeader
-        // title={
-        //   <div>
-        //     <Logo /> Podote
-        //   </div>
-        // }
-      />
+      <MobileHeader />
       <Block>
-        <Outlet />
+        <AuthBlock>
+          {userState ? (
+            <PurpleButton onClick={handleGoogleLogout}>
+              구글 로그아웃
+            </PurpleButton>
+          ) : (
+            <PurpleButton onClick={handleGoogleLogin}>구글 로그인</PurpleButton>
+          )}
+        </AuthBlock>
+        {/* <Outlet /> */}
       </Block>
       <Footer />
     </>
   );
 }
+
+const AuthBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
 
 export default Home;

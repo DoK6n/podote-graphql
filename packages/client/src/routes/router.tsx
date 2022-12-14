@@ -4,11 +4,14 @@ import Index from './Index';
 import List, { listLoader } from './List';
 import Root, { rootLoader } from './Root';
 import Todo, { todoLoader } from './Todo';
-import Search from './Search';
-import Home, { homeLoader } from './Home';
+import Search, { searchLoader } from './Search';
+import Home from './Home';
+// const Home = React.lazy(() => import('./Home'));
 import Setting, { settingLoader } from './Setting';
 import ErrorPage from './ErrorPage';
 import Document from '../components/document/Document';
+import Auth from './auth/Auth';
+import Login, { loginLoader } from './auth/Login';
 
 const router = createBrowserRouter([
   {
@@ -22,19 +25,19 @@ const router = createBrowserRouter([
           {
             path: '/',
             element: <Home />,
-            loader: homeLoader,
+            // loader: homeLoader,
             children: [
-              { index: true, element: <Index message='아무것도 없어요.' /> },
+              { index: true, element: <Index message="아무것도 없어요." /> },
             ],
           },
           {
             path: 'search',
             element: <Search />,
-            // loader: searchLoader,
+            loader: searchLoader,
             children: [
               {
                 index: true,
-                element: <Index message='검색된 결과가 없어요.' />,
+                element: <Index message="검색된 결과가 없어요." />,
               },
             ],
           },
@@ -43,7 +46,7 @@ const router = createBrowserRouter([
             element: <Todo />,
             loader: todoLoader,
             children: [
-              { index: true, element: <Index message='한가하군요.' /> },
+              { index: true, element: <Index message="한가하군요." /> },
             ],
           },
           {
@@ -57,6 +60,13 @@ const router = createBrowserRouter([
             element: <Setting />,
             loader: settingLoader,
             children: [{ index: true, element: <Index /> }],
+          },
+          {
+            path: 'auth',
+            element: <Auth />,
+            children: [
+              { path: 'login', element: <Login />, loader: loginLoader },
+            ],
           },
         ],
       },
