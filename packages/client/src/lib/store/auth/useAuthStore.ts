@@ -12,8 +12,6 @@ interface AuthStore {
   setUserState: (newState: User) => void;
 }
 
-// console.log('userStorage.get()', userStorage.get());
-
 export const useAuthStore = create<AuthStore>()(
   devtools((set, get) => ({
     userState: userStorage.get(),
