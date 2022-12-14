@@ -1,0 +1,58 @@
+query retrieveAllTodos {
+  retrieveAllTodos {
+    id
+    title
+    done
+    documentId
+    isRemoved
+    orderKey
+  }
+}
+
+query retrieveAllRemovedTodo {
+  retrieveAllRemovedTodo {
+    id
+    documentId
+    title
+    done
+    isRemoved
+    removedDt
+  }
+}
+
+query retrieveRemovedTodo {
+  retrieveRemovedTodo (id: "t-8ZQDAPxvm71cLAGw55sr0zP") {
+    id
+    documentId
+    title
+    done
+    isRemoved
+    removedDt
+  }
+}
+
+query retrieveDocuement($data: FindOneDocumentInput!) {
+  retrieveDocuement (data: $data) {
+    id
+    content
+    todoId
+    userId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
+}
+
+query retrieveRemovedDocument($data: FindOneDocumentInput!) {
+  retrieveRemovedDocument (data: $data) {
+    id
+    content
+    todoId
+    userId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
+}

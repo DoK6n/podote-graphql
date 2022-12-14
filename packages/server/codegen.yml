@@ -1,8 +1,0 @@
-overwrite: true
-schema: '/Users/mac/projects/side/podote-v2/packages/server/src/schema.gql'
-documents: null
-generates:
-  src/generated/graphql.ts:
-    plugins:
-      - 'typescript'
-      - 'typescript-resolvers'
