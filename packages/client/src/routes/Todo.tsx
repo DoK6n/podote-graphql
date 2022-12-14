@@ -14,6 +14,11 @@ import { TodoInput, TodoItem, TodoList } from '../components/todo';
 import { DropdownButton } from '../components/dropdown';
 import { checkIsLoggedIn } from '../lib/protectRoute';
 
+/**
+ * 할일 목록 화면
+ * 
+ * Loader에서 로그인 체크 후 비로그인시 로그인 화면으로 이동
+ *  */
 export const todoLoader: LoaderFunction = async () => {
   const isLoggedIn = checkIsLoggedIn();
   if (!isLoggedIn) return redirect('/auth/login?next=/todo');

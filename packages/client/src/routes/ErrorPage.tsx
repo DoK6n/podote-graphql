@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouteError } from 'react-router-dom';
 
-interface IErrorResponse {
+interface ErrorResponse {
   status: number;
   statusText: string;
   internal: boolean;
@@ -11,7 +11,7 @@ interface IErrorResponse {
 }
 
 export default function ErrorPage() {
-  const error = useRouteError() as IErrorResponse;
+  const error = useRouteError() as ErrorResponse;
   console.error(error);
 
   return (

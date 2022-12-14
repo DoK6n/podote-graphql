@@ -1,4 +1,4 @@
-import { LoaderFunction, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 function Auth() {
   return <Outlet />;

@@ -16,6 +16,11 @@ import { useGoBack } from '../../hooks';
 import { useAuthStore } from '../../lib/store/auth';
 import { colors } from '../../styles/colors';
 
+/**
+ * 로그인 화면
+ *
+ * 로그인 후 이동해야할 다음 페이지 경로 반환
+ *  */
 export const loginLoader: LoaderFunction = async ({ request }) => {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get('next') ?? '/';

@@ -1,5 +1,6 @@
 import { User } from 'firebase/auth';
 
+// firebase auth에서 생성되는 로컬스토리지 key name
 const key = `firebase:authUser:${import.meta.env.VITE_API_KEY}:[DEFAULT]`;
 
 const userStorage = {

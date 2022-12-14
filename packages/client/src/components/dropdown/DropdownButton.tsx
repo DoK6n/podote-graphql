@@ -81,24 +81,6 @@ const DropdownContent = styled.div<DropdownContentProps>`
   border-radius: 8px;
   padding: 3px;
   z-index: 2;
-
-  /* & a {
-    margin: 4px;
-    padding: 4px;
-    text-decoration: none;
-    display: block;
-    font-size: 1rem;
-
-    border-radius: 6px;
-    color: #7d889a;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 18px;
-
-    &:hover {
-      color: #495362;
-    }
-  } */
 `;
 
 export default DropdownButton;

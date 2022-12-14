@@ -5,6 +5,9 @@ import MobileHeader from '../components/Header';
 import { useGoBack } from '../hooks';
 import { getDataById } from '../lib/data';
 
+/**
+ * 할일에 연결된 문서 편집 화면
+ *  */
 export const docsLoader: LoaderFunction = async ({ request }) => {
   const path = new URL(request.url).pathname.split('/');
   const docsId = path[path.length - 1];
