@@ -17,7 +17,6 @@ function Home() {
         setUserState(fbUser);
       }
     });
-    console.log('[userState]', userState);
   }, []);
 
   const handleGoogleLogin = () => {

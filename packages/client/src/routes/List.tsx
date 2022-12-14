@@ -13,8 +13,6 @@ interface LoaderResult {
 function List() {
   const { url } = useLoaderData() as LoaderResult;
 
-  console.log(url);
-
   return <div css={style}>List</div>;
 }
 
