@@ -13,7 +13,8 @@
     "server:add": "pnpm add --filter @podote-v2/server",
     "server:remove": "pnpm remove --filter @podote-v2/server",
     "generate": "graphql-codegen --config ./codegen.ts",
-    "client:dev": "concurrently \"pnpm client:run dev\" \"pnpm generate --watch\""
+    "client:dev": "concurrently \"pnpm client:run dev\" \"pnpm generate --watch\"",
+    "server:dev": "concurrently \"pnpm server:run start:dev\" \"pnpm generate --watch\""
   },
   "workspaces": [
     "packages/*"
