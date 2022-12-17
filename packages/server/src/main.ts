@@ -1,10 +1,13 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { AppModule } from './app.module';
-import { PrismaService } from './prisma/prisma.service';
+import { AppModule } from '@/app.module';
+import { PrismaService } from '@/prisma/prisma.service';
+import firebaseAdmin from 'firebase-admin';
+import { firebaseConfig } from '@/config';
 
 async function bootstrap() {
+  const PORT = process.env.PORT || 3000;
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger:
       process.env.NODE_ENV === 'production'
@@ -14,8 +17,10 @@ async function bootstrap() {
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
-
-  const PORT = process.env.PORT || 3000;
+  firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert(firebaseConfig),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+  });
 
   app.enableCors({
     origin: [/^(.*)/],

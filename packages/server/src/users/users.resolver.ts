@@ -1,7 +1,7 @@
 import { Logger, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UserIdGuard } from '../auth';
-import { SnsTypeService } from '../sns-type/sns-type.service';
+import { FirebaseAuthGuard, UserIdGuard } from '@/auth';
+import { SnsTypeService } from '@/sns-type/sns-type.service';
 import { UserId } from './decorators';
 import { CreateUserInput, FindUserInput } from './dto';
 import { User, UserWithSnsType } from './models';
@@ -26,6 +26,7 @@ export class UsersResolver {
     return this.usersService.findAllUsers();
   }
 
+  // @UseGuards(FirebaseAuthGuard)
   @UseGuards(UserIdGuard)
   @Query(() => UserWithSnsType)
   async retrieveUserById(@UserId() uid: string) {
