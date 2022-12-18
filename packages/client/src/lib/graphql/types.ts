@@ -64,6 +64,7 @@ export type Mutation = {
   editDocumentContent?: Maybe<Document>;
   editTodoDone?: Maybe<Todo>;
   editTodoTitle?: Maybe<Todo>;
+  register: User;
   removeDocument?: Maybe<Document>;
   removeTodo?: Maybe<Todo>;
   restoreDocument?: Maybe<Document>;
@@ -138,6 +139,7 @@ export type MutationSwitchTodoOrderArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  login: UserWithSnsType;
   retrieveAllRemovedTodo?: Maybe<Array<Todo>>;
   retrieveAllTodos?: Maybe<Array<Todo>>;
   retrieveAllUsers?: Maybe<Array<User>>;

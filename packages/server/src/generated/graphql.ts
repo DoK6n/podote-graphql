@@ -66,6 +66,7 @@ export type Mutation = {
   editDocumentContent?: Maybe<Document>;
   editTodoDone?: Maybe<Todo>;
   editTodoTitle?: Maybe<Todo>;
+  register: User;
   removeDocument?: Maybe<Document>;
   removeTodo?: Maybe<Todo>;
   restoreDocument?: Maybe<Document>;
@@ -140,6 +141,7 @@ export type MutationSwitchTodoOrderArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  login: UserWithSnsType;
   retrieveAllRemovedTodo?: Maybe<Array<Todo>>;
   retrieveAllTodos?: Maybe<Array<Todo>>;
   retrieveAllUsers?: Maybe<Array<User>>;
@@ -415,6 +417,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   editDocumentContent?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationEditDocumentContentArgs, 'data'>>;
   editTodoDone?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationEditTodoDoneArgs, 'data'>>;
   editTodoTitle?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationEditTodoTitleArgs, 'data'>>;
+  register?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   removeDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRemoveDocumentArgs, 'data'>>;
   removeTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationRemoveTodoArgs, 'data'>>;
   restoreDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRestoreDocumentArgs, 'data'>>;
@@ -423,6 +426,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  login?: Resolver<ResolversTypes['UserWithSnsType'], ParentType, ContextType>;
   retrieveAllRemovedTodo?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   retrieveAllTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   retrieveAllUsers?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;

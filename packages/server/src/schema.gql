@@ -72,7 +72,6 @@ type Query {
   retrieveAllRemovedTodo: [Todo!]
   login: UserWithSnsType!
   retrieveAllUsers: [User!]
-  retrieveUserById: UserWithSnsType!
   snsType(name: String!): SnsType!
   retrieveDocuement(data: FindOneDocumentInput!): Document
   retrieveRemovedDocument(data: FindOneDocumentInput!): Document
@@ -92,7 +91,6 @@ type Mutation {
   deleteRemovedTodo(data: TodoIdInput!): [Todo!]
   deleteAllRemovedTodos: [Todo!]
   register: User!
-  addUser(data: CreateUserInput!): User!
   addNewDocument(data: CreateDocumentInput!): Document
   editDocumentContent(data: UpdateDocumentInput!): Document
   removeDocument(data: RemoveDocumentInput!): Document
@@ -125,12 +123,6 @@ input TodoIdOrderKey {
 
 input TodoIdInput {
   id: String!
-}
-
-input CreateUserInput {
-  email: String!
-  name: String!
-  snsTypeName: String!
 }
 
 input CreateDocumentInput {
