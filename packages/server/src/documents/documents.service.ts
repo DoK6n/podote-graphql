@@ -202,7 +202,7 @@ export class DocumentsService {
               id: todo.id,
               userId,
               documentId: id,
-              isRemoved: false,
+              isRemoved: true,
             },
             data: {
               documentId: null,
@@ -211,7 +211,7 @@ export class DocumentsService {
         }
 
         // document 영구 삭제
-        await tx.$queryRaw<Document>`DELETE FROM document WHERE id = ${id} AND todoId = ${id} is_removed = true AND user_id = ${userId}`;
+        await tx.$queryRaw<Document>`DELETE FROM document WHERE id = ${id} AND is_removed = true AND user_id = ${userId}`;
       });
     } catch (e) {
     }
