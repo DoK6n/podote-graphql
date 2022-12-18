@@ -7,6 +7,7 @@ import { join } from 'path';
 export const graphqlConfig: ApolloDriverConfig = {
   driver: ApolloDriver,
   autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+  context: ({ req, res }) => ({ req, res }),
   buildSchemaOptions: { dateScalarMode: 'timestamp' },
   cors: {
     origin: [/^(.*)/],
@@ -39,13 +40,13 @@ export const graphqlConfig: ApolloDriverConfig = {
       },
     };
 
-    if (error.extensions.code !== 'UNAUTHENTICATED') {
-      logger.error(
-        error,
-        error.extensions.exception.stacktrace.join('\n'),
-        error.extensions.code,
-      );
-    }
+    // if (error.extensions.code !== 'UNAUTHENTICATED') {
+    // logger.error(
+    //   error,
+    //   error.extensions.exception.stacktrace.join('\n'),
+    //   error.extensions.code,
+    // );
+    // }
 
     return graphQLFormattedError;
   },

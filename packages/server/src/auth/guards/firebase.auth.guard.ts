@@ -1,20 +1,17 @@
 import {
   CanActivate,
+  ConsoleLogger,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
-  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { AuthenticationError } from 'apollo-server-express';
 import { Request } from 'express';
 import firebaseAdmin from 'firebase-admin';
-import { GraphQLError } from 'graphql';
 @Injectable()
 export class FirebaseAuthGuard implements CanActivate {
-  // private readonly logger = new Logger(FirebaseAuthGuard.name);
+  // private readonly logger = new ConsoleLogger(FirebaseAuthGuard.name);
 
   canActivate(context: ExecutionContext) {
     if (context.getType<GqlContextType>() === 'graphql') {
@@ -31,8 +28,8 @@ export class FirebaseAuthGuard implements CanActivate {
 
   private async validateToken(request: Request) {
     const { headers } = request;
-    const token = headers.authorization;
-
+    const token = headers.cookie.replace('access_token=', '');
+    
     if (!token) {
       throw new UnauthorizedException(
         'Authorization token not present in header.',
@@ -40,19 +37,13 @@ export class FirebaseAuthGuard implements CanActivate {
     }
 
     try {
-      const decodedToken = await firebaseAdmin
-        .auth()
-        .verifyIdToken(token.replace('Bearer ', ''));
-      const user = {
-        email: decodedToken.email,
-      };
-      request.user = user;
+      const decodedToken = await firebaseAdmin.auth().verifyIdToken(token);
       return true;
     } catch (e) {
       throw new AuthenticationError('Not authenticated properly', {
         invalidArgs: e,
-        code: e.code ,
-        message: e.message
+        code: e.code,
+        message: e.message,
       });
     }
   }

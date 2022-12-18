@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { UserIdGuard } from '@/auth';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { FirebaseAuthGuard } from '@/auth';
 import { UserId } from '@/users/decorators';
 import {
   CreateTodoInput,
@@ -17,7 +17,7 @@ export class TodosResolver {
   constructor(private readonly todoService: TodosService) {}
 
   // 할일 추가
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async addNewTodo(
     @UserId() userId: string,
@@ -27,14 +27,14 @@ export class TodosResolver {
   }
 
   // 할일 목록 조회
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Query(() => [Todo], { nullable: true })
   async retrieveAllTodos(@UserId() userId: string) {
     return this.todoService.findAllTodosByUser(userId);
   }
 
   // 할일 항목 조회
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Query(() => Todo, { nullable: true })
   async retrieveTodo(
     @Args('id', { type: () => String }) id: string,
@@ -44,7 +44,7 @@ export class TodosResolver {
   }
 
   // 삭제한 항목 조회
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Query(() => Todo, { nullable: true })
   async retrieveRemovedTodo(
     @Args('id', { type: () => String }) id: string,
@@ -54,14 +54,14 @@ export class TodosResolver {
   }
 
   // 삭제한 할일 목록 조회
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Query(() => [Todo], { nullable: true })
   async retrieveAllRemovedTodo(@UserId() userId: string) {
     return this.todoService.findAllRemovedTodos(userId);
   }
 
   // 할일 항목 내용 수정
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async editTodoTitle(
     @UserId() userId: string,
@@ -71,7 +71,7 @@ export class TodosResolver {
   }
 
   // 할일 항목 완료
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async editTodoDone(
     @UserId() userId: string,
@@ -81,7 +81,7 @@ export class TodosResolver {
   }
 
   // 할일 항목 순서 변경
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => [Todo])
   async switchTodoOrder(
     @UserId() userId: string,
@@ -91,17 +91,14 @@ export class TodosResolver {
   }
 
   // 할일 항목 삭제 (soft delete)
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
-  async removeTodo(
-    @UserId() userId: string,
-    @Args('data') data: TodoIdInput,
-  ) {
+  async removeTodo(@UserId() userId: string, @Args('data') data: TodoIdInput) {
     return this.todoService.removeOneTodoById(userId, data);
   }
 
   // 삭제한 할일 항목 복원
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async restoreRemovedTodo(
     @UserId() userId: string,
@@ -111,7 +108,7 @@ export class TodosResolver {
   }
 
   // 할일 항목 영구 삭제
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => [Todo], { nullable: true })
   async deleteRemovedTodo(
     @UserId() userId: string,
@@ -121,7 +118,7 @@ export class TodosResolver {
   }
 
   // 할일 목록 전체 영구 삭제
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => [Todo], { nullable: true })
   async deleteAllRemovedTodos(@UserId() userId: string) {
     return this.todoService.deleteAllRemovedTodos(userId);

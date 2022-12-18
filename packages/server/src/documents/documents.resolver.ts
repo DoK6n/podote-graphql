@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { UserIdGuard } from '@/auth';
+import { FirebaseAuthGuard } from '@/auth';
 import { UserId } from '@/users/decorators';
 import { DocumentsService } from './documents.service';
 import { Document } from './models';
@@ -18,7 +18,7 @@ export class DocumentsResolver {
   constructor(private readonly documentsService: DocumentsService) {}
 
   /** 문서 생성 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async addNewDocument(
     @UserId() userId: string,
@@ -28,7 +28,7 @@ export class DocumentsResolver {
   }
 
   /** 문서 조회 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Query(() => Document, { nullable: true })
   async retrieveDocuement(
     @UserId() userId: string,
@@ -38,7 +38,7 @@ export class DocumentsResolver {
   }
 
   /** 지운 문서 조회 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Query(() => Document, { nullable: true })
   async retrieveRemovedDocument(
     @UserId() userId: string,
@@ -48,7 +48,7 @@ export class DocumentsResolver {
   }
 
   /** 문서 내용 수정 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async editDocumentContent(
     @UserId() userId: string,
@@ -58,7 +58,7 @@ export class DocumentsResolver {
   }
 
   /** 문서 삭제 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async removeDocument(
     @UserId() userId: string,
@@ -68,7 +68,7 @@ export class DocumentsResolver {
   }
 
   /** 삭제된 문서 복원 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async restoreDocument(
     @UserId() userId: string,
@@ -78,7 +78,7 @@ export class DocumentsResolver {
   }
 
   /** 문서 영구 삭제 */
-  @UseGuards(UserIdGuard)
+  @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async deleteRemovedDocument(
     @UserId() userId: string,

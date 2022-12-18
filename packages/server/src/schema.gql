@@ -70,6 +70,7 @@ type Query {
   retrieveTodo(id: String!): Todo
   retrieveRemovedTodo(id: String!): Todo
   retrieveAllRemovedTodo: [Todo!]
+  login: UserWithSnsType!
   retrieveAllUsers: [User!]
   retrieveUserById: UserWithSnsType!
   snsType(name: String!): SnsType!
@@ -90,6 +91,7 @@ type Mutation {
   restoreRemovedTodo(data: TodoIdInput!): Todo
   deleteRemovedTodo(data: TodoIdInput!): [Todo!]
   deleteAllRemovedTodos: [Todo!]
+  register: User!
   addUser(data: CreateUserInput!): User!
   addNewDocument(data: CreateDocumentInput!): Document
   editDocumentContent(data: UpdateDocumentInput!): Document
