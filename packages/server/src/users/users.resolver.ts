@@ -25,7 +25,7 @@ export class UsersResolver {
       const snsType = await this.snsTypeService.findOneSNSTypeId(
         user.snsTypeId,
       );
-      return { ...user, snsType: snsType.name, _decodedToken: decodedToken };
+      return { ...user, snsType: snsType.name };
     } else {
       return {};
     }
