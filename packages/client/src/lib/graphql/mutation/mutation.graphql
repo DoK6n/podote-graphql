@@ -1,7 +1,7 @@
-mutation addUser($data: CreateUserInput!) {
-  addUser(data: $data) {
-    email
-    name
-    snsTypeId
-  }
+mutation register {
+	register {
+		email
+		name
+		snsTypeId
+	}
 }

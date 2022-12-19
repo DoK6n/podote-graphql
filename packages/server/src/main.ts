@@ -5,6 +5,7 @@ import { AppModule } from '@/app.module';
 import { PrismaService } from '@/prisma/prisma.service';
 import firebaseAdmin from 'firebase-admin';
 import { firebaseConfig } from '@/config';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
@@ -29,6 +30,7 @@ async function bootstrap() {
     optionsSuccessStatus: 200,
     credentials: true,
   });
+  app.use(cookieParser(process.env.COOKIE_SECRET));
 
   await app.listen(PORT, () => {
     Logger.log(`

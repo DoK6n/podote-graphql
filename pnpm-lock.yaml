@@ -47,11 +47,13 @@ importers:
       '@types/react-router-dom': ^5.3.3
       '@vitejs/plugin-react': ^2.2.0
       concurrently: ^7.6.0
+      dayjs: ^1.11.6
       firebase: ^9.15.0
       graphql: ^16.6.0
       graphql-tag: ^2.12.6
       immer: ^9.0.16
       react: ^18.2.0
+      react-cookie: ^4.1.1
       react-dom: ^18.2.0
       react-router-dom: ^6.4.4
       typescript: ^4.6.4
@@ -71,11 +73,13 @@ importers:
       '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
       '@firebase/auth': 0.21.0
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
+      dayjs: 1.11.6
       firebase: 9.15.0
       graphql: 16.6.0
       graphql-tag: 2.12.6_graphql@16.6.0
       immer: 9.0.16
       react: 18.2.0
+      react-cookie: 4.1.1_react@18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.4.4_biqbaboplfbrettd7655fr4n2y
       zustand: 4.1.5_immer@9.0.16+react@18.2.0
@@ -107,11 +111,11 @@ importers:
       '@nestjs/schematics': ^9.0.0
       '@nestjs/testing': ^9.0.0
       '@prisma/client': ^4.7.1
+      '@types/cookie-parser': ^1.4.3
       '@types/express': ^4.17.13
       '@types/firebase': ^3.2.1
       '@types/jest': 28.1.4
       '@types/node': ^16.0.0
-      '@types/passport-jwt': ^3.0.8
       '@types/supertest': ^2.0.11
       '@typescript-eslint/eslint-plugin': ^5.0.0
       '@typescript-eslint/parser': ^5.0.0
@@ -119,6 +123,7 @@ importers:
       apollo-server-express: ^3.11.1
       aws-sdk: ^2.1268.0
       class-validator: ^0.13.2
+      cookie-parser: ^1.4.6
       dayjs: ^1.11.6
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
@@ -130,8 +135,6 @@ importers:
       graphql-type-json: ^0.3.2
       jest: 28.1.2
       nanoid: ^3.0.0
-      passport: ^0.6.0
-      passport-jwt: ^4.0.0
       prettier: ^2.3.2
       prisma: ^4.7.1
       prisma-query-log: ^3.2.0
@@ -152,13 +155,14 @@ importers:
       '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
       '@nestjs/graphql': 10.1.6_qvlru7mihulo7iadddklfsm6cq
       '@nestjs/mapped-types': 1.2.0_owz3rxfszkgceewod2ym3ga2xe
-      '@nestjs/passport': 9.0.0_s6va3jdeufsye4wwu25es3p4om
+      '@nestjs/passport': 9.0.0_@nestjs+common@9.2.0
       '@nestjs/platform-express': 9.2.0_pf2fb646rsvo5szivgkaevcpvi
       '@prisma/client': 4.7.1_prisma@4.7.1
       apollo-server-errors: 3.3.1_graphql@16.6.0
       apollo-server-express: 3.11.1_graphql@16.6.0
       aws-sdk: 2.1268.0
       class-validator: 0.13.2
+      cookie-parser: 1.4.6
       dayjs: 1.11.6
       firebase: 9.15.0
       firebase-admin: 11.4.0
@@ -166,8 +170,6 @@ importers:
       graphql-tools: 8.3.12_graphql@16.6.0
       graphql-type-json: 0.3.2_graphql@16.6.0
       nanoid: 3.3.4
-      passport: 0.6.0
-      passport-jwt: 4.0.0
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.5.7
@@ -179,11 +181,11 @@ importers:
       '@nestjs/cli': 9.1.5
       '@nestjs/schematics': 9.0.3_typescript@4.9.3
       '@nestjs/testing': 9.2.0_3jiwpo56qab566j5kwfezyelg4
+      '@types/cookie-parser': 1.4.3
       '@types/express': 4.17.14
       '@types/firebase': 3.2.1
       '@types/jest': 28.1.4
       '@types/node': 16.18.3
-      '@types/passport-jwt': 3.0.8
       '@types/supertest': 2.0.12
       '@typescript-eslint/eslint-plugin': 5.43.0_nqj4bdx4ekws7aecttskpih4py
       '@typescript-eslint/parser': 5.43.0_hsf322ms6xhhd4b5ne6lb74y4a
@@ -4675,14 +4677,13 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/passport/9.0.0_s6va3jdeufsye4wwu25es3p4om:
+  /@nestjs/passport/9.0.0_@nestjs+common@9.2.0:
     resolution: {integrity: sha512-Gnh8n1wzFPOLSS/94X1sUP4IRAoXTgG4odl7/AO5h+uwscEGXxJFercrZfqdAwkWhqkKWbsntM3j5mRy/6ZQDA==}
     peerDependencies:
       '@nestjs/common': ^8.0.0 || ^9.0.0
       passport: ^0.4.0 || ^0.5.0 || ^0.6.0
     dependencies:
       '@nestjs/common': 9.2.0_upcmjahfwlai3vw7b2ah62xipi
-      passport: 0.6.0
     dev: false
 
   /@nestjs/platform-express/9.2.0_pf2fb646rsvo5szivgkaevcpvi:
@@ -5127,6 +5128,16 @@ packages:
     dependencies:
       '@types/node': 18.11.9
 
+  /@types/cookie-parser/1.4.3:
+    resolution: {integrity: sha512-CqSKwFwefj4PzZ5n/iwad/bow2hTCh0FlNAeWLtQM3JA/NX/iYagIpWG2cf1bQKQ2c9gU2log5VUCrn7LDOs0w==}
+    dependencies:
+      '@types/express': 4.17.14
+    dev: true
+
+  /@types/cookie/0.3.3:
+    resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
+    dev: false
+
   /@types/cookiejar/2.1.2:
     resolution: {integrity: sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==}
     dev: true
@@ -5186,6 +5197,13 @@ packages:
   /@types/history/4.7.11:
     resolution: {integrity: sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA==}
     dev: true
+
+  /@types/hoist-non-react-statics/3.3.1:
+    resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
+    dependencies:
+      '@types/react': 18.0.25
+      hoist-non-react-statics: 3.3.2
+    dev: false
 
   /@types/istanbul-lib-coverage/2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -5264,27 +5282,6 @@ packages:
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
-
-  /@types/passport-jwt/3.0.8:
-    resolution: {integrity: sha512-VKJZDJUAHFhPHHYvxdqFcc5vlDht8Q2pL1/ePvKAgqRThDaCc84lSYOTQmnx3+JIkDlN+2KfhFhXIzlcVT+Pcw==}
-    dependencies:
-      '@types/express': 4.17.14
-      '@types/jsonwebtoken': 8.5.9
-      '@types/passport-strategy': 0.2.35
-    dev: true
-
-  /@types/passport-strategy/0.2.35:
-    resolution: {integrity: sha512-o5D19Jy2XPFoX2rKApykY15et3Apgax00RRLf0RUotPDUsYrQa7x4howLYr9El2mlUApHmCMv5CZ1IXqKFQ2+g==}
-    dependencies:
-      '@types/express': 4.17.14
-      '@types/passport': 1.0.11
-    dev: true
-
-  /@types/passport/1.0.11:
-    resolution: {integrity: sha512-pz1cx9ptZvozyGKKKIPLcVDVHwae4hrH5d6g5J+DkMRRjR3cVETb4jMabhXAUbg3Ov7T22nFHEgaK2jj+5CBpw==}
-    dependencies:
-      '@types/express': 4.17.14
-    dev: true
 
   /@types/prettier/2.7.1:
     resolution: {integrity: sha512-ri0UmynRRvZiiUJdiz38MmIblKK+oH30MztdBVR95dv/Ubw6neWSb8u1XpRb72L4qsZOhz+L+z9JD40SJmfWow==}
@@ -6660,8 +6657,26 @@ packages:
   /convert-source-map/1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
 
+  /cookie-parser/1.4.6:
+    resolution: {integrity: sha512-z3IzaNjdwUC2olLIB5/ITd0/setiaFMLYiZJle7xg5Fe9KWAceil7xszYfHHBtDFYLSgJduS2Ty0P1uJdPDJeA==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      cookie: 0.4.1
+      cookie-signature: 1.0.6
+    dev: false
+
   /cookie-signature/1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+
+  /cookie/0.4.1:
+    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie/0.4.2:
+    resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
+    engines: {node: '>= 0.6'}
+    dev: false
 
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
@@ -10034,27 +10049,6 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /passport-jwt/4.0.0:
-    resolution: {integrity: sha512-BwC0n2GP/1hMVjR4QpnvqA61TxenUMlmfNjYNgK0ZAs0HK4SOQkHcSv4L328blNTLtHq7DbmvyNJiH+bn6C5Mg==}
-    dependencies:
-      jsonwebtoken: 8.5.1
-      passport-strategy: 1.0.0
-    dev: false
-
-  /passport-strategy/1.0.0:
-    resolution: {integrity: sha512-CB97UUvDKJde2V0KDWWB3lyf6PC3FaZP7YxZ2G8OAtn9p4HI9j9JLP9qjOGZFvyl8uwNT8qM+hGnz/n16NI7oA==}
-    engines: {node: '>= 0.4.0'}
-    dev: false
-
-  /passport/0.6.0:
-    resolution: {integrity: sha512-0fe+p3ZnrWRW74fe8+SvCyf4a3Pb2/h7gFkQ8yTJpAO50gDzlfjZUZTO1k5Eg9kUct22OxHLqDZoKUWRHOh9ug==}
-    engines: {node: '>= 0.4.0'}
-    dependencies:
-      passport-strategy: 1.0.0
-      pause: 0.0.1
-      utils-merge: 1.0.1
-    dev: false
-
   /path-case/3.0.4:
     resolution: {integrity: sha512-qO4qCFjXqVTrcbPt/hQfhTQ+VhFsqNKOPtytgNKkKxSoEp3XPUQ8ObFuePylOIok5gjn69ry8XiULxCwot3Wfg==}
     dependencies:
@@ -10100,10 +10094,6 @@ packages:
   /path-type/4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
-
-  /pause/0.0.1:
-    resolution: {integrity: sha512-KG8UEiEVkR3wGEb4m5yZkVCzigAD+cVEJck2CzYZO37ZGJfctvVptVO192MwrtPhzONn6go8ylnOdMhKqi4nfg==}
-    dev: false
 
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -10354,6 +10344,17 @@ packages:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+
+  /react-cookie/4.1.1_react@18.2.0:
+    resolution: {integrity: sha512-ffn7Y7G4bXiFbnE+dKhHhbP+b8I34mH9jqnm8Llhj89zF4nPxPutxHT1suUqMeCEhLDBI7InYwf1tpaSoK5w8A==}
+    peerDependencies:
+      react: '>= 16.3.0'
+    dependencies:
+      '@types/hoist-non-react-statics': 3.3.1
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
+      universal-cookie: 4.0.4
+    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
@@ -11480,6 +11481,13 @@ packages:
     resolution: {integrity: sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==}
     engines: {node: '>=4'}
     dev: true
+
+  /universal-cookie/4.0.4:
+    resolution: {integrity: sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==}
+    dependencies:
+      '@types/cookie': 0.3.3
+      cookie: 0.4.2
+    dev: false
 
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}

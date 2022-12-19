@@ -25,12 +25,6 @@ export type CreateTodoInput = {
   title: Scalars['String'];
 };
 
-export type CreateUserInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  snsTypeName: Scalars['String'];
-};
-
 export type DeleteDocumentInput = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -57,7 +51,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   addNewDocument?: Maybe<Document>;
   addNewTodo?: Maybe<Todo>;
-  addUser: User;
   deleteAllRemovedTodos?: Maybe<Array<Todo>>;
   deleteRemovedDocument?: Maybe<Document>;
   deleteRemovedTodo?: Maybe<Array<Todo>>;
@@ -80,11 +73,6 @@ export type MutationAddNewDocumentArgs = {
 
 export type MutationAddNewTodoArgs = {
   data: CreateTodoInput;
-};
-
-
-export type MutationAddUserArgs = {
-  data: CreateUserInput;
 };
 
 
@@ -147,7 +135,6 @@ export type Query = {
   retrieveRemovedDocument?: Maybe<Document>;
   retrieveRemovedTodo?: Maybe<Todo>;
   retrieveTodo?: Maybe<Todo>;
-  retrieveUserById: UserWithSnsType;
   snsType: SnsType;
 };
 

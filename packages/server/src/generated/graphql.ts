@@ -27,12 +27,6 @@ export type CreateTodoInput = {
   title: Scalars['String'];
 };
 
-export type CreateUserInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  snsTypeName: Scalars['String'];
-};
-
 export type DeleteDocumentInput = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -59,7 +53,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   addNewDocument?: Maybe<Document>;
   addNewTodo?: Maybe<Todo>;
-  addUser: User;
   deleteAllRemovedTodos?: Maybe<Array<Todo>>;
   deleteRemovedDocument?: Maybe<Document>;
   deleteRemovedTodo?: Maybe<Array<Todo>>;
@@ -82,11 +75,6 @@ export type MutationAddNewDocumentArgs = {
 
 export type MutationAddNewTodoArgs = {
   data: CreateTodoInput;
-};
-
-
-export type MutationAddUserArgs = {
-  data: CreateUserInput;
 };
 
 
@@ -149,7 +137,6 @@ export type Query = {
   retrieveRemovedDocument?: Maybe<Document>;
   retrieveRemovedTodo?: Maybe<Todo>;
   retrieveTodo?: Maybe<Todo>;
-  retrieveUserById: UserWithSnsType;
   snsType: SnsType;
 };
 
@@ -330,7 +317,6 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   CreateDocumentInput: CreateDocumentInput;
   CreateTodoInput: CreateTodoInput;
-  CreateUserInput: CreateUserInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   DeleteDocumentInput: DeleteDocumentInput;
   Document: ResolverTypeWrapper<Document>;
@@ -360,7 +346,6 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   CreateDocumentInput: CreateDocumentInput;
   CreateTodoInput: CreateTodoInput;
-  CreateUserInput: CreateUserInput;
   DateTime: Scalars['DateTime'];
   DeleteDocumentInput: DeleteDocumentInput;
   Document: Document;
@@ -410,7 +395,6 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addNewDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationAddNewDocumentArgs, 'data'>>;
   addNewTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationAddNewTodoArgs, 'data'>>;
-  addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'data'>>;
   deleteAllRemovedTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   deleteRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationDeleteRemovedDocumentArgs, 'data'>>;
   deleteRemovedTodo?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<MutationDeleteRemovedTodoArgs, 'data'>>;
@@ -434,7 +418,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   retrieveRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedDocumentArgs, 'data'>>;
   retrieveRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedTodoArgs, 'id'>>;
   retrieveTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveTodoArgs, 'id'>>;
-  retrieveUserById?: Resolver<ResolversTypes['UserWithSnsType'], ParentType, ContextType>;
   snsType?: Resolver<ResolversTypes['SnsType'], ParentType, ContextType, RequireFields<QuerySnsTypeArgs, 'name'>>;
 };
 

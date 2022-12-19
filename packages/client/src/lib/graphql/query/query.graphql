@@ -1,10 +1,10 @@
-query retrieveUserById {
-  retrieveUserById {
+query login {
+  login {
     id
     email
     name
-    snsType
-  }
+    snsType 
+  }  
 }
 
 query retrieveAllTodos {

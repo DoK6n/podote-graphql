@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { FirebaseAuthGuard } from '@/auth';
-import { UserId } from '@/users/decorators';
+import { DecodedTokenDecorator } from '@/users/decorators';
 import { DocumentsService } from './documents.service';
 import { Document } from './models';
 import {
@@ -12,6 +12,7 @@ import {
   RestoreDocumentInput,
   UpdateDocumentInput,
 } from './dto';
+import { DecodedToken } from '@/users/interfaces/decoded-token.interface';
 
 @Resolver(() => Document)
 export class DocumentsResolver {
@@ -21,69 +22,69 @@ export class DocumentsResolver {
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async addNewDocument(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: CreateDocumentInput,
   ) {
-    return this.documentsService.createNewDocument(userId, data);
+    return this.documentsService.createNewDocument(user.id, data);
   }
 
   /** 문서 조회 */
   @UseGuards(FirebaseAuthGuard)
   @Query(() => Document, { nullable: true })
   async retrieveDocuement(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: FindOneDocumentInput,
   ) {
-    return this.documentsService.findOneDocumentById(userId, data);
+    return this.documentsService.findOneDocumentById(user.id, data);
   }
 
   /** 지운 문서 조회 */
   @UseGuards(FirebaseAuthGuard)
   @Query(() => Document, { nullable: true })
   async retrieveRemovedDocument(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: FindOneDocumentInput,
   ) {
-    return this.documentsService.findOneRemovedDocumentById(userId, data);
+    return this.documentsService.findOneRemovedDocumentById(user.id, data);
   }
 
   /** 문서 내용 수정 */
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async editDocumentContent(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: UpdateDocumentInput,
   ) {
-    return this.documentsService.updateDocumentById(userId, data);
+    return this.documentsService.updateDocumentById(user.id, data);
   }
 
   /** 문서 삭제 */
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async removeDocument(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: RemoveDocumentInput,
   ) {
-    return this.documentsService.removeDocumentById(userId, data);
+    return this.documentsService.removeDocumentById(user.id, data);
   }
 
   /** 삭제된 문서 복원 */
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async restoreDocument(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: RestoreDocumentInput,
   ) {
-    return this.documentsService.restoreDocumentById(userId, data);
+    return this.documentsService.restoreDocumentById(user.id, data);
   }
 
   /** 문서 영구 삭제 */
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
   async deleteRemovedDocument(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: DeleteDocumentInput,
   ) {
-    return this.documentsService.deleteDocumentById(userId, data);
+    return this.documentsService.deleteDocumentById(user.id, data);
   }
 }

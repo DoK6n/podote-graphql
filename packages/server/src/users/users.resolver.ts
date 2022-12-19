@@ -1,15 +1,15 @@
-import { Logger, UseGuards } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Logger, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import { FirebaseAuthGuard } from '@/auth';
 import { SnsTypeService } from '@/sns-type/sns-type.service';
-import { RegistUserInfo, UserId } from './decorators';
+import { DecodedTokenDecorator } from './decorators';
 import { User, UserWithSnsType } from './models';
 import { UsersService } from './users.service';
-import { UserInfo } from './interfaces/UserInfo';
+import { DecodedToken } from './interfaces/decoded-token.interface';
 
 @Resolver(() => User)
 export class UsersResolver {
-  // private readonly logger = new Logger(UsersResolver.name);
+  private readonly logger = new Logger(UsersResolver.name);
   constructor(
     private readonly usersService: UsersService,
     private readonly snsTypeService: SnsTypeService,
@@ -17,18 +17,15 @@ export class UsersResolver {
 
   @UseGuards(FirebaseAuthGuard)
   @Query(() => UserWithSnsType)
-  async login(@UserId() userId: string, @Context() context: any) {
-    // const { req, res } = context;
-    // const token = req.headers.cookie;
-    // const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    // const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-    const user = await this.usersService.findUserByUserId(userId);
+  async login(
+    @DecodedTokenDecorator() decodedToken: DecodedToken,
+  ) {
+    const user = await this.usersService.findUserByUserId(decodedToken.id);
     if (user) {
       const snsType = await this.snsTypeService.findOneSNSTypeId(
         user.snsTypeId,
       );
-      // res.cookie('access_token', token.replace('access_token=', ''), options);
-      return { ...user, snsType: snsType.name };
+      return { ...user, snsType: snsType.name, _decodedToken: decodedToken };
     } else {
       return {};
     }
@@ -37,16 +34,10 @@ export class UsersResolver {
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => User)
   async register(
-    @RegistUserInfo()
-    user: UserInfo,
-    @Context() context: any,
+    @DecodedTokenDecorator()
+    user: DecodedToken,
   ) {
-    // const { req, res } = context;
-    // const token = req.headers.cookie;
-    // const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    // const options = { maxAge: expiresIn, httpOnly: true, secure: true };
     const result = await this.usersService.createUser(user);
-    // res.cookie('access_token', token.replace('access_token=', ''), options);
     return result;
   }
 

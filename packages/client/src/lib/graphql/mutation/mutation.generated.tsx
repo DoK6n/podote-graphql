@@ -3,46 +3,43 @@ import * as Types from '../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type AddUserMutationVariables = Types.Exact<{
-  data: Types.CreateUserInput;
-}>;
+export type RegisterMutationVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type AddUserMutation = { __typename?: 'Mutation', addUser: { __typename?: 'User', email: string, name: string, snsTypeId: number } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', email: string, name: string, snsTypeId: number } };
 
 
-export const AddUserDocument = gql`
-    mutation addUser($data: CreateUserInput!) {
-  addUser(data: $data) {
+export const RegisterDocument = gql`
+    mutation register {
+  register {
     email
     name
     snsTypeId
   }
 }
     `;
-export type AddUserMutationFn = Apollo.MutationFunction<AddUserMutation, AddUserMutationVariables>;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
- * __useAddUserMutation__
+ * __useRegisterMutation__
  *
- * To run a mutation, you first call `useAddUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddUserMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addUserMutation, { data, loading, error }] = useAddUserMutation({
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
- *      data: // value for 'data'
  *   },
  * });
  */
-export function useAddUserMutation(baseOptions?: Apollo.MutationHookOptions<AddUserMutation, AddUserMutationVariables>) {
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddUserMutation, AddUserMutationVariables>(AddUserDocument, options);
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
       }
-export type AddUserMutationHookResult = ReturnType<typeof useAddUserMutation>;
-export type AddUserMutationResult = Apollo.MutationResult<AddUserMutation>;
-export type AddUserMutationOptions = Apollo.BaseMutationOptions<AddUserMutation, AddUserMutationVariables>;
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;

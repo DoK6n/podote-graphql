@@ -1,2 +1,1 @@
-export * from './user-id-decotator';
-export * from './register-decotator';
+export * from './decoded-token.decorator';

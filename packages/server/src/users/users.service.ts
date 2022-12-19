@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { SnsTypeService } from '../sns-type/sns-type.service';
 import { CreateUserInput } from './dto';
-import { UserInfo } from './interfaces/UserInfo';
+import { DecodedToken } from './interfaces/decoded-token.interface';
 @Injectable()
 export class UsersService {
   // private readonly logger = new Logger(UsersService.name);
@@ -11,7 +11,7 @@ export class UsersService {
     private readonly snsTypeService: SnsTypeService,
   ) {}
 
-  async createUser({ id, email, name, snsTypeId }: UserInfo) {
+  async createUser({ id, email, name, snsTypeId }: DecodedToken) {
     const snsType = await this.snsTypeService.findOneSNSTypeName(snsTypeId);
     return await this.prisma.user.create({
       data: {

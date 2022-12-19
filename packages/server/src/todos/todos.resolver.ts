@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { FirebaseAuthGuard } from '@/auth';
-import { UserId } from '@/users/decorators';
+import { DecodedTokenDecorator } from '@/users/decorators';
 import {
   CreateTodoInput,
   TodoIdInput,
@@ -11,6 +11,7 @@ import {
 } from './dto';
 import { Todo } from './models';
 import { TodosService } from './todos.service';
+import { DecodedToken } from '@/users/interfaces/decoded-token.interface';
 
 @Resolver(() => Todo)
 export class TodosResolver {
@@ -20,17 +21,17 @@ export class TodosResolver {
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async addNewTodo(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() { id }: DecodedToken,
     @Args('data') data: CreateTodoInput,
   ) {
-    return this.todoService.createNewTodo(userId, data);
+    return this.todoService.createNewTodo(id, data);
   }
 
   // 할일 목록 조회
   @UseGuards(FirebaseAuthGuard)
   @Query(() => [Todo], { nullable: true })
-  async retrieveAllTodos(@UserId() userId: string) {
-    return this.todoService.findAllTodosByUser(userId);
+  async retrieveAllTodos(@DecodedTokenDecorator() user: DecodedToken) {
+    return this.todoService.findAllTodosByUser(user.id);
   }
 
   // 할일 항목 조회
@@ -38,9 +39,9 @@ export class TodosResolver {
   @Query(() => Todo, { nullable: true })
   async retrieveTodo(
     @Args('id', { type: () => String }) id: string,
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
   ) {
-    return this.todoService.findOneTodoById(id, userId);
+    return this.todoService.findOneTodoById(id, user.id);
   }
 
   // 삭제한 항목 조회
@@ -48,79 +49,82 @@ export class TodosResolver {
   @Query(() => Todo, { nullable: true })
   async retrieveRemovedTodo(
     @Args('id', { type: () => String }) id: string,
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
   ) {
-    return this.todoService.findOneRemovedTodo(id, userId);
+    return this.todoService.findOneRemovedTodo(id, user.id);
   }
 
   // 삭제한 할일 목록 조회
   @UseGuards(FirebaseAuthGuard)
   @Query(() => [Todo], { nullable: true })
-  async retrieveAllRemovedTodo(@UserId() userId: string) {
-    return this.todoService.findAllRemovedTodos(userId);
+  async retrieveAllRemovedTodo(@DecodedTokenDecorator() user: DecodedToken) {
+    return this.todoService.findAllRemovedTodos(user.id);
   }
 
   // 할일 항목 내용 수정
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async editTodoTitle(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: UpdateTodoTitleInput,
   ) {
-    return this.todoService.updateTodoTitleById(userId, data);
+    return this.todoService.updateTodoTitleById(user.id, data);
   }
 
   // 할일 항목 완료
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async editTodoDone(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: UpdateTodoDoneInput,
   ) {
-    return this.todoService.updateTodoDoneById(userId, data);
+    return this.todoService.updateTodoDoneById(user.id, data);
   }
 
   // 할일 항목 순서 변경
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => [Todo])
   async switchTodoOrder(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: UpdateTodoOrderkeyInput,
   ) {
-    return this.todoService.updateTodoOrderkeyInput(userId, data);
+    return this.todoService.updateTodoOrderkeyInput(user.id, data);
   }
 
   // 할일 항목 삭제 (soft delete)
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
-  async removeTodo(@UserId() userId: string, @Args('data') data: TodoIdInput) {
-    return this.todoService.removeOneTodoById(userId, data);
+  async removeTodo(
+    @DecodedTokenDecorator() user: DecodedToken,
+    @Args('data') data: TodoIdInput,
+  ) {
+    return this.todoService.removeOneTodoById(user.id, data);
   }
 
   // 삭제한 할일 항목 복원
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Todo, { nullable: true })
   async restoreRemovedTodo(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: TodoIdInput,
   ) {
-    return this.todoService.restoreOneRemovedTodoById(userId, data);
+    return this.todoService.restoreOneRemovedTodoById(user.id, data);
   }
 
   // 할일 항목 영구 삭제
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => [Todo], { nullable: true })
   async deleteRemovedTodo(
-    @UserId() userId: string,
+    @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: TodoIdInput,
   ) {
-    return this.todoService.deleteOneRemovedTodoById(userId, data);
+    return this.todoService.deleteOneRemovedTodoById(user.id, data);
   }
 
   // 할일 목록 전체 영구 삭제
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => [Todo], { nullable: true })
-  async deleteAllRemovedTodos(@UserId() userId: string) {
-    return this.todoService.deleteAllRemovedTodos(userId);
+  async deleteAllRemovedTodos(@DecodedTokenDecorator() user: DecodedToken) {
+    return this.todoService.deleteAllRemovedTodos(user.id);
   }
 }
