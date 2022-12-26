@@ -14,23 +14,17 @@ export const DecodedTokenDecorator = createParamDecorator(
     if (context.getType<GqlContextType>() === 'graphql') {
       const gqlContext = GqlExecutionContext.create(context);
       const ctx = gqlContext.getArgByIndex(2).req;
-
       const { token, exp, ...user } = await validateRequest(ctx);
-      const options = { maxAge: exp, httpOnly: true };
-      ctx.res.cookie('token', token, options);
+      // const options = { maxAge: exp, httpOnly: true };
+      // ctx.res.cookie('token', token, options);
       return user;
-    }
-
-    if (context.getType() === 'http') {
-      const request = context.switchToHttp().getRequest();
-      return validateRequest(request);
     }
   },
 );
 
 const validateRequest = async (request: Request) => {
   const { headers } = request;
-  let token;
+  let token: string;
 
   if (headers.authorization) {
     token = headers.authorization.replace('Bearer ', '');
