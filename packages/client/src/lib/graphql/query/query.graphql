@@ -10,6 +10,7 @@ query login {
 query retrieveAllTodos {
   retrieveAllTodos {
     id
+    userId
     title
     done
     documentId

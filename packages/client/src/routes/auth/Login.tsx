@@ -1,6 +1,10 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+} from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import {
   LoaderFunction,
@@ -13,6 +17,7 @@ import GoBackButton from '../../components/GoBackButton';
 import MobileHeader from '../../components/Header';
 import { Logo } from '../../components/vectors';
 import { useGoBack } from '../../hooks';
+import { auth } from '../../lib/firebase/firebaseClient';
 import { useAuthStore } from '../../lib/store/auth';
 import { colors } from '../../styles/colors';
 
@@ -45,7 +50,8 @@ function Login() {
 
   const handleGoogleLogin = async () => {
     const googleProvider = new GoogleAuthProvider();
-    login(googleProvider);
+    // login(googleProvider);
+    const { user } = await signInWithPopup(auth, googleProvider);
   };
 
   return (

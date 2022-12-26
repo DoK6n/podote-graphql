@@ -3,14 +3,14 @@ import { IconButton } from './base';
 import { FillPage } from './vectors';
 
 interface Props {
-  id?: number;
+  id?: string;
   hasDocument: boolean;
 }
 
 function GoDocsButton({ id, hasDocument }: Props) {
   const navigate = useNavigate();
 
-  const goDocs = (i: number) => {
+  const goDocs = (i: string) => {
     navigate(`/docs/${i}`);
   };
 

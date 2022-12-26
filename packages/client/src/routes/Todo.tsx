@@ -48,26 +48,7 @@ function Todo() {
             <DropdownButton itemList={['All Todos', 'Tags', 'Completed']} />
           </TodoSortMenu>
           <TodoInput />
-          <TodoList>
-            <TodoItem
-              title={'공부하자'}
-              docsId={1}
-              hasDocument={true}
-              isDone={true}
-            />
-            {data ? (
-              data?.map((d) => (
-                <TodoItem
-                  title={d.title}
-                  docsId={d.id}
-                  hasDocument={d.document}
-                  key={d.id}
-                />
-              ))
-            ) : (
-              <Outlet />
-            )}
-          </TodoList>
+          <TodoList />
         </TodoBlock>
       </Block>
       <Footer />

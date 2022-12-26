@@ -1,22 +1,41 @@
 import styled from '@emotion/styled';
-import { GoogleAuthProvider, signInWithPopup, User } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  User,
+  UserCredential,
+} from 'firebase/auth';
 import { useEffect } from 'react';
 // import { Outlet, useNavigate } from 'react-router-dom';
 import { Block, PurpleButton } from '../components/base';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/Header';
 import { auth } from '../lib/firebase/firebaseClient';
-import { useAddUserMutation } from '../lib/graphql/mutation/mutation.generated';
-import { useRetrieveUserByIdLazyQuery } from '../lib/graphql/query/query.generated';
+import { useRegisterMutation } from '../lib/graphql/mutation/mutation.generated';
+import { useLoginLazyQuery } from '../lib/graphql/query/query.generated';
 import { useAuthStore } from '../lib/store/auth';
 
 // export const homeLoader: LoaderFunction = async ({ request }) => {};
 // interface LoaderResult {}
 
+interface ReturnUser extends User {
+  metadata: {
+    createdAt: string;
+    creationTime: string;
+    lastLoginAt: string;
+    lastSignInTime: string;
+  };
+  stsTokenManager: {
+    accessToken: string;
+    expirationTime: number;
+    isExpired: boolean;
+  };
+}
+
 function Home() {
   const { userState, login, logout } = useAuthStore();
-  const [retrieveUserByIdLazyQuery] = useRetrieveUserByIdLazyQuery();
-  const [addUserMutation] = useAddUserMutation();
+  const [loginLazyQuery] = useLoginLazyQuery();
+  const [registerMutation] = useRegisterMutation();
 
   useEffect(() => {
     auth.onAuthStateChanged((fbUser) => {
@@ -28,37 +47,19 @@ function Home() {
 
   const handleGoogleLogin = async () => {
     const googleProvider = new GoogleAuthProvider();
-    const { user } = await signInWithPopup(auth, googleProvider);
-
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user as ReturnUser;
+    // const accessToken = await user.getIdToken(false); // 토큰 강제 리프레쉬 옵션
     if (user) {
-      const { data, loading } = await retrieveUserByIdLazyQuery({
-        context: {
-          headers: {
-            uid: user.uid,
-          },
-        },
-      });
+      const { data, loading } = await loginLazyQuery();
 
       if (!loading) {
-        if (data && data.retrieveUserById) {
+        if (data && data.login) {
           login(user);
         } else {
           // DB에 유저 정보 저장
-          const { data, errors } = await addUserMutation({
-            variables: {
-              data: {
-                email: user.email!,
-                name: user.displayName!,
-                snsTypeName: user.providerData[0].providerId,
-              },
-            },
-            context: {
-              headers: {
-                uid: user.uid,
-              },
-            },
-          });
-          if (data && data.addUser) {
+          const { data, errors } = await registerMutation();
+          if (data && data.register) {
             login(user);
           }
         }

@@ -8,7 +8,7 @@ import { colors } from '../../styles/colors';
 interface Props {
   title: string;
   hasDocument?: boolean;
-  docsId?: number;
+  docsId?: string;
   isDone?: boolean;
 }
 
