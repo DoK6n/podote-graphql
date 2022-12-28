@@ -20,7 +20,6 @@ const TodoItemTitle = forwardRef<HTMLDivElement, Props>(
   ({ id, editable, title }, ref) => {
     const [editTodoTitleMutation] = useEditTodoTitleMutation();
     const { setUnEditable, getBeforeEditTodoTitle } = useTodoClientCache();
-    // const titleRef = useRef<HTMLDivElement | null>(null);
     const forwardedRef = ref as MutableRefObject<HTMLDivElement | null>;
 
     useEffect(() => {
@@ -57,19 +56,19 @@ const TodoItemTitle = forwardRef<HTMLDivElement, Props>(
     };
 
     return (
-      <TodoItemText
+      <Text
         contentEditable={editable}
         onKeyDown={handleEditTitle}
         suppressContentEditableWarning
         ref={forwardedRef}
       >
         {title}
-      </TodoItemText>
+      </Text>
     );
   },
 );
 
-const TodoItemText = styled.div`
+const Text = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
