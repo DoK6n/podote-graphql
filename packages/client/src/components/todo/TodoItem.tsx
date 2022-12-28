@@ -83,13 +83,6 @@ const TodoItemTitleGroup = styled.div`
   margin-right: 1rem;
 `;
 
-const TodoItemText = styled.div`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  line-height: 1.6;
-`;
-
 /** TitleGroup에 들어갈 icon들 - @example `document`, `watchingDocument` */
 const TodoItemIconWrapper = styled.span`
   margin: 0 0.5rem 0 0.5rem;
