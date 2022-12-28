@@ -1,8 +1,8 @@
-import { CloudDone } from '../vectors';
-import { IconButton } from '../base';
-import { useTodoClientCache } from '../../hooks';
-import { useEditTodoTitleMutation } from '../../lib/graphql/mutation/mutation.generated';
-import { RetrieveAllTodosDocument } from '../../lib/graphql/query/query.generated';
+import { CloudDone } from '../../vectors';
+import { IconButton } from '../../base';
+import { useTodoClientCache } from '../../../hooks';
+import { useEditTodoTitleMutation } from '../../../lib/graphql/mutation/mutation.generated';
+import { RetrieveAllTodosDocument } from '../../../lib/graphql/query/query.generated';
 
 interface Props {
   id: string;

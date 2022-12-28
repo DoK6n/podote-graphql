@@ -21,6 +21,7 @@ function TodoList({}: Props) {
             id={d.id}
             title={d.title}
             hasDocument={d.documentId ? true : false}
+            isDone={d.done}
             docsId={d.id}
             editable={d.editable}
             key={d.id}

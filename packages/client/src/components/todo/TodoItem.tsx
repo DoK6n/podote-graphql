@@ -1,17 +1,13 @@
 import styled from '@emotion/styled';
 import GoDocsButton from '../GoDocsButton';
-import { IconButton } from '../base';
-import { Checked, Unchecked } from '../vectors';
-import { useState, memo, KeyboardEvent, useRef, useEffect } from 'react';
-// import { colors } from '../../styles/colors';
-import TodoRemoveButton from './TodoRemoveButton';
-import TodoEditButton from './TodoEditButton';
-import TodoEditCancel from './TodoEditCancel';
-// import TodoSaveButton from './TodoSaveButton';
-import { useEditTodoTitleMutation } from '../../lib/graphql/mutation/mutation.generated';
-import { RetrieveAllTodosDocument } from '../../lib/graphql/query/query.generated';
-import { useTodoClientCache } from '../../hooks';
-import { focusContentEditableTextToEnd } from '../../lib/focusContentEditableTextToEnd';
+import { memo, useRef } from 'react';
+import {
+  TodoRemoveButton,
+  TodoEditButton,
+  TodoEditCancel,
+  TodoSaveButton,
+} from './todoButtons';
+import { TodoItemTitle, TodoItemCheckBox } from './todoItems';
 
 interface Props {
   id: string;
@@ -19,7 +15,7 @@ interface Props {
   hasDocument?: boolean;
   docsId?: string;
   editable: boolean;
-  isDone?: boolean;
+  isDone: boolean;
 }
 
 function TodoItem({
@@ -30,62 +26,20 @@ function TodoItem({
   editable,
   isDone = false,
 }: Props) {
-  const [done, setDone] = useState(isDone);
   const titleRef = useRef<HTMLDivElement | null>(null);
-
-  const [editTodoTitleMutation] = useEditTodoTitleMutation();
-  const { setUnEditable, getBeforeEditTodoTitle } = useTodoClientCache();
-
-  useEffect(() => {
-    if (editable && titleRef.current) {
-      focusContentEditableTextToEnd(titleRef.current);
-    }
-  }, [editable]);
-
-  const handleDone = () => setDone((d) => !d);
-  const handleEditTitle = async (e: KeyboardEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLInputElement;
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      await editTodoTitleMutation({
-        variables: {
-          data: {
-            id,
-            title: target.innerText !== '' ? target.innerText : 'untitled',
-          },
-        },
-        refetchQueries: [
-          {
-            query: RetrieveAllTodosDocument,
-          },
-        ],
-      });
-      setUnEditable(id);
-    } else if (e.key === 'Escape') {
-      const beforeTitleId = getBeforeEditTodoTitle(id);
-      if (beforeTitleId) {
-        target.innerText = beforeTitleId;
-      }
-      setUnEditable(id);
-    }
-  };
 
   return (
     <TodoItemWrapper>
       <TodoItemCheckBoxGroup>
-        <IconButton onClick={handleDone}>
-          {done ? <Checked /> : <Unchecked />}
-        </IconButton>
+        <TodoItemCheckBox id={id} isDone={isDone} />
       </TodoItemCheckBoxGroup>
       <TodoItemTitleGroup>
-        <TodoItemText
-          contentEditable={editable}
-          onKeyDown={handleEditTitle}
-          suppressContentEditableWarning
+        <TodoItemTitle
+          id={id}
+          title={title}
+          editable={editable}
           ref={titleRef}
-        >
-          {title}
-        </TodoItemText>
+        />
         {hasDocument && (
           <TodoItemIconWrapper>
             <GoDocsButton id={docsId} hasDocument={hasDocument} />

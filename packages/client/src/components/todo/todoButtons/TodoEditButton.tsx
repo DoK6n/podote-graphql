@@ -1,6 +1,6 @@
-import { Edit } from '../vectors';
-import { IconButton } from '../base';
-import { useTodoClientCache } from '../../hooks';
+import { Edit } from '../../vectors';
+import { IconButton } from '../../base';
+import { useTodoClientCache } from '../../../hooks';
 
 interface Props {
   id: string;

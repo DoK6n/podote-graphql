@@ -1,5 +1,5 @@
-import { IconButton } from '../base';
-import { Delete } from '../vectors';
+import { IconButton } from '../../base';
+import { Delete } from '../../vectors';
 
 function TodoRemoveButton() {
   return (

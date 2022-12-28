@@ -1,7 +1,7 @@
 import { forwardRef, MutableRefObject } from 'react';
-import { useTodoClientCache } from '../../hooks';
-import { IconButton } from '../base';
-import { Cancel } from '../vectors';
+import { useTodoClientCache } from '../../../hooks';
+import { IconButton } from '../../base';
+import { Cancel } from '../../vectors';
 
 interface Props {
   id: string;
