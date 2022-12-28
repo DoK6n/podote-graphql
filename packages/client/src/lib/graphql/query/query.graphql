@@ -3,8 +3,8 @@ query login {
     id
     email
     name
-    snsType 
-  }  
+    snsType
+  }
 }
 
 query retrieveAllTodos {
@@ -13,8 +13,16 @@ query retrieveAllTodos {
     userId
     title
     done
+    editable
     documentId
     isRemoved
     orderKey
+    createdDt
+    updatedDt
+    removedDt
   }
+}
+
+fragment todoEditable on Todo {
+  editable
 }

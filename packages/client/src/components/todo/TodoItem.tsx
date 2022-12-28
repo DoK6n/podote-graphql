@@ -2,25 +2,73 @@ import styled from '@emotion/styled';
 import GoDocsButton from '../GoDocsButton';
 import { IconButton } from '../base';
 import { Checked, Unchecked } from '../vectors';
-import { useState } from 'react';
-import { colors } from '../../styles/colors';
+import { useState, memo, KeyboardEvent, useRef, useEffect } from 'react';
+// import { colors } from '../../styles/colors';
+import TodoRemoveButton from './TodoRemoveButton';
+import TodoEditButton from './TodoEditButton';
+import TodoEditCancel from './TodoEditCancel';
+// import TodoSaveButton from './TodoSaveButton';
+import { useEditTodoTitleMutation } from '../../lib/graphql/mutation/mutation.generated';
+import { RetrieveAllTodosDocument } from '../../lib/graphql/query/query.generated';
+import { useTodoClientCache } from '../../hooks';
+import { focusContentEditableTextToEnd } from '../../lib/focusContentEditableTextToEnd';
 
 interface Props {
+  id: string;
   title: string;
   hasDocument?: boolean;
   docsId?: string;
+  editable: boolean;
   isDone?: boolean;
 }
 
 function TodoItem({
+  id,
   title,
   hasDocument = false,
   docsId,
+  editable,
   isDone = false,
 }: Props) {
   const [done, setDone] = useState(isDone);
+  const titleRef = useRef<HTMLDivElement | null>(null);
 
-  const handleDone = () => setDone(d => !d);
+  const [editTodoTitleMutation] = useEditTodoTitleMutation();
+  const { setUnEditable, getBeforeEditTodoTitle } = useTodoClientCache();
+
+  useEffect(() => {
+    if (editable && titleRef.current) {
+      focusContentEditableTextToEnd(titleRef.current);
+    }
+  }, [editable]);
+
+  const handleDone = () => setDone((d) => !d);
+  const handleEditTitle = async (e: KeyboardEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLInputElement;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      await editTodoTitleMutation({
+        variables: {
+          data: {
+            id,
+            title: target.innerText !== '' ? target.innerText : 'untitled',
+          },
+        },
+        refetchQueries: [
+          {
+            query: RetrieveAllTodosDocument,
+          },
+        ],
+      });
+      setUnEditable(id);
+    } else if (e.key === 'Escape') {
+      const beforeTitleId = getBeforeEditTodoTitle(id);
+      if (beforeTitleId) {
+        target.innerText = beforeTitleId;
+      }
+      setUnEditable(id);
+    }
+  };
 
   return (
     <TodoItemWrapper>
@@ -30,12 +78,25 @@ function TodoItem({
         </IconButton>
       </TodoItemCheckBoxGroup>
       <TodoItemTitleGroup>
-        <TodoItemText>{title}</TodoItemText>
+        <TodoItemText
+          contentEditable={editable}
+          onKeyDown={handleEditTitle}
+          suppressContentEditableWarning
+          ref={titleRef}
+        >
+          {title}
+        </TodoItemText>
         {hasDocument && (
           <TodoItemIconWrapper>
             <GoDocsButton id={docsId} hasDocument={hasDocument} />
           </TodoItemIconWrapper>
         )}
+        <TodoItemIconWrapper>
+          {/* {editable ? <TodoSaveButton id={id} /> : <TodoEditButton id={id} />} */}
+          {!editable && <TodoEditButton id={id} />}
+          {editable && <TodoEditCancel id={id} ref={titleRef} />}
+          <TodoRemoveButton />
+        </TodoItemIconWrapper>
       </TodoItemTitleGroup>
     </TodoItemWrapper>
   );
@@ -83,4 +144,4 @@ const TodoItemIconWrapper = styled.span`
   align-items: center;
 `;
 
-export default TodoItem;
+export default memo(TodoItem);

@@ -10,7 +10,6 @@ interface Props {}
 
 function TodoList({}: Props) {
   const { loading, error, data } = useRetrieveAllTodosQuery();
-  console.log(data);
 
   return (
     <Block>
@@ -19,9 +18,11 @@ function TodoList({}: Props) {
       {data ? (
         data.retrieveAllTodos?.map((d) => (
           <TodoItem
+            id={d.id}
             title={d.title}
-            docsId={d.id}
             hasDocument={d.documentId ? true : false}
+            docsId={d.id}
+            editable={d.editable}
             key={d.id}
           />
         ))

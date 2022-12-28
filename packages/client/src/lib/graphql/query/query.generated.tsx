@@ -11,9 +11,15 @@ export type LoginQuery = { __typename?: 'Query', login: { __typename?: 'UserWith
 export type RetrieveAllTodosQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type RetrieveAllTodosQuery = { __typename?: 'Query', retrieveAllTodos?: Array<{ __typename?: 'Todo', id: string, userId: string, title: string, done: boolean, documentId?: string | null, isRemoved: boolean, orderKey: number }> | null };
+export type RetrieveAllTodosQuery = { __typename?: 'Query', retrieveAllTodos?: Array<{ __typename?: 'Todo', id: string, userId: string, title: string, done: boolean, editable: boolean, documentId?: string | null, isRemoved: boolean, orderKey: number, createdDt: any, updatedDt?: any | null, removedDt?: any | null }> | null };
 
+export type TodoEditableFragment = { __typename?: 'Todo', editable: boolean };
 
+export const TodoEditableFragmentDoc = gql`
+    fragment todoEditable on Todo {
+  editable
+}
+    `;
 export const LoginDocument = gql`
     query login {
   login {
@@ -61,9 +67,13 @@ export const RetrieveAllTodosDocument = gql`
     userId
     title
     done
+    editable
     documentId
     isRemoved
     orderKey
+    createdDt
+    updatedDt
+    removedDt
   }
 }
     `;

@@ -3,7 +3,7 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   schema: 'packages/server/src/**/*.gql',
   documents: [
-    'packages/client/src/**/*.{ts,graphql}',
+    'packages/client/src/lib/graphql/**/*.{ts,graphql}',
     'packages/client/src/**/*.generated.ts',
   ],
   ignoreNoDocuments: true, // for better experience with the watcher
