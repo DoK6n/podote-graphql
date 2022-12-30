@@ -7,30 +7,6 @@ type SnsType {
   name: String!
 }
 
-type User {
-  id: String!
-  email: String!
-  name: String!
-  snsTypeId: Float!
-  documents: JSON!
-  todos: JSON!
-}
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-
-type UserWithSnsType {
-  id: String!
-  email: String!
-  name: String!
-  snsTypeId: Float!
-  documents: JSON!
-  todos: JSON!
-  snsType: String!
-}
-
 type Todo {
   id: String!
   userId: String!
@@ -43,7 +19,7 @@ type Todo {
   updatedDt: DateTime
   isRemoved: Boolean!
   removedDt: DateTime
-  document: JSON!
+  document: Document
   user: User!
 }
 
@@ -61,20 +37,48 @@ type Document {
   updatedDt: DateTime
   isRemoved: Boolean!
   removedDt: DateTime
-  todo: Todo!
+  todo: Todo
   user: User!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type User {
+  id: String!
+  email: String!
+  name: String!
+  snsTypeId: Float!
+  document: Document!
+  todo: Todo!
+}
+
+type UserWithSnsType {
+  id: String!
+  email: String!
+  name: String!
+  snsTypeId: Float!
+  document: Document!
+  todo: Todo!
+  snsType: String!
 }
 
 type Query {
   retrieveAllTodos: [Todo!]
-  retrieveTodo(id: String!): Todo
-  retrieveRemovedTodo(id: String!): Todo
+  retrieveTodo(data: TodoIdInput!): Todo
+  retrieveRemovedTodo(data: TodoIdInput!): Todo
   retrieveAllRemovedTodo: [Todo!]
   login: UserWithSnsType!
   retrieveAllUsers: [User!]
   snsType(name: String!): SnsType!
   retrieveDocuement(data: FindOneDocumentInput!): Document
   retrieveRemovedDocument(data: FindOneDocumentInput!): Document
+}
+
+input TodoIdInput {
+  id: String!
 }
 
 input FindOneDocumentInput {
@@ -119,10 +123,6 @@ input UpdateTodoOrderkeyInput {
 input TodoIdOrderKey {
   id: String!
   orderKey: Float!
-}
-
-input TodoIdInput {
-  id: String!
 }
 
 input CreateDocumentInput {

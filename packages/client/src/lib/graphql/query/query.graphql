@@ -23,6 +23,82 @@ query retrieveAllTodos {
   }
 }
 
+query retrieveTodo($data: TodoIdInput!) {
+  retrieveTodo(data: $data) {
+    id
+    userId
+    documentId
+    title
+    done
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+    document {
+      id
+      content
+      todoId
+      createdDt
+      updatedDt
+      isRemoved
+      removedDt
+    }
+  }
+}
+
 fragment todoEditable on Todo {
   editable
+}
+
+query retrieveRemovedTodo($data: TodoIdInput!) {
+  retrieveRemovedTodo(data: $data) {
+    id
+    documentId
+    title
+    done
+    isRemoved
+    removedDt
+  }
+}
+
+query retrieveAllRemovedTodo {
+  retrieveAllRemovedTodo {
+    id
+    documentId
+    title
+    done
+    isRemoved
+    removedDt
+  }
+}
+
+query retrieveDocuement($data: FindOneDocumentInput!) {
+  retrieveDocuement(data: $data) {
+    id
+    content
+    todoId
+    userId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+    todo {
+      id
+      title
+      userId
+    }
+  }
+}
+
+query retrieveRemovedDocument($data: FindOneDocumentInput!) {
+  retrieveRemovedDocument(data: $data) {
+    id
+    content
+    todoId
+    userId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
 }

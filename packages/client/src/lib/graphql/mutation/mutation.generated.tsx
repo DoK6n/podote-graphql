@@ -43,6 +43,60 @@ export type RemoveTodoMutationVariables = Types.Exact<{
 
 export type RemoveTodoMutation = { __typename?: 'Mutation', removeTodo?: { __typename?: 'Todo', id: string, title: string, done: boolean, orderKey: number, editable: boolean, documentId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
+export type RestoreRemovedTodoMutationVariables = Types.Exact<{
+  data: Types.TodoIdInput;
+}>;
+
+
+export type RestoreRemovedTodoMutation = { __typename?: 'Mutation', restoreRemovedTodo?: { __typename?: 'Todo', title: string, done: boolean, editable: boolean, isRemoved: boolean, removedDt?: any | null } | null };
+
+export type DeleteRemovedTodoMutationVariables = Types.Exact<{
+  data: Types.TodoIdInput;
+}>;
+
+
+export type DeleteRemovedTodoMutation = { __typename?: 'Mutation', deleteRemovedTodo?: Array<{ __typename?: 'Todo', title: string, done: boolean, editable: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
+
+export type DeleteAllRemovedTodosMutationVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type DeleteAllRemovedTodosMutation = { __typename?: 'Mutation', deleteAllRemovedTodos?: Array<{ __typename?: 'Todo', title: string, done: boolean, editable: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
+
+export type AddNewDocumentMutationVariables = Types.Exact<{
+  data: Types.CreateDocumentInput;
+}>;
+
+
+export type AddNewDocumentMutation = { __typename?: 'Mutation', addNewDocument?: { __typename?: 'Document', id: string, todoId?: string | null, content?: any | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+
+export type EditDocumentContentMutationVariables = Types.Exact<{
+  data: Types.UpdateDocumentInput;
+}>;
+
+
+export type EditDocumentContentMutation = { __typename?: 'Mutation', editDocumentContent?: { __typename?: 'Document', content?: any | null } | null };
+
+export type RemoveDocumentMutationVariables = Types.Exact<{
+  data: Types.RemoveDocumentInput;
+}>;
+
+
+export type RemoveDocumentMutation = { __typename?: 'Mutation', removeDocument?: { __typename?: 'Document', id: string, content?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+
+export type RestoreDocumentMutationVariables = Types.Exact<{
+  data: Types.RestoreDocumentInput;
+}>;
+
+
+export type RestoreDocumentMutation = { __typename?: 'Mutation', restoreDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, userId: string, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+
+export type DeleteRemovedDocumentMutationVariables = Types.Exact<{
+  data: Types.DeleteDocumentInput;
+}>;
+
+
+export type DeleteRemovedDocumentMutation = { __typename?: 'Mutation', deleteRemovedDocument?: { __typename?: 'Document', id: string } | null };
+
 
 export const RegisterDocument = gql`
     mutation register {
@@ -289,3 +343,294 @@ export function useRemoveTodoMutation(baseOptions?: Apollo.MutationHookOptions<R
 export type RemoveTodoMutationHookResult = ReturnType<typeof useRemoveTodoMutation>;
 export type RemoveTodoMutationResult = Apollo.MutationResult<RemoveTodoMutation>;
 export type RemoveTodoMutationOptions = Apollo.BaseMutationOptions<RemoveTodoMutation, RemoveTodoMutationVariables>;
+export const RestoreRemovedTodoDocument = gql`
+    mutation restoreRemovedTodo($data: TodoIdInput!) {
+  restoreRemovedTodo(data: $data) {
+    title
+    done
+    editable
+    isRemoved
+    removedDt
+  }
+}
+    `;
+export type RestoreRemovedTodoMutationFn = Apollo.MutationFunction<RestoreRemovedTodoMutation, RestoreRemovedTodoMutationVariables>;
+
+/**
+ * __useRestoreRemovedTodoMutation__
+ *
+ * To run a mutation, you first call `useRestoreRemovedTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRestoreRemovedTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [restoreRemovedTodoMutation, { data, loading, error }] = useRestoreRemovedTodoMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRestoreRemovedTodoMutation(baseOptions?: Apollo.MutationHookOptions<RestoreRemovedTodoMutation, RestoreRemovedTodoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RestoreRemovedTodoMutation, RestoreRemovedTodoMutationVariables>(RestoreRemovedTodoDocument, options);
+      }
+export type RestoreRemovedTodoMutationHookResult = ReturnType<typeof useRestoreRemovedTodoMutation>;
+export type RestoreRemovedTodoMutationResult = Apollo.MutationResult<RestoreRemovedTodoMutation>;
+export type RestoreRemovedTodoMutationOptions = Apollo.BaseMutationOptions<RestoreRemovedTodoMutation, RestoreRemovedTodoMutationVariables>;
+export const DeleteRemovedTodoDocument = gql`
+    mutation deleteRemovedTodo($data: TodoIdInput!) {
+  deleteRemovedTodo(data: $data) {
+    title
+    done
+    editable
+    isRemoved
+    removedDt
+  }
+}
+    `;
+export type DeleteRemovedTodoMutationFn = Apollo.MutationFunction<DeleteRemovedTodoMutation, DeleteRemovedTodoMutationVariables>;
+
+/**
+ * __useDeleteRemovedTodoMutation__
+ *
+ * To run a mutation, you first call `useDeleteRemovedTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteRemovedTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteRemovedTodoMutation, { data, loading, error }] = useDeleteRemovedTodoMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useDeleteRemovedTodoMutation(baseOptions?: Apollo.MutationHookOptions<DeleteRemovedTodoMutation, DeleteRemovedTodoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteRemovedTodoMutation, DeleteRemovedTodoMutationVariables>(DeleteRemovedTodoDocument, options);
+      }
+export type DeleteRemovedTodoMutationHookResult = ReturnType<typeof useDeleteRemovedTodoMutation>;
+export type DeleteRemovedTodoMutationResult = Apollo.MutationResult<DeleteRemovedTodoMutation>;
+export type DeleteRemovedTodoMutationOptions = Apollo.BaseMutationOptions<DeleteRemovedTodoMutation, DeleteRemovedTodoMutationVariables>;
+export const DeleteAllRemovedTodosDocument = gql`
+    mutation deleteAllRemovedTodos {
+  deleteAllRemovedTodos {
+    title
+    done
+    editable
+    isRemoved
+    removedDt
+  }
+}
+    `;
+export type DeleteAllRemovedTodosMutationFn = Apollo.MutationFunction<DeleteAllRemovedTodosMutation, DeleteAllRemovedTodosMutationVariables>;
+
+/**
+ * __useDeleteAllRemovedTodosMutation__
+ *
+ * To run a mutation, you first call `useDeleteAllRemovedTodosMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAllRemovedTodosMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAllRemovedTodosMutation, { data, loading, error }] = useDeleteAllRemovedTodosMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDeleteAllRemovedTodosMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAllRemovedTodosMutation, DeleteAllRemovedTodosMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAllRemovedTodosMutation, DeleteAllRemovedTodosMutationVariables>(DeleteAllRemovedTodosDocument, options);
+      }
+export type DeleteAllRemovedTodosMutationHookResult = ReturnType<typeof useDeleteAllRemovedTodosMutation>;
+export type DeleteAllRemovedTodosMutationResult = Apollo.MutationResult<DeleteAllRemovedTodosMutation>;
+export type DeleteAllRemovedTodosMutationOptions = Apollo.BaseMutationOptions<DeleteAllRemovedTodosMutation, DeleteAllRemovedTodosMutationVariables>;
+export const AddNewDocumentDocument = gql`
+    mutation addNewDocument($data: CreateDocumentInput!) {
+  addNewDocument(data: $data) {
+    id
+    todoId
+    content
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
+}
+    `;
+export type AddNewDocumentMutationFn = Apollo.MutationFunction<AddNewDocumentMutation, AddNewDocumentMutationVariables>;
+
+/**
+ * __useAddNewDocumentMutation__
+ *
+ * To run a mutation, you first call `useAddNewDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddNewDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addNewDocumentMutation, { data, loading, error }] = useAddNewDocumentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useAddNewDocumentMutation(baseOptions?: Apollo.MutationHookOptions<AddNewDocumentMutation, AddNewDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddNewDocumentMutation, AddNewDocumentMutationVariables>(AddNewDocumentDocument, options);
+      }
+export type AddNewDocumentMutationHookResult = ReturnType<typeof useAddNewDocumentMutation>;
+export type AddNewDocumentMutationResult = Apollo.MutationResult<AddNewDocumentMutation>;
+export type AddNewDocumentMutationOptions = Apollo.BaseMutationOptions<AddNewDocumentMutation, AddNewDocumentMutationVariables>;
+export const EditDocumentContentDocument = gql`
+    mutation editDocumentContent($data: UpdateDocumentInput!) {
+  editDocumentContent(data: $data) {
+    content
+  }
+}
+    `;
+export type EditDocumentContentMutationFn = Apollo.MutationFunction<EditDocumentContentMutation, EditDocumentContentMutationVariables>;
+
+/**
+ * __useEditDocumentContentMutation__
+ *
+ * To run a mutation, you first call `useEditDocumentContentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditDocumentContentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editDocumentContentMutation, { data, loading, error }] = useEditDocumentContentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useEditDocumentContentMutation(baseOptions?: Apollo.MutationHookOptions<EditDocumentContentMutation, EditDocumentContentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditDocumentContentMutation, EditDocumentContentMutationVariables>(EditDocumentContentDocument, options);
+      }
+export type EditDocumentContentMutationHookResult = ReturnType<typeof useEditDocumentContentMutation>;
+export type EditDocumentContentMutationResult = Apollo.MutationResult<EditDocumentContentMutation>;
+export type EditDocumentContentMutationOptions = Apollo.BaseMutationOptions<EditDocumentContentMutation, EditDocumentContentMutationVariables>;
+export const RemoveDocumentDocument = gql`
+    mutation removeDocument($data: RemoveDocumentInput!) {
+  removeDocument(data: $data) {
+    id
+    content
+    isRemoved
+    removedDt
+  }
+}
+    `;
+export type RemoveDocumentMutationFn = Apollo.MutationFunction<RemoveDocumentMutation, RemoveDocumentMutationVariables>;
+
+/**
+ * __useRemoveDocumentMutation__
+ *
+ * To run a mutation, you first call `useRemoveDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeDocumentMutation, { data, loading, error }] = useRemoveDocumentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRemoveDocumentMutation(baseOptions?: Apollo.MutationHookOptions<RemoveDocumentMutation, RemoveDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveDocumentMutation, RemoveDocumentMutationVariables>(RemoveDocumentDocument, options);
+      }
+export type RemoveDocumentMutationHookResult = ReturnType<typeof useRemoveDocumentMutation>;
+export type RemoveDocumentMutationResult = Apollo.MutationResult<RemoveDocumentMutation>;
+export type RemoveDocumentMutationOptions = Apollo.BaseMutationOptions<RemoveDocumentMutation, RemoveDocumentMutationVariables>;
+export const RestoreDocumentDocument = gql`
+    mutation restoreDocument($data: RestoreDocumentInput!) {
+  restoreDocument(data: $data) {
+    id
+    content
+    todoId
+    userId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
+}
+    `;
+export type RestoreDocumentMutationFn = Apollo.MutationFunction<RestoreDocumentMutation, RestoreDocumentMutationVariables>;
+
+/**
+ * __useRestoreDocumentMutation__
+ *
+ * To run a mutation, you first call `useRestoreDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRestoreDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [restoreDocumentMutation, { data, loading, error }] = useRestoreDocumentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRestoreDocumentMutation(baseOptions?: Apollo.MutationHookOptions<RestoreDocumentMutation, RestoreDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RestoreDocumentMutation, RestoreDocumentMutationVariables>(RestoreDocumentDocument, options);
+      }
+export type RestoreDocumentMutationHookResult = ReturnType<typeof useRestoreDocumentMutation>;
+export type RestoreDocumentMutationResult = Apollo.MutationResult<RestoreDocumentMutation>;
+export type RestoreDocumentMutationOptions = Apollo.BaseMutationOptions<RestoreDocumentMutation, RestoreDocumentMutationVariables>;
+export const DeleteRemovedDocumentDocument = gql`
+    mutation deleteRemovedDocument($data: DeleteDocumentInput!) {
+  deleteRemovedDocument(data: $data) {
+    id
+  }
+}
+    `;
+export type DeleteRemovedDocumentMutationFn = Apollo.MutationFunction<DeleteRemovedDocumentMutation, DeleteRemovedDocumentMutationVariables>;
+
+/**
+ * __useDeleteRemovedDocumentMutation__
+ *
+ * To run a mutation, you first call `useDeleteRemovedDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteRemovedDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteRemovedDocumentMutation, { data, loading, error }] = useDeleteRemovedDocumentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useDeleteRemovedDocumentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteRemovedDocumentMutation, DeleteRemovedDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteRemovedDocumentMutation, DeleteRemovedDocumentMutationVariables>(DeleteRemovedDocumentDocument, options);
+      }
+export type DeleteRemovedDocumentMutationHookResult = ReturnType<typeof useDeleteRemovedDocumentMutation>;
+export type DeleteRemovedDocumentMutationResult = Apollo.MutationResult<DeleteRemovedDocumentMutation>;
+export type DeleteRemovedDocumentMutationOptions = Apollo.BaseMutationOptions<DeleteRemovedDocumentMutation, DeleteRemovedDocumentMutationVariables>;

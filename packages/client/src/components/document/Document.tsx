@@ -1,8 +1,13 @@
 import DocumentUpdatedAt from './DocumentUpdatedAt';
 import DocumentTitle from './DocumentTitle';
-import DocumentHashTag from './DocumentHashTag';
 import styled from '@emotion/styled';
 import { scrollbarStyle } from '../../styles/scrollbar';
+import { useRetrieveDocuementQuery } from '../../lib/graphql/query/query.generated';
+import { Outlet } from 'react-router-dom';
+
+interface Props {
+  id: string;
+}
 
 /**
  * # 문서
@@ -16,20 +21,37 @@ import { scrollbarStyle } from '../../styles/scrollbar';
  * - 우측 상단에 저장, 취소 버튼 -> fixed로 고정
  * - 좌측 상단(?)에 토글버튼으로 view 모드와 edit 모드 선택
  */
-function Document() {
+function Document({ id }: Props) {
+  const { data, loading, error } = useRetrieveDocuementQuery({
+    variables: {
+      data: {
+        id
+      },
+    },
+  });
+
+  console.log(data);
+
   return (
     <DocumentWrapper>
-      <ScrollWrapper>
-        <DocumentUpdatedAt />
-        <DocumentTitle />
-        <DocumentHashTag />
-        <div
-          contentEditable={true}
-          translate={'no'}
-          role={'textbox'}
-          suppressContentEditableWarning={true}
-          placeholder={'내용을 입력하세요.'}></div>
-      </ScrollWrapper>
+      {data && data.retrieveDocuement ? (
+        <ScrollWrapper>
+          <DocumentUpdatedAt updatedDt={data.retrieveDocuement.updatedDt} />
+          <DocumentTitle title={data.retrieveDocuement.todo?.title} />
+          {/* <DocumentHashTag /> */}
+          <div
+            contentEditable={true}
+            translate={'no'}
+            role={'textbox'}
+            suppressContentEditableWarning={true}
+            placeholder={'내용을 입력하세요.'}
+          >
+            {JSON.stringify(data.retrieveDocuement.content)}
+          </div>
+        </ScrollWrapper>
+      ) : (
+        <Outlet />
+      )}
     </DocumentWrapper>
   );
 }

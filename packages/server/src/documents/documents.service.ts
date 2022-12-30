@@ -54,6 +54,9 @@ export class DocumentsService {
         userId,
         isRemoved: false,
       },
+      include: {
+        todo: true,
+      },
     });
   }
 
@@ -213,7 +216,6 @@ export class DocumentsService {
         // document 영구 삭제
         await tx.$queryRaw<Document>`DELETE FROM document WHERE id = ${id} AND is_removed = true AND user_id = ${userId}`;
       });
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 }

@@ -38,7 +38,7 @@ export type Document = {
   id: Scalars['String'];
   isRemoved: Scalars['Boolean'];
   removedDt?: Maybe<Scalars['DateTime']>;
-  todo: Todo;
+  todo?: Maybe<Todo>;
   todoId?: Maybe<Scalars['String']>;
   updatedDt?: Maybe<Scalars['DateTime']>;
   user: User;
@@ -152,12 +152,12 @@ export type QueryRetrieveRemovedDocumentArgs = {
 
 
 export type QueryRetrieveRemovedTodoArgs = {
-  id: Scalars['String'];
+  data: TodoIdInput;
 };
 
 
 export type QueryRetrieveTodoArgs = {
-  id: Scalars['String'];
+  data: TodoIdInput;
 };
 
 
@@ -182,7 +182,7 @@ export type SnsType = {
 export type Todo = {
   __typename?: 'Todo';
   createdDt: Scalars['DateTime'];
-  document: Scalars['JSON'];
+  document?: Maybe<Document>;
   documentId?: Maybe<Scalars['String']>;
   done: Scalars['Boolean'];
   editable: Scalars['Boolean'];
@@ -226,23 +226,23 @@ export type UpdateTodoTitleInput = {
 
 export type User = {
   __typename?: 'User';
-  documents: Scalars['JSON'];
+  document: Document;
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   snsTypeId: Scalars['Float'];
-  todos: Scalars['JSON'];
+  todo: Todo;
 };
 
 export type UserWithSnsType = {
   __typename?: 'UserWithSnsType';
-  documents: Scalars['JSON'];
+  document: Document;
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   snsType: Scalars['String'];
   snsTypeId: Scalars['Float'];
-  todos: Scalars['JSON'];
+  todo: Todo;
 };
 
 
@@ -380,7 +380,7 @@ export type DocumentResolvers<ContextType = any, ParentType extends ResolversPar
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   isRemoved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   removedDt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  todo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType>;
+  todo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType>;
   todoId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedDt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -416,8 +416,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   retrieveAllUsers?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
   retrieveDocuement?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveDocuementArgs, 'data'>>;
   retrieveRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedDocumentArgs, 'data'>>;
-  retrieveRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedTodoArgs, 'id'>>;
-  retrieveTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveTodoArgs, 'id'>>;
+  retrieveRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedTodoArgs, 'data'>>;
+  retrieveTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveTodoArgs, 'data'>>;
   snsType?: Resolver<ResolversTypes['SnsType'], ParentType, ContextType, RequireFields<QuerySnsTypeArgs, 'name'>>;
 };
 
@@ -429,7 +429,7 @@ export type SnsTypeResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   createdDt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  document?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  document?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType>;
   documentId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   done?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   editable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -445,23 +445,23 @@ export type TodoResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  documents?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  document?: Resolver<ResolversTypes['Document'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   snsTypeId?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  todos?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  todo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserWithSnsTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserWithSnsType'] = ResolversParentTypes['UserWithSnsType']> = {
-  documents?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  document?: Resolver<ResolversTypes['Document'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   snsType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   snsTypeId?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  todos?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  todo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

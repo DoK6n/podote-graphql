@@ -15,6 +15,8 @@ import { useDebounce } from '../hooks';
 import { colors } from '../styles/colors';
 import { TodoList, TodoItem } from '../components/todo';
 import { checkIsLoggedIn } from '../lib/protectRoute';
+import { useRetrieveAllTodosQuery } from '../lib/graphql/query/query.generated';
+import { Todo } from '../lib/graphql/types';
 
 /**
  * 내 할일 검색 하는 화면
@@ -30,7 +32,9 @@ export const searchLoader: LoaderFunction = async ({ request }) => {
 
 // TODO 렌더링 최적화 : 검색시 불필요한 리랜더링 방지 작업
 function Search() {
-  const [data, setData] = useState<DataType[]>([]);
+  const [searchData, setSearchData] = useState<Todo[] | null>(null);
+  const { loading, error, data } = useRetrieveAllTodosQuery();
+
   const [searchParams] = useSearchParams();
   const [searchText, setSearchText] = useState(searchParams.get('q') ?? '');
   const navigate = useNavigate();
@@ -38,7 +42,8 @@ function Search() {
 
   useEffect(() => {
     navigate(`/search?q=${debouncedSearchText}`);
-    setData(getSearchData(debouncedSearchText));
+    // setData(getSearchData(debouncedSearchText));
+    // cache된 데이터들을 debouncedSearchText로 검색하기
   }, [debouncedSearchText, navigate]);
 
   return (
@@ -54,13 +59,16 @@ function Search() {
       />
       <Block>
         <TodoList>
-          {data ? (
-            data?.map((d) => (
+          {searchData ? (
+            searchData.map((todo) => (
               <TodoItem
-                title={d.title}
-                docsId={d.id}
-                hasDocument={d.document}
-                key={d.id}
+                id={todo.id}
+                title={todo.title}
+                hasDocument={todo.documentId ? true : false}
+                isDone={todo.done}
+                documentId={todo.documentId}
+                editable={todo.editable}
+                key={todo.id}
               />
             ))
           ) : (

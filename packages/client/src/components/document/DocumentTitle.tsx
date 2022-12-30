@@ -1,14 +1,19 @@
 import styled from '@emotion/styled';
 
-function DocumentTitle() {
+interface Props {
+  title?: string;
+}
+
+function DocumentTitle({ title = 'Untitled' }: Props) {
   return (
     <Title
-      contentEditable={true}
+      contentEditable={false}
       translate={'no'}
       role={'textbox'}
       suppressContentEditableWarning={true}
-      placeholder={'Title'}>
-      제목
+      placeholder={'Title'}
+    >
+      {title}
     </Title>
   );
 }

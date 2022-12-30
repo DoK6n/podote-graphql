@@ -1,6 +1,7 @@
 import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsNumber, IsString, IsUUID } from 'class-validator';
 import { Prisma } from '@prisma/client';
+import { Document } from '../../documents/models';
 import { User } from '../../users/models';
 import GraphQLJSON from 'graphql-type-json';
 
@@ -46,8 +47,8 @@ export class Todo {
   @Field(() => GraphQLISODateTime, { nullable: true })
   removedDt?: Date;
 
-  @Field(() => GraphQLJSON)
-  document: Prisma.JsonValue;
+  @Field(() => Document, { nullable: true })
+  document?: Document;
 
   @Field(() => User)
   user: User;

@@ -36,7 +36,7 @@ export type Document = {
   id: Scalars['String'];
   isRemoved: Scalars['Boolean'];
   removedDt?: Maybe<Scalars['DateTime']>;
-  todo: Todo;
+  todo?: Maybe<Todo>;
   todoId?: Maybe<Scalars['String']>;
   updatedDt?: Maybe<Scalars['DateTime']>;
   user: User;
@@ -150,12 +150,12 @@ export type QueryRetrieveRemovedDocumentArgs = {
 
 
 export type QueryRetrieveRemovedTodoArgs = {
-  id: Scalars['String'];
+  data: TodoIdInput;
 };
 
 
 export type QueryRetrieveTodoArgs = {
-  id: Scalars['String'];
+  data: TodoIdInput;
 };
 
 
@@ -180,7 +180,7 @@ export type SnsType = {
 export type Todo = {
   __typename?: 'Todo';
   createdDt: Scalars['DateTime'];
-  document: Scalars['JSON'];
+  document?: Maybe<Document>;
   documentId?: Maybe<Scalars['String']>;
   done: Scalars['Boolean'];
   editable: Scalars['Boolean'];
@@ -224,21 +224,21 @@ export type UpdateTodoTitleInput = {
 
 export type User = {
   __typename?: 'User';
-  documents: Scalars['JSON'];
+  document: Document;
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   snsTypeId: Scalars['Float'];
-  todos: Scalars['JSON'];
+  todo: Todo;
 };
 
 export type UserWithSnsType = {
   __typename?: 'UserWithSnsType';
-  documents: Scalars['JSON'];
+  document: Document;
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   snsType: Scalars['String'];
   snsTypeId: Scalars['Float'];
-  todos: Scalars['JSON'];
+  todo: Todo;
 };

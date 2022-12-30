@@ -38,20 +38,20 @@ export class TodosResolver {
   @UseGuards(FirebaseAuthGuard)
   @Query(() => Todo, { nullable: true })
   async retrieveTodo(
-    @Args('id', { type: () => String }) id: string,
+    @Args('data') data: TodoIdInput,
     @DecodedTokenDecorator() user: DecodedToken,
   ) {
-    return this.todoService.findOneTodoById(id, user.id);
+    return this.todoService.findOneTodoById(data.id, user.id);
   }
 
   // 삭제한 항목 조회
   @UseGuards(FirebaseAuthGuard)
   @Query(() => Todo, { nullable: true })
   async retrieveRemovedTodo(
-    @Args('id', { type: () => String }) id: string,
+    @Args('data') data: TodoIdInput,
     @DecodedTokenDecorator() user: DecodedToken,
   ) {
-    return this.todoService.findOneRemovedTodo(id, user.id);
+    return this.todoService.findOneRemovedTodo(data.id, user.id);
   }
 
   // 삭제한 할일 목록 조회

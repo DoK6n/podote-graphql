@@ -1,23 +1,24 @@
 import { useNavigate } from 'react-router-dom';
+import { Maybe, Todo } from '../lib/graphql/types';
 import { IconButton } from './base';
 import { FillPage } from './vectors';
 
 interface Props {
-  id?: string;
+  documentId?: Maybe<string> | undefined;
   hasDocument: boolean;
 }
 
-function GoDocsButton({ id, hasDocument }: Props) {
+function GoDocsButton({ documentId, hasDocument }: Props) {
   const navigate = useNavigate();
 
-  const goDocs = (i: string) => {
-    navigate(`/docs/${i}`);
+  const goDocs = () => {
+    navigate(`/docs/${documentId!}`);
   };
 
   return (
     <>
       {hasDocument && (
-        <IconButton onClick={() => goDocs(id!)}>
+        <IconButton onClick={() => goDocs()}>
           <FillPage size={20} />
         </IconButton>
       )}

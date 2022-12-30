@@ -1,6 +1,5 @@
-import { KeyboardEvent, CompositionEvent } from 'react';
+import React, { KeyboardEvent, memo, useState } from 'react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { colors } from '../../styles/colors';
 import { RemirrorJSON } from 'remirror';
 import { useAddNewTodoMutation } from '../../lib/graphql/mutation/mutation.generated';
@@ -20,15 +19,14 @@ const emptyContent: RemirrorJSON = {
     },
   ],
 };
-
 function TodoInput() {
-  const [isComposing, setIsComposing] = useState<boolean>(false);
   const [addNewTodoMutation] = useAddNewTodoMutation();
 
   const handleAddTodoItem = async (e: KeyboardEvent<HTMLInputElement>) => {
-    if (isComposing) return;
     const target = e.target as HTMLInputElement;
     if (e.key === 'Enter' && target.value !== '') {
+      if (e.nativeEvent.isComposing) return;
+
       await addNewTodoMutation({
         variables: {
           data: {
@@ -45,14 +43,7 @@ function TodoInput() {
     }
   };
 
-  return (
-    <Input
-      onCompositionStartCapture={() => setIsComposing(true)}
-      onCompositionEndCapture={() => setIsComposing(false)}
-      placeholder="Add New Todo"
-      onKeyUp={handleAddTodoItem}
-    />
-  );
+  return <Input placeholder="Add New Todo" onKeyDown={handleAddTodoItem} />;
 }
 
 const Input = styled.input`
@@ -66,4 +57,4 @@ const Input = styled.input`
   margin-right: 1rem;
 `;
 
-export default TodoInput;
+export default memo(TodoInput);

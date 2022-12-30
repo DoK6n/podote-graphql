@@ -6,6 +6,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import firebaseAdmin from 'firebase-admin';
 import { firebaseConfig } from '@/config';
 import cookieParser from 'cookie-parser';
+import { getMyIp } from '@/common/utils';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ async function bootstrap() {
                   ? 'https://api.podote.click'
                   : `http://localhost:${PORT}/graphql`
               }
+              🚀 Host: ${getMyIp()}:${PORT}
               ⭐️ front: https://podote.com
 
     `);

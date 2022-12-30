@@ -56,6 +56,9 @@ export class TodosService {
         userId,
         isRemoved: false,
       },
+      include: {
+        document: true,
+      },
     });
   }
 

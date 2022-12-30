@@ -16,3 +16,4 @@ export { SvgLogo as Logo } from './Logo';
 export { Cancel } from '@emotion-icons/material-outlined/Cancel';
 export { CancelPresentation } from '@emotion-icons/material-rounded/CancelPresentation';
 export { CloudDone } from '@emotion-icons/material-rounded/CloudDone';
+export { NoteAdd } from '@emotion-icons/fluentui-system-filled/NoteAdd';

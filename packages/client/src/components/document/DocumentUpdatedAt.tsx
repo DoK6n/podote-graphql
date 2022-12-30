@@ -1,11 +1,21 @@
 import styled from '@emotion/styled';
 
-function DocumentUpdatedAt() {
-  return <UpdatedAt>최근 수정 3일전</UpdatedAt>;
+interface Props {
+  updatedDt: string;
 }
 
-const UpdatedAt = styled.div`
+function DocumentUpdatedDt({ updatedDt }: Props) {
+  const formatUpdateDt = new Intl.DateTimeFormat('ko-KR', {
+    dateStyle: 'full',
+    timeStyle: 'medium',
+    timeZone: 'Asia/Seoul',
+  }).format(new Date(updatedDt));
+
+  return <Block>{formatUpdateDt}</Block>;
+}
+
+const Block = styled.div`
   color: #4d3e77;
 `;
 
-export default DocumentUpdatedAt;
+export default DocumentUpdatedDt;

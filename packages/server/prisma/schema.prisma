@@ -15,7 +15,7 @@ model User {
   snsTypeId Int        @map("sns_type_id")
   createdDt DateTime   @default(now()) @map("created_dt")
   updatedDt DateTime?  @updatedAt @map("updated_dt")
-  Documents Document[]
+  documents Document[]
   todos     Todo[]
   snsType   SnsType    @relation(fields: [snsTypeId], references: [id])
 
@@ -42,7 +42,7 @@ model Todo {
   editable   Boolean   @default(false) @map("editable")
   documentId String?   @map("document_id")
   title      String    @map("title")
-  Document   Document?
+  document   Document?
   user       User      @relation(fields: [userId], references: [id])
 
   @@map("todo")

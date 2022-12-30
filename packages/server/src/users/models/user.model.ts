@@ -1,7 +1,7 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Prisma, Todo } from '@prisma/client';
+import { Document } from '@/documents/models';
+import { Todo } from '@/todos/models';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
-import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
 export class User {
@@ -18,11 +18,11 @@ export class User {
   @Field(() => Number)
   snsTypeId: number;
 
-  @Field(() => GraphQLJSON)
-  documents: Prisma.JsonValue[];
+  @Field(() => Document)
+  document: Document;
 
-  @Field(() => GraphQLJSON) // FIXME
-  todos: Todo[];
+  @Field(() => Todo)
+  todo: Todo[];
 }
 
 @ObjectType()

@@ -6,14 +6,16 @@ import {
   TodoEditButton,
   TodoEditCancel,
   TodoSaveButton,
+  AddTodoDocumentButton,
 } from './todoButtons';
 import { TodoItemTitle, TodoItemCheckBox } from './todoItems';
+import { Maybe, Todo } from '../../lib/graphql/types';
 
 interface Props {
   id: string;
   title: string;
   hasDocument?: boolean;
-  docsId?: string;
+  documentId?: Maybe<string> | undefined;
   editable: boolean;
   isDone: boolean;
 }
@@ -22,7 +24,7 @@ function TodoItem({
   id,
   title,
   hasDocument = false,
-  docsId,
+  documentId,
   editable,
   isDone = false,
 }: Props) {
@@ -42,16 +44,17 @@ function TodoItem({
         />
         {hasDocument && (
           <TodoItemIconWrapper>
-            <GoDocsButton id={docsId} hasDocument={hasDocument} />
+            <GoDocsButton documentId={documentId} hasDocument={hasDocument} />
           </TodoItemIconWrapper>
         )}
-        <TodoItemIconWrapper>
-          {/* {editable ? <TodoSaveButton id={id} /> : <TodoEditButton id={id} />} */}
-          {!editable && <TodoEditButton id={id} />}
-          {editable && <TodoEditCancel id={id} ref={titleRef} />}
-          <TodoRemoveButton />
-        </TodoItemIconWrapper>
       </TodoItemTitleGroup>
+      <TodoItemIconWrapper>
+        {!hasDocument && <AddTodoDocumentButton todoId={id} />}
+        {/* {editable ? <TodoSaveButton id={id} /> : <TodoEditButton id={id} />} */}
+        {!editable && <TodoEditButton id={id} />}
+        {editable && <TodoEditCancel id={id} ref={titleRef} />}
+        <TodoRemoveButton id={id} />
+      </TodoItemIconWrapper>
     </TodoItemWrapper>
   );
 }
@@ -77,7 +80,7 @@ const TodoItemCheckBoxGroup = styled.div`
 /** 두번째 그룹 - @example `text`, `icons` */
 const TodoItemTitleGroup = styled.div`
   display: flex;
-  cursor: default;
+  justify-content: flex-start;
   flex: 1 1 auto;
   min-width: 0;
   margin-right: 1rem;

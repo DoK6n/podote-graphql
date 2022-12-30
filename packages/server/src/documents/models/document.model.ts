@@ -35,8 +35,8 @@ export class Document {
   @Field(() => GraphQLISODateTime, { nullable: true })
   removedDt?: Date;
 
-  @Field(() => Todo)
-  todo: Todo;
+  @Field(() => Todo, { nullable: true })
+  todo?: Todo;
 
   @Field(() => User)
   user: User;

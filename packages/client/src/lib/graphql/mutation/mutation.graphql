@@ -21,7 +21,6 @@ mutation addNewTodo($data: CreateTodoInput!) {
   }
 }
 
-
 mutation editTodoTitle($data: UpdateTodoTitleInput!) {
   editTodoTitle(data: $data) {
     id
@@ -80,5 +79,81 @@ mutation removeTodo($data: TodoIdInput!) {
     isRemoved
     removedDt
     userId
+  }
+}
+
+mutation restoreRemovedTodo($data: TodoIdInput!) {
+  restoreRemovedTodo(data: $data) {
+    title
+    done
+    editable
+    isRemoved
+    removedDt
+  }
+}
+
+mutation deleteRemovedTodo($data: TodoIdInput!) {
+  deleteRemovedTodo(data: $data) {
+    title
+    done
+    editable
+    isRemoved
+    removedDt
+  }
+}
+
+mutation deleteAllRemovedTodos {
+  deleteAllRemovedTodos {
+    title
+    done
+    editable
+    isRemoved
+    removedDt
+  }
+}
+
+mutation addNewDocument($data: CreateDocumentInput!) {
+  addNewDocument(data: $data) {
+    id
+    todoId
+    content
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
+}
+
+mutation editDocumentContent($data: UpdateDocumentInput!) {
+  editDocumentContent(data: $data) {
+    content
+  }
+}
+
+mutation removeDocument($data: RemoveDocumentInput!) {
+  removeDocument(data: $data) {
+    id
+    content
+    isRemoved
+    removedDt
+  }
+}
+
+mutation restoreDocument($data: RestoreDocumentInput!) {
+  restoreDocument(data: $data) {
+    id
+    content
+    todoId
+    userId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+  }
+}
+
+mutation deleteRemovedDocument($data: DeleteDocumentInput!) {
+  deleteRemovedDocument(data: $data) {
+    id
   }
 }

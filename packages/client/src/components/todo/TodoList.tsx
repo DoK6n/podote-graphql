@@ -15,14 +15,14 @@ function TodoList({}: Props) {
     <Block>
       <FadeView />
       <div css={listTopGapStyle} />
-      {data ? (
-        data.retrieveAllTodos?.map((d) => (
+      {data && data.retrieveAllTodos ? (
+        data.retrieveAllTodos.map((d) => (
           <TodoItem
             id={d.id}
             title={d.title}
             hasDocument={d.documentId ? true : false}
             isDone={d.done}
-            docsId={d.id}
+            documentId={d.documentId}
             editable={d.editable}
             key={d.id}
           />

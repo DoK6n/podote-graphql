@@ -53,7 +53,7 @@ const router = createBrowserRouter([
             path: 'docs/:id',
             element: <Docs />,
             loader: docsLoader,
-            children: [{ index: true, element: <Document /> }],
+            children: [{ index: true, element: <Index /> }],
           },
           {
             path: 'setting',
