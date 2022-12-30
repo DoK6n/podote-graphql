@@ -10,13 +10,13 @@ import {
 import { Block } from '../components/base';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/Header';
-import { DataType, getSearchData } from '../lib/data';
 import { useDebounce } from '../hooks';
 import { colors } from '../styles/colors';
-import { TodoList, TodoItem } from '../components/todo';
+import { TodoItem } from '../components/todo';
 import { checkIsLoggedIn } from '../lib/protectRoute';
 import { useRetrieveAllTodosQuery } from '../lib/graphql/query/query.generated';
 import { Todo } from '../lib/graphql/types';
+import { getSearchData } from '../lib/fuzzySearch';
 
 /**
  * 내 할일 검색 하는 화면
@@ -30,9 +30,8 @@ export const searchLoader: LoaderFunction = async ({ request }) => {
   return {};
 };
 
-// TODO 렌더링 최적화 : 검색시 불필요한 리랜더링 방지 작업
 function Search() {
-  const [searchData, setSearchData] = useState<Todo[] | null>(null);
+  const [searchData, setSearchData] = useState<Todo[]>([]);
   const { loading, error, data } = useRetrieveAllTodosQuery();
 
   const [searchParams] = useSearchParams();
@@ -41,9 +40,11 @@ function Search() {
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
   useEffect(() => {
+    if (!data) return;
+    const todos = data.retrieveAllTodos as Todo[];
+
     navigate(`/search?q=${debouncedSearchText}`);
-    // setData(getSearchData(debouncedSearchText));
-    // cache된 데이터들을 debouncedSearchText로 검색하기
+    setSearchData(getSearchData(debouncedSearchText, todos));
   }, [debouncedSearchText, navigate]);
 
   return (
@@ -58,23 +59,21 @@ function Search() {
         }
       />
       <Block>
-        <TodoList>
-          {searchData ? (
-            searchData.map((todo) => (
-              <TodoItem
-                id={todo.id}
-                title={todo.title}
-                hasDocument={todo.documentId ? true : false}
-                isDone={todo.done}
-                documentId={todo.documentId}
-                editable={todo.editable}
-                key={todo.id}
-              />
-            ))
-          ) : (
-            <Outlet />
-          )}
-        </TodoList>
+        {searchData.length !== 0 ? (
+          searchData.map((todo) => (
+            <TodoItem
+              id={todo.id}
+              title={todo.title}
+              hasDocument={todo.documentId ? true : false}
+              isDone={todo.done}
+              documentId={todo.documentId}
+              editable={todo.editable}
+              key={todo.id}
+            />
+          ))
+        ) : (
+          <Outlet />
+        )}
       </Block>
       <Footer />
     </>

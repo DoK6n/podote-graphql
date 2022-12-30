@@ -22,6 +22,8 @@ import { useAccount } from '../hooks';
 export const todoLoader: LoaderFunction = async () => {
   const isLoggedIn = checkIsLoggedIn();
   if (!isLoggedIn) return redirect('/auth/login?next=/todo');
+
+  return {};
 };
 
 interface LoaderResult {}

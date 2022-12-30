@@ -1,3 +1,5 @@
+import { Todo } from './graphql/types';
+
 // 특수문자 처리
 const escapeRegExp = (str: string) =>
   str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -44,19 +46,22 @@ const ch2pattern = (ch: string) => {
   }
   // 한글이 입력되지 않은 경우
   else return escapeRegExp(ch);
-}
+};
 
 // 퍼지 문자열 검색을 위한 정규식 생성
-const createFuzzyMatcher= (input: string) => {
+const createFuzzyMatcher = (input: string) => {
   const pattern = input
     .toLocaleLowerCase()
     .split('')
     .map(ch2pattern)
     .join('.*?');
   return new RegExp(pattern);
-}
+};
 
 export const fuzzySearch = (keyword: string, target: string) => {
   const regex = createFuzzyMatcher(keyword);
   return keyword !== '' ? regex.test(target.toLocaleLowerCase()) : false;
 };
+
+export const getSearchData = (qs: string, todos: Todo[]) =>
+  todos.filter((todo) => fuzzySearch(qs, todo.title));
