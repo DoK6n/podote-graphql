@@ -9,9 +9,9 @@ import Home from './Home';
 // const Home = React.lazy(() => import('./Home'));
 import Setting, { settingLoader } from './Setting';
 import ErrorPage from './ErrorPage';
-import Document from '../components/document/Document';
 import Auth from './auth/Auth';
 import Login, { loginLoader } from './auth/Login';
+import RecycleBin, { recyclebinLoader } from './RecycleBin';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +59,12 @@ const router = createBrowserRouter([
             path: 'setting',
             element: <Setting />,
             loader: settingLoader,
+            children: [{ index: true, element: <Index /> }],
+          },
+          {
+            path: 'recyclebin',
+            element: <RecycleBin />,
+            loader: recyclebinLoader,
             children: [{ index: true, element: <Index /> }],
           },
           {
