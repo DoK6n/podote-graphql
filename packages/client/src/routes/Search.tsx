@@ -17,6 +17,8 @@ import { checkIsLoggedIn } from '../lib/protectRoute';
 import { useRetrieveAllTodosQuery } from '../lib/graphql/query/query.generated';
 import { Todo } from '../lib/graphql/types';
 import { getSearchData } from '../lib/fuzzySearch';
+import styled from '@emotion/styled';
+import { scrollbarStyle } from '../styles/scrollbar';
 
 /**
  * 내 할일 검색 하는 화면
@@ -58,7 +60,7 @@ function Search() {
           />
         }
       />
-      <Block>
+      <ListBlock>
         {searchData.length !== 0 ? (
           searchData.map((todo) => (
             <TodoItem
@@ -74,11 +76,18 @@ function Search() {
         ) : (
           <Outlet />
         )}
-      </Block>
+      </ListBlock>
       <Footer />
     </>
   );
 }
+
+const ListBlock = styled(Block)`
+  gap: 0.625rem;
+  overflow-y: auto;
+  padding: 1rem;
+  ${scrollbarStyle}
+`;
 
 const inputStyle = css`
   font-size: 1rem;
