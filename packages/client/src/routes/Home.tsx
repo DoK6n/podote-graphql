@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 // import { Outlet, useNavigate } from 'react-router-dom';
 import { Block, PurpleButton } from '../components/base';
 import Footer from '../components/Footer';
-import MobileHeader from '../components/Header';
+import MobileHeader from '../components/MobileHeader';
 import { auth } from '../lib/firebase/firebaseClient';
 import { useRegisterMutation } from '../lib/graphql/mutation/mutation.generated';
 import { useLoginLazyQuery } from '../lib/graphql/query/query.generated';

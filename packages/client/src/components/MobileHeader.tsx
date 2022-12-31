@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { colors } from '../styles/colors';
 import { LogoText } from './vectors';
-import { Logo } from '../components/vectors';
+import { Logo } from './vectors';
 
 interface Props {
   title?: React.ReactNode;

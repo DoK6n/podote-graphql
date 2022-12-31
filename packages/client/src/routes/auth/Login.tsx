@@ -14,7 +14,7 @@ import {
 } from 'react-router-dom';
 import { PurpleButton } from '../../components/base';
 import GoBackButton from '../../components/GoBackButton';
-import MobileHeader from '../../components/Header';
+import MobileHeader from '../../components/MobileHeader';
 import { Logo } from '../../components/vectors';
 import { useGoBack } from '../../hooks';
 import { auth } from '../../lib/firebase/firebaseClient';

@@ -5,7 +5,7 @@ import {
   useLoaderData,
 } from 'react-router-dom';
 import Footer from '../components/Footer';
-import MobileHeader from '../components/Header';
+import MobileHeader from '../components/MobileHeader';
 import { Logo } from '../components/vectors';
 import styled from '@emotion/styled';
 import { colors } from '../styles/colors';

@@ -7,7 +7,7 @@ import {
 import { Block, FullCard } from '../components/base';
 import { Document } from '../components/document';
 import GoBackButton from '../components/GoBackButton';
-import MobileHeader from '../components/Header';
+import MobileHeader from '../components/MobileHeader';
 import { useAccount, useGoBack } from '../hooks';
 import { checkIsLoggedIn } from '../lib/protectRoute';
 

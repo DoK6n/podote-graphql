@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import { Block } from '../components/base';
 import Footer from '../components/Footer';
-import MobileHeader from '../components/Header';
+import MobileHeader from '../components/MobileHeader';
 import { useDebounce } from '../hooks';
 import { colors } from '../styles/colors';
 import { TodoItem } from '../components/todo';
