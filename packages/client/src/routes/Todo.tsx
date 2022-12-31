@@ -1,15 +1,13 @@
 import {
   LoaderFunction,
-  Outlet,
   redirect,
-  useLoaderData,
 } from 'react-router-dom';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/MobileHeader';
 import { Logo } from '../components/vectors';
 import styled from '@emotion/styled';
 import { colors } from '../styles/colors';
-import { TodoInput, TodoItem, TodoList } from '../components/todo';
+import { TodoInput, TodoList } from '../components/todo';
 import { DropdownButton } from '../components/dropdown';
 import { checkIsLoggedIn } from '../lib/protectRoute';
 import { useAccount } from '../hooks';
