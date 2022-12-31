@@ -13,6 +13,7 @@ import { TodoInput, TodoItem, TodoList } from '../components/todo';
 import { DropdownButton } from '../components/dropdown';
 import { checkIsLoggedIn } from '../lib/protectRoute';
 import { useAccount } from '../hooks';
+import { RectinglePageBlock } from '../components/base';
 
 /**
  * 할일 목록 화면
@@ -60,7 +61,7 @@ const Block = styled.div`
   padding: 1rem;
 `;
 
-const TodoBlock = styled.div`
+const TodoBlock = styled(RectinglePageBlock)`
   width: 100%;
   height: 100%;
   border: 1px solid ${colors.border2};

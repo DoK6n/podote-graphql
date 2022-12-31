@@ -6,3 +6,4 @@ export * from './FullCard';
 export * from './IconButton';
 export * from './ItemButton';
 export * from './PurpleButton';
+export * from './RectinglePageBlock';
