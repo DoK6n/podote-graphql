@@ -24,7 +24,8 @@ function FooterTabItem({ icon, to }: Props) {
       className={({ isActive }: { isActive: boolean }) => {
         if (isActive) return 'active';
         return '';
-      }}>
+      }}
+    >
       {iconEl}
     </LinkItem>
   );
@@ -40,6 +41,7 @@ const sharedStyle = css`
 
 const LinkItem = styled(NavLink)`
   ${sharedStyle}
+  -webkit-tap-highlight-color: transparent;
   &.active {
     background-color: ${colors.purple1};
   }

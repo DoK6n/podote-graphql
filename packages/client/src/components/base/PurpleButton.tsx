@@ -5,15 +5,16 @@ export const PurpleButton = styled.button`
   box-sizing: border-box;
   width: 10em;
   height: 3em;
-  background: #564689;
-  border: 1px solid #413966;
+  background: ${colors.border1};
+  border: 1px solid ${colors.border3};
   border-radius: 6px;
   cursor: pointer;
   color: ${colors.text0};
   transition: all 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
-    background: #413966;
+    background: ${colors.border3};
   }
 
   &:active {

@@ -13,10 +13,11 @@ export const BaseButton = styled.button<BaseButtonStyledProps>`
   background: transparent;
   padding: 0.5em;
   transition: all 0.2s ease-out;
-  ${props => css`
+  -webkit-tap-highlight-color: transparent;
+  ${(props) => css`
     font-size: ${props.fontSize};
   `}
-  &:hover {
+  &:hover, &:active {
     color: #fff;
   }
 `;

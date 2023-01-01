@@ -8,6 +8,7 @@ export const IconButton = styled.span`
   background: transparent;
   color: ${colors.purple0};
   transition: all 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     color: ${colors.brightPurble0};
