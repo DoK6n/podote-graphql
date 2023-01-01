@@ -5,15 +5,15 @@ export const colors = {
   gray3: '#4B4B4B',
   gray4: '#2E2E2E',
   gray5: '#121212',
-  /** 사이트 임베드 Input 배경 */
+  /** 사이트 임베드 Input 배경, 아이콘 버튼 color 색 */
   purple0: '#605679',
-  /** 에디터 메뉴 버튼 배경, 모바일 nav active 색 */
+  /** 검색 Input 배경, 에디터 메뉴 버튼 배경, 모바일 nav active 색 */
   purple1: '#483d6b',
-  /** 드롭다운 배경 */
-  purple2: '#453a63',
-  /** 전체 배경 */
-  purple3: '#413966',
   /** Input 배경 */
+  purple2: '#453a63',
+  /** 드롭다운 배경 */
+  purple3: '#413966',
+  /** 전체 배경 */
   purple4: '#3b305a',
   /** Todo 배경 */
   purple5: '#362e57',
