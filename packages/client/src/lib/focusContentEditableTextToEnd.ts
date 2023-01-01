@@ -1,8 +1,5 @@
-export const focusContentEditableTextToEnd = (element: HTMLElement) => {
-  if (element.innerText.length === 0) {
-    element.focus();
-    return;
-  }
+export const focusingEndPositionContentEditableText = (element: HTMLElement) => {
+  element.focus();
 
   const selection = window.getSelection();
   const newRange = document.createRange();

@@ -7,7 +7,7 @@ import {
   useRef,
 } from 'react';
 import { useTodoClientCache } from '../../../hooks';
-import { focusContentEditableTextToEnd } from '../../../lib/focusContentEditableTextToEnd';
+import { focusingEndPositionContentEditableText } from '../../../lib/focusContentEditableTextToEnd';
 import { useEditTodoTitleMutation } from '../../../lib/graphql/mutation/mutation.generated';
 import { RetrieveAllTodosDocument } from '../../../lib/graphql/query/query.generated';
 
@@ -24,7 +24,7 @@ const TodoItemTitle = forwardRef<HTMLDivElement, Props>(
 
     useEffect(() => {
       if (editable && forwardedRef.current) {
-        focusContentEditableTextToEnd(forwardedRef.current);
+        focusingEndPositionContentEditableText(forwardedRef.current);
       }
     }, [editable]);
 
