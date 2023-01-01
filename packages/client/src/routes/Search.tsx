@@ -2,23 +2,16 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import {
   LoaderFunction,
-  Outlet,
   redirect,
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
-import { Block } from '../components/base';
 import Footer from '../components/Footer';
 import MobileHeader from '../components/MobileHeader';
 import { useDebounce } from '../hooks';
 import { colors } from '../styles/colors';
-import { TodoItem } from '../components/todo';
 import { checkIsLoggedIn } from '../lib/protectRoute';
-import { useRetrieveAllTodosQuery } from '../lib/graphql/query/query.generated';
-import { Todo } from '../lib/graphql/types';
-import { getSearchData } from '../lib/fuzzySearch';
-import styled from '@emotion/styled';
-import { scrollbarStyle } from '../styles/scrollbar';
+import TodoSearch from '../components/TodoSearch';
 
 /**
  * 내 할일 검색 하는 화면
@@ -33,20 +26,13 @@ export const searchLoader: LoaderFunction = async ({ request }) => {
 };
 
 function Search() {
-  const [searchData, setSearchData] = useState<Todo[]>([]);
-  const { loading, error, data } = useRetrieveAllTodosQuery();
-
   const [searchParams] = useSearchParams();
   const [searchText, setSearchText] = useState(searchParams.get('q') ?? '');
   const navigate = useNavigate();
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
   useEffect(() => {
-    if (!data) return;
-    const todos = data.retrieveAllTodos as Todo[];
-
     navigate(`/search?q=${debouncedSearchText}`);
-    setSearchData(getSearchData(debouncedSearchText, todos));
   }, [debouncedSearchText, navigate]);
 
   return (
@@ -60,34 +46,11 @@ function Search() {
           />
         }
       />
-      <ListBlock>
-        {searchData.length !== 0 ? (
-          searchData.map((todo) => (
-            <TodoItem
-              id={todo.id}
-              title={todo.title}
-              hasDocument={todo.documentId ? true : false}
-              isDone={todo.done}
-              documentId={todo.documentId}
-              editable={todo.editable}
-              key={todo.id}
-            />
-          ))
-        ) : (
-          <Outlet />
-        )}
-      </ListBlock>
+      <TodoSearch searchText={debouncedSearchText} />
       <Footer />
     </>
   );
 }
-
-const ListBlock = styled(Block)`
-  gap: 0.625rem;
-  overflow-y: auto;
-  padding: 1rem;
-  ${scrollbarStyle}
-`;
 
 const inputStyle = css`
   font-size: 1rem;
@@ -112,17 +75,6 @@ const inputStyle = css`
 
   &:hover {
   }
-`;
-
-const cardStyle = css`
-  width: 100%;
-  height: 4rem;
-  border-radius: 12px;
-  min-height: 84px;
-  box-shadow: 0 0 3px rgb(0 0 0 / 15%);
-  display: block;
-  margin-bottom: 16px;
-  padding: 2rem;
 `;
 
 export default Search;

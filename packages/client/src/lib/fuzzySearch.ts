@@ -63,5 +63,7 @@ export const fuzzySearch = (keyword: string, target: string) => {
   return keyword !== '' ? regex.test(target.toLocaleLowerCase()) : false;
 };
 
-export const getSearchData = (qs: string, todos: Todo[]) =>
-  todos.filter((todo) => fuzzySearch(qs, todo.title));
+export const getSearchData = (qs: string, todos: Todo[]) => {
+  if (!todos) return;
+  return todos.filter((todo) => fuzzySearch(qs, todo.title));
+};
