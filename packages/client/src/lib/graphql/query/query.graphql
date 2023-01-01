@@ -53,6 +53,7 @@ fragment todoEditable on Todo {
 query retrieveRemovedTodo($data: TodoIdInput!) {
   retrieveRemovedTodo(data: $data) {
     id
+    userId
     documentId
     title
     done
@@ -64,6 +65,7 @@ query retrieveRemovedTodo($data: TodoIdInput!) {
 query retrieveAllRemovedTodo {
   retrieveAllRemovedTodo {
     id
+    userId
     documentId
     title
     done
@@ -75,9 +77,9 @@ query retrieveAllRemovedTodo {
 query retrieveDocuement($data: FindOneDocumentInput!) {
   retrieveDocuement(data: $data) {
     id
+    userId
     content
     todoId
-    userId
     createdDt
     updatedDt
     isRemoved
@@ -93,9 +95,9 @@ query retrieveDocuement($data: FindOneDocumentInput!) {
 query retrieveRemovedDocument($data: FindOneDocumentInput!) {
   retrieveRemovedDocument(data: $data) {
     id
+    userId
     content
     todoId
-    userId
     createdDt
     updatedDt
     isRemoved

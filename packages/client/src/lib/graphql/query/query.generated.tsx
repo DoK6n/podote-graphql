@@ -27,26 +27,26 @@ export type RetrieveRemovedTodoQueryVariables = Types.Exact<{
 }>;
 
 
-export type RetrieveRemovedTodoQuery = { __typename?: 'Query', retrieveRemovedTodo?: { __typename?: 'Todo', id: string, documentId?: string | null, title: string, done: boolean, isRemoved: boolean, removedDt?: any | null } | null };
+export type RetrieveRemovedTodoQuery = { __typename?: 'Query', retrieveRemovedTodo?: { __typename?: 'Todo', id: string, userId: string, documentId?: string | null, title: string, done: boolean, isRemoved: boolean, removedDt?: any | null } | null };
 
 export type RetrieveAllRemovedTodoQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type RetrieveAllRemovedTodoQuery = { __typename?: 'Query', retrieveAllRemovedTodo?: Array<{ __typename?: 'Todo', id: string, documentId?: string | null, title: string, done: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
+export type RetrieveAllRemovedTodoQuery = { __typename?: 'Query', retrieveAllRemovedTodo?: Array<{ __typename?: 'Todo', id: string, userId: string, documentId?: string | null, title: string, done: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
 
 export type RetrieveDocuementQueryVariables = Types.Exact<{
   data: Types.FindOneDocumentInput;
 }>;
 
 
-export type RetrieveDocuementQuery = { __typename?: 'Query', retrieveDocuement?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, userId: string, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, todo?: { __typename?: 'Todo', id: string, title: string, userId: string } | null } | null };
+export type RetrieveDocuementQuery = { __typename?: 'Query', retrieveDocuement?: { __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, todo?: { __typename?: 'Todo', id: string, title: string, userId: string } | null } | null };
 
 export type RetrieveRemovedDocumentQueryVariables = Types.Exact<{
   data: Types.FindOneDocumentInput;
 }>;
 
 
-export type RetrieveRemovedDocumentQuery = { __typename?: 'Query', retrieveRemovedDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, userId: string, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+export type RetrieveRemovedDocumentQuery = { __typename?: 'Query', retrieveRemovedDocument?: { __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
 
 export const TodoEditableFragmentDoc = gql`
     fragment todoEditable on Todo {
@@ -199,6 +199,7 @@ export const RetrieveRemovedTodoDocument = gql`
     query retrieveRemovedTodo($data: TodoIdInput!) {
   retrieveRemovedTodo(data: $data) {
     id
+    userId
     documentId
     title
     done
@@ -242,6 +243,7 @@ export const RetrieveAllRemovedTodoDocument = gql`
     query retrieveAllRemovedTodo {
   retrieveAllRemovedTodo {
     id
+    userId
     documentId
     title
     done
@@ -284,9 +286,9 @@ export const RetrieveDocuementDocument = gql`
     query retrieveDocuement($data: FindOneDocumentInput!) {
   retrieveDocuement(data: $data) {
     id
+    userId
     content
     todoId
-    userId
     createdDt
     updatedDt
     isRemoved
@@ -334,9 +336,9 @@ export const RetrieveRemovedDocumentDocument = gql`
     query retrieveRemovedDocument($data: FindOneDocumentInput!) {
   retrieveRemovedDocument(data: $data) {
     id
+    userId
     content
     todoId
-    userId
     createdDt
     updatedDt
     isRemoved
