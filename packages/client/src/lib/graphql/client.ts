@@ -11,11 +11,14 @@ import userStorage from '../userStorage';
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) =>
+    graphQLErrors.forEach(({ message, locations, path }) => {
       console.error(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
-    );
+        `[GraphQL error]: 
+        Message: ${message}
+        Location: ${JSON.stringify(locations)}
+        Path: ${path}`,
+      );
+    });
   }
   if (networkError) {
     console.error(`[Network error]: ${networkError}`);
@@ -45,8 +48,6 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   }));
   return forward(operation);
 });
-
-
 
 const appLink = from([authMiddleware, errorLink, httpLink]);
 

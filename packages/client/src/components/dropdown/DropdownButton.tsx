@@ -39,27 +39,19 @@ function DropdownButton({ itemList }: Props) {
         {currentItem} <ArrowDropDown data-dropdown-btn-icon size={20} />
       </BaseButton>
       <DropdownContent isOpen={isOpen} ref={ref}>
-        <DropdownItem // FIXME 전역상태로 값 관리 해야할듯 -> list에서 item 정렬해야 하므로
-          name={'All Todos'}
-          onClick={() => {
-            setCurrentItem('All Todos');
-            setIsOpen(false);
-          }}
-        />
-        <DropdownItem
-          name={'Tags'}
-          onClick={() => {
-            setCurrentItem('Tags');
-            setIsOpen(false);
-          }}
-        />
-        <DropdownItem
-          name={'Completed'}
-          onClick={() => {
-            setCurrentItem('Completed');
-            setIsOpen(false);
-          }}
-        />
+        {itemList.map(
+          (item, i) =>
+            item !== currentItem && (
+              <DropdownItem
+                name={item}
+                onClick={() => {
+                  setCurrentItem(item);
+                  setIsOpen(false);
+                }}
+                key={i}
+              />
+            ),
+        )}
       </DropdownContent>
     </>
   );
@@ -70,7 +62,7 @@ interface DropdownContentProps {
 }
 
 const DropdownContent = styled.div<DropdownContentProps>`
-  display: ${props => (props.isOpen ? 'flex' : 'none')};
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
   min-width: 160px;

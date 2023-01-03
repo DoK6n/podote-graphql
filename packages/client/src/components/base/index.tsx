@@ -7,3 +7,5 @@ export * from './IconButton';
 export * from './ItemButton';
 export * from './PurpleButton';
 export * from './RectinglePageBlock';
+export * from './RoundButton';
+export * from './MobileModal';

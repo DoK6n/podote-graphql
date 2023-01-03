@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { LoaderFunction, redirect, useLoaderData } from 'react-router-dom';
-import { RectinglePageBlock } from '../components/base';
+import { Block } from '../components/base';
 import GoBackButton from '../components/GoBackButton';
 import MobileHeader from '../components/MobileHeader';
+import { RecycleBinList } from '../components/recycleBin';
 import { Logo } from '../components/vectors';
 import { useGoBack } from '../hooks';
 import { checkIsLoggedIn } from '../lib/protectRoute';
-import { colors } from '../styles/colors';
+import { scrollbarStyle } from '../styles/scrollbar';
 
 export const recyclebinLoader: LoaderFunction = async ({ request }) => {
   const isLoggedIn = checkIsLoggedIn();
@@ -26,34 +27,23 @@ function RecycleBin() {
       <MobileHeader
         title={
           <div>
-            <Logo width={24} height={24} /> RecycleBin
+            <Logo width={24} height={24} /> 휴지통
           </div>
         }
         headerLeft={<GoBackButton onClick={goBack} />}
       />
-      <Block>
-        <RecycleBinBlock>RecycleBin</RecycleBinBlock>
-      </Block>
+      <ListBlock>
+        <RecycleBinList />
+      </ListBlock>
     </>
   );
 }
 
-const Block = styled.div`
-  flex: 1;
-  overflow-x: hidden;
+const ListBlock = styled(Block)`
+  gap: 0.625rem;
+  overflow-y: auto;
   padding: 1rem;
-`;
-
-const RecycleBinBlock = styled(RectinglePageBlock)`
-  width: 100%;
-  height: 100%;
-  border: 1px solid ${colors.border2};
-  box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 0 0 1rem;
-  transition: all 0.2s ease-in-out;
+  ${scrollbarStyle}
 `;
 
 export default RecycleBin;

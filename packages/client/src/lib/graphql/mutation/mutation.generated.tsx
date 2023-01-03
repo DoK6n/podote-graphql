@@ -48,54 +48,54 @@ export type RestoreRemovedTodoMutationVariables = Types.Exact<{
 }>;
 
 
-export type RestoreRemovedTodoMutation = { __typename?: 'Mutation', restoreRemovedTodo?: { __typename?: 'Todo', title: string, done: boolean, editable: boolean, isRemoved: boolean, removedDt?: any | null } | null };
+export type RestoreRemovedTodoMutation = { __typename?: 'Mutation', restoreRemovedTodo?: { __typename?: 'Todo', id: string, title: string, done: boolean, editable: boolean, documentId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 export type DeleteRemovedTodoMutationVariables = Types.Exact<{
   data: Types.TodoIdInput;
 }>;
 
 
-export type DeleteRemovedTodoMutation = { __typename?: 'Mutation', deleteRemovedTodo?: Array<{ __typename?: 'Todo', title: string, done: boolean, editable: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
+export type DeleteRemovedTodoMutation = { __typename?: 'Mutation', deleteRemovedTodo?: Array<{ __typename?: 'Todo', id: string, title: string, done: boolean, editable: boolean, documentId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string }> | null };
 
 export type DeleteAllRemovedTodosMutationVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type DeleteAllRemovedTodosMutation = { __typename?: 'Mutation', deleteAllRemovedTodos?: Array<{ __typename?: 'Todo', title: string, done: boolean, editable: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
+export type DeleteAllRemovedTodosMutation = { __typename?: 'Mutation', deleteAllRemovedTodos?: Array<{ __typename?: 'Todo', id: string, title: string, done: boolean, editable: boolean, documentId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string }> | null };
 
 export type AddNewDocumentMutationVariables = Types.Exact<{
   data: Types.CreateDocumentInput;
 }>;
 
 
-export type AddNewDocumentMutation = { __typename?: 'Mutation', addNewDocument?: { __typename?: 'Document', id: string, todoId?: string | null, content?: any | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+export type AddNewDocumentMutation = { __typename?: 'Mutation', addNewDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 export type EditDocumentContentMutationVariables = Types.Exact<{
   data: Types.UpdateDocumentInput;
 }>;
 
 
-export type EditDocumentContentMutation = { __typename?: 'Mutation', editDocumentContent?: { __typename?: 'Document', content?: any | null } | null };
+export type EditDocumentContentMutation = { __typename?: 'Mutation', editDocumentContent?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, userId: string } | null };
 
 export type RemoveDocumentMutationVariables = Types.Exact<{
   data: Types.RemoveDocumentInput;
 }>;
 
 
-export type RemoveDocumentMutation = { __typename?: 'Mutation', removeDocument?: { __typename?: 'Document', id: string, content?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+export type RemoveDocumentMutation = { __typename?: 'Mutation', removeDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 export type RestoreDocumentMutationVariables = Types.Exact<{
   data: Types.RestoreDocumentInput;
 }>;
 
 
-export type RestoreDocumentMutation = { __typename?: 'Mutation', restoreDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, userId: string, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+export type RestoreDocumentMutation = { __typename?: 'Mutation', restoreDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 export type DeleteRemovedDocumentMutationVariables = Types.Exact<{
   data: Types.DeleteDocumentInput;
 }>;
 
 
-export type DeleteRemovedDocumentMutation = { __typename?: 'Mutation', deleteRemovedDocument?: { __typename?: 'Document', id: string } | null };
+export type DeleteRemovedDocumentMutation = { __typename?: 'Mutation', deleteRemovedDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 
 export const RegisterDocument = gql`
@@ -346,11 +346,14 @@ export type RemoveTodoMutationOptions = Apollo.BaseMutationOptions<RemoveTodoMut
 export const RestoreRemovedTodoDocument = gql`
     mutation restoreRemovedTodo($data: TodoIdInput!) {
   restoreRemovedTodo(data: $data) {
+    id
     title
     done
     editable
+    documentId
     isRemoved
     removedDt
+    userId
   }
 }
     `;
@@ -383,11 +386,14 @@ export type RestoreRemovedTodoMutationOptions = Apollo.BaseMutationOptions<Resto
 export const DeleteRemovedTodoDocument = gql`
     mutation deleteRemovedTodo($data: TodoIdInput!) {
   deleteRemovedTodo(data: $data) {
+    id
     title
     done
     editable
+    documentId
     isRemoved
     removedDt
+    userId
   }
 }
     `;
@@ -420,11 +426,14 @@ export type DeleteRemovedTodoMutationOptions = Apollo.BaseMutationOptions<Delete
 export const DeleteAllRemovedTodosDocument = gql`
     mutation deleteAllRemovedTodos {
   deleteAllRemovedTodos {
+    id
     title
     done
     editable
+    documentId
     isRemoved
     removedDt
+    userId
   }
 }
     `;
@@ -457,12 +466,13 @@ export const AddNewDocumentDocument = gql`
     mutation addNewDocument($data: CreateDocumentInput!) {
   addNewDocument(data: $data) {
     id
-    todoId
     content
+    todoId
     createdDt
     updatedDt
     isRemoved
     removedDt
+    userId
   }
 }
     `;
@@ -495,7 +505,10 @@ export type AddNewDocumentMutationOptions = Apollo.BaseMutationOptions<AddNewDoc
 export const EditDocumentContentDocument = gql`
     mutation editDocumentContent($data: UpdateDocumentInput!) {
   editDocumentContent(data: $data) {
+    id
     content
+    todoId
+    userId
   }
 }
     `;
@@ -530,8 +543,10 @@ export const RemoveDocumentDocument = gql`
   removeDocument(data: $data) {
     id
     content
+    todoId
     isRemoved
     removedDt
+    userId
   }
 }
     `;
@@ -567,11 +582,11 @@ export const RestoreDocumentDocument = gql`
     id
     content
     todoId
-    userId
     createdDt
     updatedDt
     isRemoved
     removedDt
+    userId
   }
 }
     `;
@@ -605,6 +620,11 @@ export const DeleteRemovedDocumentDocument = gql`
     mutation deleteRemovedDocument($data: DeleteDocumentInput!) {
   deleteRemovedDocument(data: $data) {
     id
+    content
+    todoId
+    isRemoved
+    removedDt
+    userId
   }
 }
     `;

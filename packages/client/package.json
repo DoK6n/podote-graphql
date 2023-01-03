@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.2",
     "@emotion-icons/bootstrap": "^3.27.0",
+    "@emotion-icons/boxicons-regular": "^3.19.0",
     "@emotion-icons/boxicons-solid": "^3.19.0",
     "@emotion-icons/evaicons-solid": "^3.14.0",
     "@emotion-icons/fa-solid": "^3.14.0",

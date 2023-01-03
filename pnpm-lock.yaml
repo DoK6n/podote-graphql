@@ -30,6 +30,7 @@ importers:
     specifiers:
       '@apollo/client': ^3.7.2
       '@emotion-icons/bootstrap': ^3.27.0
+      '@emotion-icons/boxicons-regular': ^3.19.0
       '@emotion-icons/boxicons-solid': ^3.19.0
       '@emotion-icons/evaicons-solid': ^3.14.0
       '@emotion-icons/fa-solid': ^3.14.0
@@ -67,6 +68,7 @@ importers:
     dependencies:
       '@apollo/client': 3.7.2_gdcq4dv6opitr3wbfwyjmanyra
       '@emotion-icons/bootstrap': 3.27.0_dovxhg2tvkkxkdnqyoum6wzcxm
+      '@emotion-icons/boxicons-regular': 3.19.0_dovxhg2tvkkxkdnqyoum6wzcxm
       '@emotion-icons/boxicons-solid': 3.19.0_dovxhg2tvkkxkdnqyoum6wzcxm
       '@emotion-icons/evaicons-solid': 3.14.0_dovxhg2tvkkxkdnqyoum6wzcxm
       '@emotion-icons/fa-solid': 3.14.0_dovxhg2tvkkxkdnqyoum6wzcxm
@@ -1997,6 +1999,20 @@ packages:
 
   /@emotion-icons/bootstrap/3.27.0_dovxhg2tvkkxkdnqyoum6wzcxm:
     resolution: {integrity: sha512-ZLUHpiXI/Lsej4i8T9do9Vrn5LGdcYtDAPz09cyHlp5cvEVkncgqAcGmeDVMnweNBf6wB+QzL33IqZiD43S/HA==}
+    peerDependencies:
+      '@emotion/react': '>=11.0.0 <12'
+      '@emotion/styled': '>=11.0.0 <12'
+      react: '*'
+    dependencies:
+      '@babel/runtime': 7.20.6
+      '@emotion-icons/emotion-icon': 4.1.0_dovxhg2tvkkxkdnqyoum6wzcxm
+      '@emotion/react': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
+      '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
+      react: 18.2.0
+    dev: false
+
+  /@emotion-icons/boxicons-regular/3.19.0_dovxhg2tvkkxkdnqyoum6wzcxm:
+    resolution: {integrity: sha512-/MesvrmY7dXW58Wk7cD4BDaPEk3m0fAOhQ/7qxDkvi83e3XHUwMiOTiqD4ooMMGZIBhkVvwjUU1Ovs1P0IaZ5A==}
     peerDependencies:
       '@emotion/react': '>=11.0.0 <12'
       '@emotion/styled': '>=11.0.0 <12'

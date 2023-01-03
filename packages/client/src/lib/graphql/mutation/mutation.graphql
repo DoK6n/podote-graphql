@@ -84,49 +84,62 @@ mutation removeTodo($data: TodoIdInput!) {
 
 mutation restoreRemovedTodo($data: TodoIdInput!) {
   restoreRemovedTodo(data: $data) {
+    id
     title
     done
     editable
+    documentId
     isRemoved
     removedDt
+    userId
   }
 }
 
 mutation deleteRemovedTodo($data: TodoIdInput!) {
   deleteRemovedTodo(data: $data) {
+    id
     title
     done
     editable
+    documentId
     isRemoved
     removedDt
+    userId
   }
 }
 
 mutation deleteAllRemovedTodos {
   deleteAllRemovedTodos {
+    id
     title
     done
     editable
+    documentId
     isRemoved
     removedDt
+    userId
   }
 }
 
 mutation addNewDocument($data: CreateDocumentInput!) {
   addNewDocument(data: $data) {
     id
-    todoId
     content
+    todoId
     createdDt
     updatedDt
     isRemoved
     removedDt
+    userId
   }
 }
 
 mutation editDocumentContent($data: UpdateDocumentInput!) {
   editDocumentContent(data: $data) {
+    id
     content
+    todoId
+    userId
   }
 }
 
@@ -134,8 +147,10 @@ mutation removeDocument($data: RemoveDocumentInput!) {
   removeDocument(data: $data) {
     id
     content
+    todoId
     isRemoved
     removedDt
+    userId
   }
 }
 
@@ -144,16 +159,21 @@ mutation restoreDocument($data: RestoreDocumentInput!) {
     id
     content
     todoId
-    userId
     createdDt
     updatedDt
     isRemoved
     removedDt
+    userId
   }
 }
 
 mutation deleteRemovedDocument($data: DeleteDocumentInput!) {
   deleteRemovedDocument(data: $data) {
     id
+    content
+    todoId
+    isRemoved
+    removedDt
+    userId
   }
 }

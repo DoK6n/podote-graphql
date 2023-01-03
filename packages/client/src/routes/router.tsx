@@ -65,7 +65,9 @@ const router = createBrowserRouter([
             path: 'recyclebin',
             element: <RecycleBin />,
             loader: recyclebinLoader,
-            children: [{ index: true, element: <Index /> }],
+            children: [
+              { index: true, element: <Index message="휴지통이 비었어요." /> },
+            ],
           },
           {
             path: 'auth',
