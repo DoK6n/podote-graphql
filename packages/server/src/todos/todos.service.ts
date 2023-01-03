@@ -168,7 +168,7 @@ export class TodosService {
           where: {
             todoId: id,
             userId,
-            isRemoved: true,
+            isRemoved: false,
           },
         });
 
@@ -253,6 +253,15 @@ export class TodosService {
     const { id } = data;
     try {
       return await this.prisma.$transaction(async tx => {
+        // 연결된 지운 document 조회
+        const document = await tx.document.findFirst({
+          where: {
+            todoId: id,
+            userId,
+            isRemoved: true,
+          },
+        });
+
         // 지운 todo 영구삭제
         await tx.todo.deleteMany({
           where: {
@@ -263,21 +272,12 @@ export class TodosService {
         });
         // await tx.$queryRaw<Todo>`DELETE FROM todo WHERE id = ${id} AND user_id = ${userId} AND is_removed = true`;
 
-        // 연결된 지운 document 조회
-        const document = await tx.document.findFirst({
-          where: {
-            todoId: id,
-            userId,
-            isRemoved: true,
-          },
-        });
-
         if (document) {
           // 연결된 지운 document 영구삭제
           await tx.document.deleteMany({
             where: {
               id: document.id,
-              todoId: id,
+              // todoId: id,
               userId,
               isRemoved: true,
             },
@@ -309,10 +309,9 @@ export class TodosService {
           },
         });
 
-        // 연결된 document 전부 영구삭제
+        // 지운 document 전부 영구삭제
         await tx.document.deleteMany({
           where: {
-            todoId: { not: null },
             userId,
             isRemoved: true,
           },
