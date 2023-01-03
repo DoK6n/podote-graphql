@@ -18,16 +18,14 @@ function RecycleBinList() {
     <Block>
       {data && data.retrieveAllRemovedTodo ? (
         data.retrieveAllRemovedTodo.map((todo) => (
-          <React.Fragment key={todo.id}>
-            <RecycleItemBlock>
-              <ContentsGroup>
-                <Text>{todo.title}</Text>
-              </ContentsGroup>
-              <OptionsGroup>
-                <MoreOptionsMenu id={todo.id} documentId={todo.documentId} />
-              </OptionsGroup>
-            </RecycleItemBlock>
-          </React.Fragment>
+          <RecycleItemBlock key={todo.id}>
+            <ContentsGroup>
+              <Text>{todo.title}</Text>
+            </ContentsGroup>
+            <OptionsGroup>
+              <MoreOptionsMenu id={todo.id} documentId={todo.documentId} />
+            </OptionsGroup>
+          </RecycleItemBlock>
         ))
       ) : (
         <Outlet />
@@ -48,7 +46,7 @@ const Text = styled.div`
 `;
 
 const RecycleItemBlock = styled(RectinglePageBlock)`
-  height: 5rem;
+  height: 2.5rem;
   border: 1px solid ${colors.border0};
   padding: 0.6rem;
   display: flex;
