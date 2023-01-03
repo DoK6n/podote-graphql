@@ -107,12 +107,17 @@ function RecycleBinModalContent({}: Props) {
 
   return (
     <>
-      <PreviewDocsCard>
-        <p>문서 미리보기</p>
-      </PreviewDocsCard>
-      <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
-        <p>문서 영구삭제</p>
-      </RoundButton>
+      {modalState.documentId && (
+        <>
+          <PreviewDocsCard>
+            <p>문서 미리보기</p>
+          </PreviewDocsCard>
+          <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
+            <p>문서 영구삭제</p>
+          </RoundButton>
+        </>
+      )}
+
       <RoundButton delay={randomNumber()} onClick={handleTodoRestore}>
         <p>할일 복원</p>
       </RoundButton>
