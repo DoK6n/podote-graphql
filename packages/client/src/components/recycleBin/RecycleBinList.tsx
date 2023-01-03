@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useRetrieveAllRemovedTodoQuery } from '../../lib/graphql/query/query.generated';
 import { useModalStore } from '../../lib/store/modal';
 import { colors } from '../../styles/colors';
-import { IconButton, RectinglePageBlock } from '../base';
+import { RectinglePageBlock } from '../base';
 import MobileModal from '../base/MobileModal';
-import { DotsVerticalRounded } from '../vectors';
 import MoreOptionsMenu from './MoreOptionsMenu';
 import RecycleBinModalContent from './RecycleBinModalContent';
 
@@ -23,7 +21,7 @@ function RecycleBinList() {
               <Text>{todo.title}</Text>
             </ContentsGroup>
             <OptionsGroup>
-              <MoreOptionsMenu id={todo.id} documentId={todo.documentId} />
+              <MoreOptionsMenu todoId={todo.id} documentId={todo.documentId} />
             </OptionsGroup>
           </RecycleItemBlock>
         ))

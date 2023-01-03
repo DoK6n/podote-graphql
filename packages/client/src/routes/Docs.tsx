@@ -43,7 +43,6 @@ function Docs() {
       <Block>
         <FullCard>
           <Document id={docsId} />
-          {/* <Outlet /> */}
         </FullCard>
       </Block>
     </>

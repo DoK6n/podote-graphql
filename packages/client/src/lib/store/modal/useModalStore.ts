@@ -1,13 +1,13 @@
 import create from 'zustand';
 import { devtools, subscribeWithSelector } from 'zustand/middleware';
-import { Todo } from '../../graphql/types';
+import { TodoId, DocumentId } from 'podote/types';
 
-interface SelectedTodoState<T = never> {
-  todoId: Todo['id'] | T;
-  documentId: Todo['documentId'];
+interface SelectedTodoState {
+  todoId: TodoId;
+  documentId: DocumentId;
 }
 
-interface ModalState extends SelectedTodoState<null> {
+interface ModalState extends SelectedTodoState {
   isModalOpen: boolean;
 }
 

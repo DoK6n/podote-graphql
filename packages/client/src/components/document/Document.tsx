@@ -4,9 +4,14 @@ import styled from '@emotion/styled';
 import { scrollbarStyle } from '../../styles/scrollbar';
 import { useRetrieveDocuementQuery } from '../../lib/graphql/query/query.generated';
 import { Outlet } from 'react-router-dom';
+import { MoreOptionsMenu } from '../recycleBin';
+import { DocumentId } from 'podote/types';
+import { useModalStore } from '../../lib/store/modal';
+import MobileModal from '../base/MobileModal';
+import DocumentModalContent from './DocumentModalContent';
 
 interface Props {
-  id: string;
+  id: DocumentId;
 }
 
 /**
@@ -22,10 +27,12 @@ interface Props {
  * - 좌측 상단(?)에 토글버튼으로 view 모드와 edit 모드 선택
  */
 function Document({ id }: Props) {
+  const { modalState } = useModalStore();
+
   const { data, loading, error } = useRetrieveDocuementQuery({
     variables: {
       data: {
-        id
+        id,
       },
     },
   });
@@ -35,26 +42,41 @@ function Document({ id }: Props) {
   return (
     <DocumentWrapper>
       {data && data.retrieveDocuement ? (
-        <ScrollWrapper>
-          <DocumentUpdatedAt updatedDt={data.retrieveDocuement.updatedDt} />
-          <DocumentTitle title={data.retrieveDocuement.todo?.title} />
-          {/* <DocumentHashTag /> */}
-          <div
-            contentEditable={true}
-            translate={'no'}
-            role={'textbox'}
-            suppressContentEditableWarning={true}
-            placeholder={'내용을 입력하세요.'}
-          >
-            {JSON.stringify(data.retrieveDocuement.content)}
-          </div>
-        </ScrollWrapper>
+        <>
+          <OptionsGroup>
+            <MoreOptionsMenu
+              todoId={data.retrieveDocuement.todoId}
+              documentId={data.retrieveDocuement.id}
+            />
+          </OptionsGroup>
+          <ScrollWrapper>
+            <DocumentUpdatedAt updatedDt={data.retrieveDocuement.updatedDt} />
+            <DocumentTitle title={data.retrieveDocuement.todo?.title} />
+            {/* <DocumentHashTag /> */}
+            <div
+              contentEditable={true}
+              translate={'no'}
+              role={'textbox'}
+              suppressContentEditableWarning={true}
+              placeholder={'내용을 입력하세요.'}
+            >
+              {JSON.stringify(data.retrieveDocuement.content)}
+            </div>
+          </ScrollWrapper>
+        </>
       ) : (
         <Outlet />
+      )}
+      {modalState.isModalOpen && (
+        <MobileModal menus={<DocumentModalContent />} />
       )}
     </DocumentWrapper>
   );
 }
+
+const OptionsGroup = styled.div`
+  text-align: end;
+`;
 
 const ScrollWrapper = styled.div`
   max-height: 100%;
