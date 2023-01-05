@@ -7,20 +7,22 @@ interface Props {
   title?: React.ReactNode;
   headerLeft?: React.ReactNode;
   headerRight?: React.ReactNode;
-  className?: string;
 }
 
 function MobileHeader({
-  title = <StyledLogo><Logo width={24} height={24}/> <LogoText width={120} height={40}/></StyledLogo>,
-  className,
+  title = (
+    <StyledLogo>
+      <Logo width={24} height={24} /> <LogoText width={120} height={40} />
+    </StyledLogo>
+  ),
   headerLeft,
   headerRight,
 }: Props) {
   return (
-    <Block className={className}>
-      {headerLeft && <HeaderSide position='left'>{headerLeft}</HeaderSide>}
-      <Title className='title'>{title}</Title>
-      {headerRight && <HeaderSide position='right'>{headerRight}</HeaderSide>}
+    <Block>
+      {headerLeft && <HeaderSide position="left">{headerLeft}</HeaderSide>}
+      <Title className="title">{title}</Title>
+      {headerRight && <HeaderSide position="right">{headerRight}</HeaderSide>}
     </Block>
   );
 }
@@ -51,7 +53,7 @@ const Title = styled.div`
 
 const HeaderSide = styled.div<{ position: 'left' | 'right' }>`
   position: absolute;
-  ${props => props.position}: 16px;
+  ${(props) => props.position}: 16px;
   top: 0;
   height: 100%;
   display: flex;
