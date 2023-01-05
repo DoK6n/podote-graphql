@@ -51,6 +51,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addNewDocument?: Maybe<Document>;
   addNewTodo?: Maybe<Todo>;
+  deleteAllRemovedDocuments?: Maybe<Document>;
   deleteAllRemovedTodos?: Maybe<Array<Todo>>;
   deleteRemovedDocument?: Maybe<Document>;
   deleteRemovedTodo?: Maybe<Array<Todo>>;
@@ -60,7 +61,7 @@ export type Mutation = {
   register: User;
   removeDocument?: Maybe<Document>;
   removeTodo?: Maybe<Todo>;
-  restoreDocument?: Maybe<Document>;
+  restoreRemovedDocument?: Maybe<Document>;
   restoreRemovedTodo?: Maybe<Todo>;
   switchTodoOrder: Array<Todo>;
 };
@@ -111,7 +112,7 @@ export type MutationRemoveTodoArgs = {
 };
 
 
-export type MutationRestoreDocumentArgs = {
+export type MutationRestoreRemovedDocumentArgs = {
   data: RestoreDocumentInput;
 };
 

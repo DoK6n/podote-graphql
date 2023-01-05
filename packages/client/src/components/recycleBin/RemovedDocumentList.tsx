@@ -8,6 +8,7 @@ import MobileModal from '../base/MobileModal';
 import { Checked, Unchecked } from '../vectors';
 import { ListMode } from './ListModeSelector';
 import MoreOptionsMenu from './MoreOptionsMenu';
+import RecycleBinDocumentModalContent from './RecycleBinDocumentModalContent';
 
 interface Props {
   mode: ListMode;
@@ -44,7 +45,9 @@ function RemovedDocumentList({ mode }: Props) {
       ) : (
         <Outlet />
       )}
-      {modalState.isModalOpen && <MobileModal menus={<></>} />}
+      {modalState.isModalOpen && (
+        <MobileModal menus={<RecycleBinDocumentModalContent />} />
+      )}
     </Block>
   );
 }

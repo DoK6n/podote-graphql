@@ -100,8 +100,9 @@ type Mutation {
   addNewDocument(data: CreateDocumentInput!): Document
   editDocumentContent(data: UpdateDocumentInput!): Document
   removeDocument(data: RemoveDocumentInput!): Document
-  restoreDocument(data: RestoreDocumentInput!): Document
+  restoreRemovedDocument(data: RestoreDocumentInput!): Document
   deleteRemovedDocument(data: DeleteDocumentInput!): Document
+  deleteAllRemovedDocuments: Document
 }
 
 input CreateTodoInput {

@@ -1,13 +1,15 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 import { useRetrieveAllRemovedTodoQuery } from '../../lib/graphql/query/query.generated';
 import { useModalStore } from '../../lib/store/modal';
 import { colors } from '../../styles/colors';
-import { RectinglePageBlock } from '../base';
+import { IconButton, RectinglePageBlock } from '../base';
 import MobileModal from '../base/MobileModal';
+import { Checked, FillPage, Unchecked } from '../vectors';
 import { ListMode } from './ListModeSelector';
 import MoreOptionsMenu from './MoreOptionsMenu';
-import RecycleBinModalContent from './RecycleBinModalContent';
+import RecycleBinModalContent from './RecycleBinTodoModalContent';
 
 interface Props {
   mode: ListMode;
@@ -24,7 +26,15 @@ function RemovedTodoList({ mode }: Props) {
         removedTodos.data.retrieveAllRemovedTodo.map((todo) => (
           <RecycleItemBlock key={todo.id}>
             <ContentsGroup>
+              <IconButton css={DefaultCursorStyle} svgSize={18}>
+                {todo.done ? <Checked /> : <Unchecked />}
+              </IconButton>
               <Text>{todo.title}</Text>
+              {todo.documentId && (
+                <IconButton css={DefaultCursorStyle} svgSize={18} disabled>
+                  <FillPage />
+                </IconButton>
+              )}
             </ContentsGroup>
             <MoreOptionsMenu todoId={todo.id} documentId={todo.documentId} />
           </RecycleItemBlock>
@@ -39,13 +49,16 @@ function RemovedTodoList({ mode }: Props) {
   );
 }
 
+const DefaultCursorStyle = css`
+  cursor: default;
+`;
+
 const Text = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   font-size: 13px;
   line-height: 1.6;
-  width: 100%;
 `;
 
 const RecycleItemBlock = styled(RectinglePageBlock)`
@@ -59,6 +72,10 @@ const RecycleItemBlock = styled(RectinglePageBlock)`
 
 const ContentsGroup = styled.div`
   width: 80%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  cursor: default;
 `;
 
 export default RemovedTodoList;

@@ -87,11 +87,11 @@ export class DocumentsResolver {
   /** 삭제된 문서 복원 */
   @UseGuards(FirebaseAuthGuard)
   @Mutation(() => Document, { nullable: true })
-  async restoreDocument(
+  async restoreRemovedDocument(
     @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: RestoreDocumentInput,
   ) {
-    return this.documentsService.restoreDocumentById(user.id, data);
+    return this.documentsService.restoreRemovedDocumentById(user.id, data);
   }
 
   /** 문서 영구 삭제 */
@@ -101,6 +101,13 @@ export class DocumentsResolver {
     @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: DeleteDocumentInput,
   ) {
-    return this.documentsService.deleteDocumentById(user.id, data);
+    return this.documentsService.deleteRemovedDocumentById(user.id, data);
+  }
+
+  /** 할일 목록 전체 영구 삭제 */
+  @UseGuards(FirebaseAuthGuard)
+  @Mutation(() => Document, { nullable: true })
+  async deleteAllRemovedDocuments(@DecodedTokenDecorator() user: DecodedToken) {
+    return this.documentsService.deleteAllRemovedDocuments(user.id);
   }
 }

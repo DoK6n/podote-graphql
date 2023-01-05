@@ -1,13 +1,5 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { InputType } from '@nestjs/graphql';
+import { DocumentIdInput } from './document-id.input';
 
 @InputType()
-export class FindOneDocumentInput {
-  @Field(() => String)
-  @IsString()
-  id: string;
-
-  // @Field(() => String)
-  // @IsString()
-  // todoId: string;
-}
+export class FindOneDocumentInput extends DocumentIdInput {}

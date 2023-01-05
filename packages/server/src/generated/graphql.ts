@@ -53,6 +53,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addNewDocument?: Maybe<Document>;
   addNewTodo?: Maybe<Todo>;
+  deleteAllRemovedDocuments?: Maybe<Document>;
   deleteAllRemovedTodos?: Maybe<Array<Todo>>;
   deleteRemovedDocument?: Maybe<Document>;
   deleteRemovedTodo?: Maybe<Array<Todo>>;
@@ -62,7 +63,7 @@ export type Mutation = {
   register: User;
   removeDocument?: Maybe<Document>;
   removeTodo?: Maybe<Todo>;
-  restoreDocument?: Maybe<Document>;
+  restoreRemovedDocument?: Maybe<Document>;
   restoreRemovedTodo?: Maybe<Todo>;
   switchTodoOrder: Array<Todo>;
 };
@@ -113,7 +114,7 @@ export type MutationRemoveTodoArgs = {
 };
 
 
-export type MutationRestoreDocumentArgs = {
+export type MutationRestoreRemovedDocumentArgs = {
   data: RestoreDocumentInput;
 };
 
@@ -397,6 +398,7 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addNewDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationAddNewDocumentArgs, 'data'>>;
   addNewTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationAddNewTodoArgs, 'data'>>;
+  deleteAllRemovedDocuments?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType>;
   deleteAllRemovedTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   deleteRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationDeleteRemovedDocumentArgs, 'data'>>;
   deleteRemovedTodo?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<MutationDeleteRemovedTodoArgs, 'data'>>;
@@ -406,7 +408,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   register?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   removeDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRemoveDocumentArgs, 'data'>>;
   removeTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationRemoveTodoArgs, 'data'>>;
-  restoreDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRestoreDocumentArgs, 'data'>>;
+  restoreRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<MutationRestoreRemovedDocumentArgs, 'data'>>;
   restoreRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationRestoreRemovedTodoArgs, 'data'>>;
   switchTodoOrder?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<MutationSwitchTodoOrderArgs, 'data'>>;
 };

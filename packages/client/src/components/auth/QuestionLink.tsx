@@ -20,7 +20,7 @@ const Block = styled.div`
   color: ${colors.purple0};
   a {
     font-weight: 600;
-    color: ${colors.brightPurble0};
+    color: ${colors.brightPurple};
     text-decoration: underline;
   }
 `;

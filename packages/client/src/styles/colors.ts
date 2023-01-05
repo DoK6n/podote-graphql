@@ -17,7 +17,8 @@ export const colors = {
   purple4: '#3b305a',
   /** Todo 배경 */
   purple5: '#362e57',
-  brightPurble0: '#A08DD6',
+  brightPurple: '#A08DD6',
+  disabledPurple: '#524968',
   /** 사이트 임베드 Input 테두리 색 */
   border0: '#9595d9',
   /** 드롭다운 테두리 */

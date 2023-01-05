@@ -83,12 +83,12 @@ export type RemoveDocumentMutationVariables = Types.Exact<{
 
 export type RemoveDocumentMutation = { __typename?: 'Mutation', removeDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
-export type RestoreDocumentMutationVariables = Types.Exact<{
+export type RestoreRemovedDocumentMutationVariables = Types.Exact<{
   data: Types.RestoreDocumentInput;
 }>;
 
 
-export type RestoreDocumentMutation = { __typename?: 'Mutation', restoreDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
+export type RestoreRemovedDocumentMutation = { __typename?: 'Mutation', restoreRemovedDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 export type DeleteRemovedDocumentMutationVariables = Types.Exact<{
   data: Types.DeleteDocumentInput;
@@ -96,6 +96,11 @@ export type DeleteRemovedDocumentMutationVariables = Types.Exact<{
 
 
 export type DeleteRemovedDocumentMutation = { __typename?: 'Mutation', deleteRemovedDocument?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
+
+export type DeleteAllRemovedDocumentsMutationVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type DeleteAllRemovedDocumentsMutation = { __typename?: 'Mutation', deleteAllRemovedDocuments?: { __typename?: 'Document', id: string, content?: any | null, todoId?: string | null, isRemoved: boolean, removedDt?: any | null, userId: string } | null };
 
 
 export const RegisterDocument = gql`
@@ -576,9 +581,9 @@ export function useRemoveDocumentMutation(baseOptions?: Apollo.MutationHookOptio
 export type RemoveDocumentMutationHookResult = ReturnType<typeof useRemoveDocumentMutation>;
 export type RemoveDocumentMutationResult = Apollo.MutationResult<RemoveDocumentMutation>;
 export type RemoveDocumentMutationOptions = Apollo.BaseMutationOptions<RemoveDocumentMutation, RemoveDocumentMutationVariables>;
-export const RestoreDocumentDocument = gql`
-    mutation restoreDocument($data: RestoreDocumentInput!) {
-  restoreDocument(data: $data) {
+export const RestoreRemovedDocumentDocument = gql`
+    mutation restoreRemovedDocument($data: RestoreDocumentInput!) {
+  restoreRemovedDocument(data: $data) {
     id
     content
     todoId
@@ -590,32 +595,32 @@ export const RestoreDocumentDocument = gql`
   }
 }
     `;
-export type RestoreDocumentMutationFn = Apollo.MutationFunction<RestoreDocumentMutation, RestoreDocumentMutationVariables>;
+export type RestoreRemovedDocumentMutationFn = Apollo.MutationFunction<RestoreRemovedDocumentMutation, RestoreRemovedDocumentMutationVariables>;
 
 /**
- * __useRestoreDocumentMutation__
+ * __useRestoreRemovedDocumentMutation__
  *
- * To run a mutation, you first call `useRestoreDocumentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRestoreDocumentMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useRestoreRemovedDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRestoreRemovedDocumentMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [restoreDocumentMutation, { data, loading, error }] = useRestoreDocumentMutation({
+ * const [restoreRemovedDocumentMutation, { data, loading, error }] = useRestoreRemovedDocumentMutation({
  *   variables: {
  *      data: // value for 'data'
  *   },
  * });
  */
-export function useRestoreDocumentMutation(baseOptions?: Apollo.MutationHookOptions<RestoreDocumentMutation, RestoreDocumentMutationVariables>) {
+export function useRestoreRemovedDocumentMutation(baseOptions?: Apollo.MutationHookOptions<RestoreRemovedDocumentMutation, RestoreRemovedDocumentMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RestoreDocumentMutation, RestoreDocumentMutationVariables>(RestoreDocumentDocument, options);
+        return Apollo.useMutation<RestoreRemovedDocumentMutation, RestoreRemovedDocumentMutationVariables>(RestoreRemovedDocumentDocument, options);
       }
-export type RestoreDocumentMutationHookResult = ReturnType<typeof useRestoreDocumentMutation>;
-export type RestoreDocumentMutationResult = Apollo.MutationResult<RestoreDocumentMutation>;
-export type RestoreDocumentMutationOptions = Apollo.BaseMutationOptions<RestoreDocumentMutation, RestoreDocumentMutationVariables>;
+export type RestoreRemovedDocumentMutationHookResult = ReturnType<typeof useRestoreRemovedDocumentMutation>;
+export type RestoreRemovedDocumentMutationResult = Apollo.MutationResult<RestoreRemovedDocumentMutation>;
+export type RestoreRemovedDocumentMutationOptions = Apollo.BaseMutationOptions<RestoreRemovedDocumentMutation, RestoreRemovedDocumentMutationVariables>;
 export const DeleteRemovedDocumentDocument = gql`
     mutation deleteRemovedDocument($data: DeleteDocumentInput!) {
   deleteRemovedDocument(data: $data) {
@@ -654,3 +659,40 @@ export function useDeleteRemovedDocumentMutation(baseOptions?: Apollo.MutationHo
 export type DeleteRemovedDocumentMutationHookResult = ReturnType<typeof useDeleteRemovedDocumentMutation>;
 export type DeleteRemovedDocumentMutationResult = Apollo.MutationResult<DeleteRemovedDocumentMutation>;
 export type DeleteRemovedDocumentMutationOptions = Apollo.BaseMutationOptions<DeleteRemovedDocumentMutation, DeleteRemovedDocumentMutationVariables>;
+export const DeleteAllRemovedDocumentsDocument = gql`
+    mutation deleteAllRemovedDocuments {
+  deleteAllRemovedDocuments {
+    id
+    content
+    todoId
+    isRemoved
+    removedDt
+    userId
+  }
+}
+    `;
+export type DeleteAllRemovedDocumentsMutationFn = Apollo.MutationFunction<DeleteAllRemovedDocumentsMutation, DeleteAllRemovedDocumentsMutationVariables>;
+
+/**
+ * __useDeleteAllRemovedDocumentsMutation__
+ *
+ * To run a mutation, you first call `useDeleteAllRemovedDocumentsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAllRemovedDocumentsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAllRemovedDocumentsMutation, { data, loading, error }] = useDeleteAllRemovedDocumentsMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDeleteAllRemovedDocumentsMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAllRemovedDocumentsMutation, DeleteAllRemovedDocumentsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAllRemovedDocumentsMutation, DeleteAllRemovedDocumentsMutationVariables>(DeleteAllRemovedDocumentsDocument, options);
+      }
+export type DeleteAllRemovedDocumentsMutationHookResult = ReturnType<typeof useDeleteAllRemovedDocumentsMutation>;
+export type DeleteAllRemovedDocumentsMutationResult = Apollo.MutationResult<DeleteAllRemovedDocumentsMutation>;
+export type DeleteAllRemovedDocumentsMutationOptions = Apollo.BaseMutationOptions<DeleteAllRemovedDocumentsMutation, DeleteAllRemovedDocumentsMutationVariables>;

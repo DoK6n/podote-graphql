@@ -142,14 +142,14 @@ const Mode = styled.div<ModeStyledProps>`
   ${(props) =>
     props.isActive &&
     css`
-      color: ${colors.brightPurble0};
+      color: ${colors.brightPurple};
       font-weight: 600;
     `}
 `;
 
 const Indicator = styled(motion.div)`
   height: 3px;
-  background: ${colors.brightPurble0};
+  background: ${colors.brightPurple};
   position: absolute;
   left: 0;
   bottom: -8px;

@@ -162,7 +162,7 @@ export class DocumentsService {
   }
 
   // document 휴지통에서 복원하기
-  async restoreDocumentById(userId: string, data: RestoreDocumentInput) {
+  async restoreRemovedDocumentById(userId: string, data: RestoreDocumentInput) {
     const { id } = data;
 
     try {
@@ -211,7 +211,7 @@ export class DocumentsService {
   }
 
   // 문서 영구 삭제
-  async deleteDocumentById(userId: string, data: DeleteDocumentInput) {
+  async deleteRemovedDocumentById(userId: string, data: DeleteDocumentInput) {
     const { id } = data;
 
     try {
@@ -242,6 +242,30 @@ export class DocumentsService {
 
         // document 영구 삭제
         await tx.$queryRaw<Document>`DELETE FROM document WHERE id = ${id} AND is_removed = true AND user_id = ${userId}`;
+      });
+    } catch (e) {}
+  }
+
+  async deleteAllRemovedDocuments(userId: string) {
+    try {
+      return await this.prisma.$transaction(async tx => {
+        // 지운 todo 전부 영구삭제
+        await tx.document.deleteMany({
+          where: {
+            userId,
+            isRemoved: true,
+          },
+        });
+
+        return await tx.todo.findMany({
+          where: {
+            userId,
+            isRemoved: true,
+          },
+          orderBy: {
+            removedDt: 'desc',
+          },
+        });
       });
     } catch (e) {}
   }

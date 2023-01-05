@@ -154,8 +154,8 @@ mutation removeDocument($data: RemoveDocumentInput!) {
   }
 }
 
-mutation restoreDocument($data: RestoreDocumentInput!) {
-  restoreDocument(data: $data) {
+mutation restoreRemovedDocument($data: RestoreDocumentInput!) {
+  restoreRemovedDocument(data: $data) {
     id
     content
     todoId
@@ -169,6 +169,17 @@ mutation restoreDocument($data: RestoreDocumentInput!) {
 
 mutation deleteRemovedDocument($data: DeleteDocumentInput!) {
   deleteRemovedDocument(data: $data) {
+    id
+    content
+    todoId
+    isRemoved
+    removedDt
+    userId
+  }
+}
+
+mutation deleteAllRemovedDocuments {
+  deleteAllRemovedDocuments {
     id
     content
     todoId

@@ -6,21 +6,33 @@ import {
   useRestoreRemovedTodoMutation,
 } from '../../lib/graphql/mutation/mutation.generated';
 import {
+  RetrieveAllRemovedDocumentsDocument,
   RetrieveAllRemovedTodoDocument,
   RetrieveAllTodosDocument,
+  useRetrieveRemovedDocumentQuery,
 } from '../../lib/graphql/query/query.generated';
 import { randomNumber } from '../../lib/randomNumber';
 import { useModalStore } from '../../lib/store/modal';
 import { colors } from '../../styles/colors';
+import { scrollbarStyle } from '../../styles/scrollbar';
 import { Card, RoundButton } from '../base';
+
 interface Props {}
 
-function RecycleBinModalContent({}: Props) {
+function RecycleBinTodoModalContent({}: Props) {
   const { modalState, modalClose } = useModalStore();
   const [deleteRemovedTodoMutation] = useDeleteRemovedTodoMutation();
   const [deleteRemovedDocumentMutation] = useDeleteRemovedDocumentMutation();
   const [deleteAllRemovedTodosMutation] = useDeleteAllRemovedTodosMutation();
   const [restoreRemovedTodoMutation] = useRestoreRemovedTodoMutation();
+
+  const removedDocument = useRetrieveRemovedDocumentQuery({
+    variables: {
+      data: {
+        id: modalState.documentId!,
+      },
+    },
+  });
 
   const handleDocumentDelete = async () => {
     if (!modalState.documentId) return;
@@ -38,8 +50,11 @@ function RecycleBinModalContent({}: Props) {
           query: RetrieveAllRemovedTodoDocument,
         },
         {
-          query: RetrieveAllTodosDocument,
+          query: RetrieveAllRemovedDocumentsDocument,
         },
+        // {
+        //   query: RetrieveAllTodosDocument,
+        // },
       ],
     });
     modalClose();
@@ -59,6 +74,9 @@ function RecycleBinModalContent({}: Props) {
       refetchQueries: [
         {
           query: RetrieveAllRemovedTodoDocument,
+        },
+        {
+          query: RetrieveAllRemovedDocumentsDocument,
         },
         {
           query: RetrieveAllTodosDocument,
@@ -84,8 +102,11 @@ function RecycleBinModalContent({}: Props) {
           query: RetrieveAllRemovedTodoDocument,
         },
         {
-          query: RetrieveAllTodosDocument,
+          query: RetrieveAllRemovedDocumentsDocument,
         },
+        // {
+        //   query: RetrieveAllTodosDocument,
+        // },
       ],
     });
     modalClose();
@@ -98,8 +119,11 @@ function RecycleBinModalContent({}: Props) {
           query: RetrieveAllRemovedTodoDocument,
         },
         {
-          query: RetrieveAllTodosDocument,
+          query: RetrieveAllRemovedDocumentsDocument,
         },
+        // {
+        //   query: RetrieveAllTodosDocument,
+        // },
       ],
     });
     modalClose();
@@ -107,16 +131,22 @@ function RecycleBinModalContent({}: Props) {
 
   return (
     <>
-      {modalState.documentId && (
-        <>
-          <PreviewDocsCard>
-            <p>문서 미리보기</p>
-          </PreviewDocsCard>
-          <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
-            <p>문서 영구삭제</p>
-          </RoundButton>
-        </>
-      )}
+      {modalState.documentId &&
+        removedDocument.data &&
+        removedDocument.data.retrieveRemovedDocument && (
+          <>
+            <PreviewDocsCard>
+              <DocsContent>
+                {JSON.stringify(
+                  removedDocument.data.retrieveRemovedDocument.content,
+                )}
+              </DocsContent>
+            </PreviewDocsCard>
+            <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
+              <p>문서 영구삭제</p>
+            </RoundButton>
+          </>
+        )}
 
       <RoundButton delay={randomNumber()} onClick={handleTodoRestore}>
         <p>할일 복원</p>
@@ -133,9 +163,17 @@ function RecycleBinModalContent({}: Props) {
 
 const PreviewDocsCard = styled(Card)`
   border: 1px solid white;
-  height: 130px;
-  width: 100px;
+  height: 200px;
+  width: 140px;
   background-color: ${colors.purple4};
+  ${scrollbarStyle}
 `;
 
-export default RecycleBinModalContent;
+const DocsContent = styled.div`
+  overflow: hidden;
+  word-wrap: break-word;
+  font-size: 13px;
+  line-height: 1.6;
+`;
+
+export default RecycleBinTodoModalContent;

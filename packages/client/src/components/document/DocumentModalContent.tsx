@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGoBack } from '../../hooks';
 import { useRemoveDocumentMutation } from '../../lib/graphql/mutation/mutation.generated';
 import {
+  RetrieveAllRemovedDocumentsDocument,
   RetrieveAllTodosDocument,
   useRetrieveDocumentQuery,
 } from '../../lib/graphql/query/query.generated';
@@ -17,7 +18,7 @@ function DocumentModalContent() {
   const { data, loading, error } = useRetrieveDocumentQuery({
     variables: {
       data: {
-        id: modalState.documentId,
+        id: modalState.documentId!,
       },
     },
   });
@@ -28,12 +29,15 @@ function DocumentModalContent() {
     await removeDocumentMutation({
       variables: {
         data: {
-          id: modalState.documentId,
+          id: modalState.documentId!,
         },
       },
       refetchQueries: [
         {
           query: RetrieveAllTodosDocument,
+        },
+        {
+          query: RetrieveAllRemovedDocumentsDocument,
         },
       ],
     });

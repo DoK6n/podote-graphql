@@ -60,11 +60,11 @@ const modalOverlay = css`
 
 const menuBox = css`
   width: fit-content;
-  height: 60%;
+  height: 90%;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 2rem;
 
   padding: 1rem 2rem 2rem 2rem;

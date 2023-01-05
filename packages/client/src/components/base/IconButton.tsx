@@ -2,7 +2,10 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { colors } from '../../styles/colors';
 
-export const IconButton = styled.span<{ svgSize?: number }>`
+export const IconButton = styled.span<{
+  svgSize?: number;
+  disabled?: boolean;
+}>`
   cursor: pointer;
   border: 1px solid #0000;
   border-radius: 3px;
@@ -18,11 +21,16 @@ export const IconButton = styled.span<{ svgSize?: number }>`
         height: ${props.svgSize}px;
       }
     `}
-  &:hover {
-    color: ${colors.brightPurble0};
-    background: #0000;
-  }
-  &:active {
-    color: ${colors.purple0};
-  }
+
+  ${({ disabled = false }) =>
+    !disabled &&
+    css`
+      &:hover {
+        color: ${colors.brightPurple};
+        background: #0000;
+      }
+      &:active {
+        color: ${colors.purple0};
+      }
+    `}
 `;

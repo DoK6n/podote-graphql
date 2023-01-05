@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { colors } from '../../styles/colors';
 import { fadeInLeft } from '../../styles/fadeInLeft';
@@ -20,7 +21,17 @@ export const RoundButton = styled.button<{ delay?: number }>`
   -webkit-tap-highlight-color: transparent;
   animation: ${fadeInLeft} ${({ delay = 0.1 }) => delay}s ease;
 
-  &:active {
-    background: transparent;
-  }
+  ${({disabled = false}) =>
+    disabled
+      ? css`
+          cursor: default;
+          background: ${colors.disabledPurple};
+          border: 1px solid ${colors.disabledPurple};
+          color: ${colors.gray2}45;
+        `
+      : css`
+          &:active {
+            background: transparent;
+          }
+        `}
 `;
