@@ -73,8 +73,10 @@ type Query {
   login: UserWithSnsType!
   retrieveAllUsers: [User!]
   snsType(name: String!): SnsType!
-  retrieveDocuement(data: FindOneDocumentInput!): Document
+  retrieveAllDocuments: [Document!]
+  retrieveDocument(data: FindOneDocumentInput!): Document
   retrieveRemovedDocument(data: FindOneDocumentInput!): Document
+  retrieveAllRemovedDocuments: [Document!]
 }
 
 input TodoIdInput {

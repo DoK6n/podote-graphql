@@ -4,7 +4,7 @@ import { useGoBack } from '../../hooks';
 import { useRemoveDocumentMutation } from '../../lib/graphql/mutation/mutation.generated';
 import {
   RetrieveAllTodosDocument,
-  useRetrieveDocuementQuery,
+  useRetrieveDocumentQuery,
 } from '../../lib/graphql/query/query.generated';
 import { randomNumber } from '../../lib/randomNumber';
 import { useModalStore } from '../../lib/store/modal';
@@ -14,7 +14,7 @@ function DocumentModalContent() {
   const { modalState, modalClose } = useModalStore();
   const navigate = useNavigate();
 
-  const { data, loading, error } = useRetrieveDocuementQuery({
+  const { data, loading, error } = useRetrieveDocumentQuery({
     variables: {
       data: {
         id: modalState.documentId,
@@ -41,10 +41,10 @@ function DocumentModalContent() {
     navigate('/todo');
   };
 
-  const createdDt = dayjs(data?.retrieveDocuement?.createdDt).format(
+  const createdDt = dayjs(data?.retrieveDocument?.createdDt).format(
     'YYYY-MM-DD HH:mm:ss',
   );
-  const updatedDt = dayjs(data?.retrieveDocuement?.updatedDt).format(
+  const updatedDt = dayjs(data?.retrieveDocument?.updatedDt).format(
     'YYYY-MM-DD HH:mm:ss',
   );
 

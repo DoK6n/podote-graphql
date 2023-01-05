@@ -2,10 +2,14 @@ import { useCallback } from 'react';
 import { useModalStore } from '../../lib/store/modal';
 import { IconButton } from '../base';
 import { DotsVerticalRounded } from '../vectors';
-import { TodoId, DocumentId } from 'podote/types';
+import { Todo, Document } from '../../lib/graphql/types';
+
+type TodoId = Todo['id'] | Document['todoId'];
+type DocumentId = Todo['documentId'] | Document['id'];
+
 interface Props {
-  todoId: TodoId;
-  documentId: DocumentId;
+  todoId?: TodoId;
+  documentId?: DocumentId;
 }
 
 function MoreOptionsMenu({ todoId, documentId }: Props) {

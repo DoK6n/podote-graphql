@@ -1,5 +1,6 @@
 import { useRemoveTodoMutation } from '../../../lib/graphql/mutation/mutation.generated';
 import {
+  RetrieveAllRemovedDocumentsDocument,
   RetrieveAllRemovedTodoDocument,
   RetrieveAllTodosDocument,
 } from '../../../lib/graphql/query/query.generated';
@@ -26,6 +27,9 @@ function TodoRemoveButton({ id }: Props) {
         },
         {
           query: RetrieveAllTodosDocument,
+        },
+        {
+          query: RetrieveAllRemovedDocumentsDocument,
         },
       ],
     });

@@ -45,6 +45,18 @@ export class DocumentsService {
     } catch (e) {}
   }
 
+  async findAllDocumentsByUserId(userId: string) {
+    return await this.prisma.document.findMany({
+      where: {
+        userId,
+        isRemoved: false,
+      },
+      include: {
+        todo: true,
+      },
+    });
+  }
+
   async findOneDocumentById(userId: string, data: FindOneDocumentInput) {
     const { id } = data;
 
@@ -68,6 +80,21 @@ export class DocumentsService {
         id,
         userId,
         isRemoved: true,
+      },
+      include: {
+        todo: true,
+      },
+    });
+  }
+
+  async findAllRemovedDocuments(userId: string) {
+    return await this.prisma.document.findMany({
+      where: {
+        userId,
+        isRemoved: true,
+      },
+      include: {
+        todo: true,
       },
     });
   }

@@ -1,13 +1,22 @@
 import styled from '@emotion/styled';
-import { LoaderFunction, redirect, useLoaderData } from 'react-router-dom';
+import {
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { Block } from '../components/base';
 import GoBackButton from '../components/GoBackButton';
 import MobileHeader from '../components/MobileHeader';
 import { RecycleBinList } from '../components/recycleBin';
 import { Logo } from '../components/vectors';
-import { useGoBack } from '../hooks';
 import { checkIsLoggedIn } from '../lib/protectRoute';
 import { scrollbarStyle } from '../styles/scrollbar';
+import { useEffect, useState } from 'react';
+import ListModeSelector, {
+  ListMode,
+} from '../components/recycleBin/ListModeSelector';
 
 export const recyclebinLoader: LoaderFunction = async ({ request }) => {
   const isLoggedIn = checkIsLoggedIn();
@@ -19,8 +28,28 @@ export const recyclebinLoader: LoaderFunction = async ({ request }) => {
 interface LoaderResult {}
 
 function RecycleBin() {
-  // const {  } = useLoaderData() as LoaderResult;
-  const goBack = useGoBack();
+  // const {} = useLoaderData() as LoaderResult;
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate('/setting');
+  };
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [mode, setMode] = useState<ListMode>(
+    (searchParams.get('mode') as ListMode) ?? 'todo',
+  );
+
+  useEffect(() => {
+    const nextMode = (searchParams.get('mode') as ListMode) ?? 'todo';
+    if (nextMode !== mode) {
+      setMode(nextMode);
+    }
+  }, [mode, searchParams]);
+
+  const onSelectMode = (mode: ListMode) => {
+    setSearchParams({ mode });
+    navigate(`?mode=${mode}`);
+  };
 
   return (
     <>
@@ -33,14 +62,15 @@ function RecycleBin() {
         headerLeft={<GoBackButton onClick={goBack} />}
       />
       <ListBlock>
-        <RecycleBinList />
+        <ListModeSelector mode={mode} onSelectMode={onSelectMode} />
+        <RecycleBinList mode={mode} />
       </ListBlock>
     </>
   );
 }
 
 const ListBlock = styled(Block)`
-  gap: 0.625rem;
+  gap: 0.5rem;
   overflow-y: auto;
   padding: 1rem;
   ${scrollbarStyle}

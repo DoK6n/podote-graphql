@@ -34,12 +34,12 @@ export type RetrieveAllRemovedTodoQueryVariables = Types.Exact<{ [key: string]: 
 
 export type RetrieveAllRemovedTodoQuery = { __typename?: 'Query', retrieveAllRemovedTodo?: Array<{ __typename?: 'Todo', id: string, userId: string, documentId?: string | null, title: string, done: boolean, isRemoved: boolean, removedDt?: any | null }> | null };
 
-export type RetrieveDocuementQueryVariables = Types.Exact<{
+export type RetrieveDocumentQueryVariables = Types.Exact<{
   data: Types.FindOneDocumentInput;
 }>;
 
 
-export type RetrieveDocuementQuery = { __typename?: 'Query', retrieveDocuement?: { __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, todo?: { __typename?: 'Todo', id: string, title: string, userId: string } | null } | null };
+export type RetrieveDocumentQuery = { __typename?: 'Query', retrieveDocument?: { __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, todo?: { __typename?: 'Todo', id: string, title: string, done: boolean, userId: string } | null } | null };
 
 export type RetrieveRemovedDocumentQueryVariables = Types.Exact<{
   data: Types.FindOneDocumentInput;
@@ -47,6 +47,16 @@ export type RetrieveRemovedDocumentQueryVariables = Types.Exact<{
 
 
 export type RetrieveRemovedDocumentQuery = { __typename?: 'Query', retrieveRemovedDocument?: { __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null } | null };
+
+export type RetrieveAllDocumentsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type RetrieveAllDocumentsQuery = { __typename?: 'Query', retrieveAllDocuments?: Array<{ __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, todo?: { __typename?: 'Todo', id: string, title: string, done: boolean, userId: string } | null }> | null };
+
+export type RetrieveAllRemovedDocumentsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type RetrieveAllRemovedDocumentsQuery = { __typename?: 'Query', retrieveAllRemovedDocuments?: Array<{ __typename?: 'Document', id: string, userId: string, content?: any | null, todoId?: string | null, createdDt: any, updatedDt?: any | null, isRemoved: boolean, removedDt?: any | null, todo?: { __typename?: 'Todo', id: string, title: string, done: boolean, userId: string } | null }> | null };
 
 export const TodoEditableFragmentDoc = gql`
     fragment todoEditable on Todo {
@@ -282,9 +292,9 @@ export type RetrieveAllRemovedTodoQueryResult = Apollo.QueryResult<RetrieveAllRe
 export function refetchRetrieveAllRemovedTodoQuery(variables?: RetrieveAllRemovedTodoQueryVariables) {
       return { query: RetrieveAllRemovedTodoDocument, variables: variables }
     }
-export const RetrieveDocuementDocument = gql`
-    query retrieveDocuement($data: FindOneDocumentInput!) {
-  retrieveDocuement(data: $data) {
+export const RetrieveDocumentDocument = gql`
+    query retrieveDocument($data: FindOneDocumentInput!) {
+  retrieveDocument(data: $data) {
     id
     userId
     content
@@ -296,6 +306,7 @@ export const RetrieveDocuementDocument = gql`
     todo {
       id
       title
+      done
       userId
     }
   }
@@ -303,34 +314,34 @@ export const RetrieveDocuementDocument = gql`
     `;
 
 /**
- * __useRetrieveDocuementQuery__
+ * __useRetrieveDocumentQuery__
  *
- * To run a query within a React component, call `useRetrieveDocuementQuery` and pass it any options that fit your needs.
- * When your component renders, `useRetrieveDocuementQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useRetrieveDocumentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRetrieveDocumentQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useRetrieveDocuementQuery({
+ * const { data, loading, error } = useRetrieveDocumentQuery({
  *   variables: {
  *      data: // value for 'data'
  *   },
  * });
  */
-export function useRetrieveDocuementQuery(baseOptions: Apollo.QueryHookOptions<RetrieveDocuementQuery, RetrieveDocuementQueryVariables>) {
+export function useRetrieveDocumentQuery(baseOptions: Apollo.QueryHookOptions<RetrieveDocumentQuery, RetrieveDocumentQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RetrieveDocuementQuery, RetrieveDocuementQueryVariables>(RetrieveDocuementDocument, options);
+        return Apollo.useQuery<RetrieveDocumentQuery, RetrieveDocumentQueryVariables>(RetrieveDocumentDocument, options);
       }
-export function useRetrieveDocuementLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RetrieveDocuementQuery, RetrieveDocuementQueryVariables>) {
+export function useRetrieveDocumentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RetrieveDocumentQuery, RetrieveDocumentQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RetrieveDocuementQuery, RetrieveDocuementQueryVariables>(RetrieveDocuementDocument, options);
+          return Apollo.useLazyQuery<RetrieveDocumentQuery, RetrieveDocumentQueryVariables>(RetrieveDocumentDocument, options);
         }
-export type RetrieveDocuementQueryHookResult = ReturnType<typeof useRetrieveDocuementQuery>;
-export type RetrieveDocuementLazyQueryHookResult = ReturnType<typeof useRetrieveDocuementLazyQuery>;
-export type RetrieveDocuementQueryResult = Apollo.QueryResult<RetrieveDocuementQuery, RetrieveDocuementQueryVariables>;
-export function refetchRetrieveDocuementQuery(variables: RetrieveDocuementQueryVariables) {
-      return { query: RetrieveDocuementDocument, variables: variables }
+export type RetrieveDocumentQueryHookResult = ReturnType<typeof useRetrieveDocumentQuery>;
+export type RetrieveDocumentLazyQueryHookResult = ReturnType<typeof useRetrieveDocumentLazyQuery>;
+export type RetrieveDocumentQueryResult = Apollo.QueryResult<RetrieveDocumentQuery, RetrieveDocumentQueryVariables>;
+export function refetchRetrieveDocumentQuery(variables: RetrieveDocumentQueryVariables) {
+      return { query: RetrieveDocumentDocument, variables: variables }
     }
 export const RetrieveRemovedDocumentDocument = gql`
     query retrieveRemovedDocument($data: FindOneDocumentInput!) {
@@ -376,4 +387,104 @@ export type RetrieveRemovedDocumentLazyQueryHookResult = ReturnType<typeof useRe
 export type RetrieveRemovedDocumentQueryResult = Apollo.QueryResult<RetrieveRemovedDocumentQuery, RetrieveRemovedDocumentQueryVariables>;
 export function refetchRetrieveRemovedDocumentQuery(variables: RetrieveRemovedDocumentQueryVariables) {
       return { query: RetrieveRemovedDocumentDocument, variables: variables }
+    }
+export const RetrieveAllDocumentsDocument = gql`
+    query retrieveAllDocuments {
+  retrieveAllDocuments {
+    id
+    userId
+    content
+    todoId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+    todo {
+      id
+      title
+      done
+      userId
+    }
+  }
+}
+    `;
+
+/**
+ * __useRetrieveAllDocumentsQuery__
+ *
+ * To run a query within a React component, call `useRetrieveAllDocumentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRetrieveAllDocumentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRetrieveAllDocumentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRetrieveAllDocumentsQuery(baseOptions?: Apollo.QueryHookOptions<RetrieveAllDocumentsQuery, RetrieveAllDocumentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RetrieveAllDocumentsQuery, RetrieveAllDocumentsQueryVariables>(RetrieveAllDocumentsDocument, options);
+      }
+export function useRetrieveAllDocumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RetrieveAllDocumentsQuery, RetrieveAllDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RetrieveAllDocumentsQuery, RetrieveAllDocumentsQueryVariables>(RetrieveAllDocumentsDocument, options);
+        }
+export type RetrieveAllDocumentsQueryHookResult = ReturnType<typeof useRetrieveAllDocumentsQuery>;
+export type RetrieveAllDocumentsLazyQueryHookResult = ReturnType<typeof useRetrieveAllDocumentsLazyQuery>;
+export type RetrieveAllDocumentsQueryResult = Apollo.QueryResult<RetrieveAllDocumentsQuery, RetrieveAllDocumentsQueryVariables>;
+export function refetchRetrieveAllDocumentsQuery(variables?: RetrieveAllDocumentsQueryVariables) {
+      return { query: RetrieveAllDocumentsDocument, variables: variables }
+    }
+export const RetrieveAllRemovedDocumentsDocument = gql`
+    query retrieveAllRemovedDocuments {
+  retrieveAllRemovedDocuments {
+    id
+    userId
+    content
+    todoId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+    todo {
+      id
+      title
+      done
+      userId
+    }
+  }
+}
+    `;
+
+/**
+ * __useRetrieveAllRemovedDocumentsQuery__
+ *
+ * To run a query within a React component, call `useRetrieveAllRemovedDocumentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRetrieveAllRemovedDocumentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRetrieveAllRemovedDocumentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRetrieveAllRemovedDocumentsQuery(baseOptions?: Apollo.QueryHookOptions<RetrieveAllRemovedDocumentsQuery, RetrieveAllRemovedDocumentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RetrieveAllRemovedDocumentsQuery, RetrieveAllRemovedDocumentsQueryVariables>(RetrieveAllRemovedDocumentsDocument, options);
+      }
+export function useRetrieveAllRemovedDocumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RetrieveAllRemovedDocumentsQuery, RetrieveAllRemovedDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RetrieveAllRemovedDocumentsQuery, RetrieveAllRemovedDocumentsQueryVariables>(RetrieveAllRemovedDocumentsDocument, options);
+        }
+export type RetrieveAllRemovedDocumentsQueryHookResult = ReturnType<typeof useRetrieveAllRemovedDocumentsQuery>;
+export type RetrieveAllRemovedDocumentsLazyQueryHookResult = ReturnType<typeof useRetrieveAllRemovedDocumentsLazyQuery>;
+export type RetrieveAllRemovedDocumentsQueryResult = Apollo.QueryResult<RetrieveAllRemovedDocumentsQuery, RetrieveAllRemovedDocumentsQueryVariables>;
+export function refetchRetrieveAllRemovedDocumentsQuery(variables?: RetrieveAllRemovedDocumentsQueryVariables) {
+      return { query: RetrieveAllRemovedDocumentsDocument, variables: variables }
     }

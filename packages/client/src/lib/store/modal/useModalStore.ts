@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { devtools, subscribeWithSelector } from 'zustand/middleware';
-import { TodoId, DocumentId } from 'podote/types';
+import { TodoId, DocumentId } from '../../types';
 
 interface SelectedTodoState {
   todoId: TodoId;

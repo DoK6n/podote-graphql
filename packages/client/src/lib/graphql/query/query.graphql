@@ -74,8 +74,8 @@ query retrieveAllRemovedTodo {
   }
 }
 
-query retrieveDocuement($data: FindOneDocumentInput!) {
-  retrieveDocuement(data: $data) {
+query retrieveDocument($data: FindOneDocumentInput!) {
+  retrieveDocument(data: $data) {
     id
     userId
     content
@@ -87,6 +87,7 @@ query retrieveDocuement($data: FindOneDocumentInput!) {
     todo {
       id
       title
+      done
       userId
     }
   }
@@ -102,5 +103,43 @@ query retrieveRemovedDocument($data: FindOneDocumentInput!) {
     updatedDt
     isRemoved
     removedDt
+  }
+}
+
+query retrieveAllDocuments {
+  retrieveAllDocuments {
+    id
+    userId
+    content
+    todoId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+    todo {
+      id
+      title
+      done
+      userId
+    }
+  }
+}
+
+query retrieveAllRemovedDocuments {
+  retrieveAllRemovedDocuments {
+    id
+    userId
+    content
+    todoId
+    createdDt
+    updatedDt
+    isRemoved
+    removedDt
+    todo {
+      id
+      title
+      done
+      userId
+    }
   }
 }

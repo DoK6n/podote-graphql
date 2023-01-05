@@ -28,10 +28,17 @@ export class DocumentsResolver {
     return this.documentsService.createNewDocument(user.id, data);
   }
 
+  /** 문서 목록 조회 */
+  @UseGuards(FirebaseAuthGuard)
+  @Query(() => [Document], { nullable: true })
+  async retrieveAllDocuments(@DecodedTokenDecorator() user: DecodedToken) {
+    return this.documentsService.findAllDocumentsByUserId(user.id);
+  }
+
   /** 문서 조회 */
   @UseGuards(FirebaseAuthGuard)
   @Query(() => Document, { nullable: true })
-  async retrieveDocuement(
+  async retrieveDocument(
     @DecodedTokenDecorator() user: DecodedToken,
     @Args('data') data: FindOneDocumentInput,
   ) {
@@ -46,6 +53,15 @@ export class DocumentsResolver {
     @Args('data') data: FindOneDocumentInput,
   ) {
     return this.documentsService.findOneRemovedDocumentById(user.id, data);
+  }
+
+  /** 지운 문서 목록 조회 */
+  @UseGuards(FirebaseAuthGuard)
+  @Query(() => [Document], { nullable: true })
+  async retrieveAllRemovedDocuments(
+    @DecodedTokenDecorator() user: DecodedToken,
+  ) {
+    return this.documentsService.findAllRemovedDocuments(user.id);
   }
 
   /** 문서 내용 수정 */

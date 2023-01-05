@@ -130,10 +130,12 @@ export type MutationSwitchTodoOrderArgs = {
 export type Query = {
   __typename?: 'Query';
   login: UserWithSnsType;
+  retrieveAllDocuments?: Maybe<Array<Document>>;
+  retrieveAllRemovedDocuments?: Maybe<Array<Document>>;
   retrieveAllRemovedTodo?: Maybe<Array<Todo>>;
   retrieveAllTodos?: Maybe<Array<Todo>>;
   retrieveAllUsers?: Maybe<Array<User>>;
-  retrieveDocuement?: Maybe<Document>;
+  retrieveDocument?: Maybe<Document>;
   retrieveRemovedDocument?: Maybe<Document>;
   retrieveRemovedTodo?: Maybe<Todo>;
   retrieveTodo?: Maybe<Todo>;
@@ -141,7 +143,7 @@ export type Query = {
 };
 
 
-export type QueryRetrieveDocuementArgs = {
+export type QueryRetrieveDocumentArgs = {
   data: FindOneDocumentInput;
 };
 
@@ -411,10 +413,12 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   login?: Resolver<ResolversTypes['UserWithSnsType'], ParentType, ContextType>;
+  retrieveAllDocuments?: Resolver<Maybe<Array<ResolversTypes['Document']>>, ParentType, ContextType>;
+  retrieveAllRemovedDocuments?: Resolver<Maybe<Array<ResolversTypes['Document']>>, ParentType, ContextType>;
   retrieveAllRemovedTodo?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   retrieveAllTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
   retrieveAllUsers?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
-  retrieveDocuement?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveDocuementArgs, 'data'>>;
+  retrieveDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveDocumentArgs, 'data'>>;
   retrieveRemovedDocument?: Resolver<Maybe<ResolversTypes['Document']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedDocumentArgs, 'data'>>;
   retrieveRemovedTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveRemovedTodoArgs, 'data'>>;
   retrieveTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryRetrieveTodoArgs, 'data'>>;

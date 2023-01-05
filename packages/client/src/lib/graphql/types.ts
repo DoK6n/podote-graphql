@@ -128,10 +128,12 @@ export type MutationSwitchTodoOrderArgs = {
 export type Query = {
   __typename?: 'Query';
   login: UserWithSnsType;
+  retrieveAllDocuments?: Maybe<Array<Document>>;
+  retrieveAllRemovedDocuments?: Maybe<Array<Document>>;
   retrieveAllRemovedTodo?: Maybe<Array<Todo>>;
   retrieveAllTodos?: Maybe<Array<Todo>>;
   retrieveAllUsers?: Maybe<Array<User>>;
-  retrieveDocuement?: Maybe<Document>;
+  retrieveDocument?: Maybe<Document>;
   retrieveRemovedDocument?: Maybe<Document>;
   retrieveRemovedTodo?: Maybe<Todo>;
   retrieveTodo?: Maybe<Todo>;
@@ -139,7 +141,7 @@ export type Query = {
 };
 
 
-export type QueryRetrieveDocuementArgs = {
+export type QueryRetrieveDocumentArgs = {
   data: FindOneDocumentInput;
 };
 

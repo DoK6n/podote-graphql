@@ -2,16 +2,16 @@ import DocumentUpdatedAt from './DocumentUpdatedAt';
 import DocumentTitle from './DocumentTitle';
 import styled from '@emotion/styled';
 import { scrollbarStyle } from '../../styles/scrollbar';
-import { useRetrieveDocuementQuery } from '../../lib/graphql/query/query.generated';
+import { useRetrieveDocumentQuery } from '../../lib/graphql/query/query.generated';
 import { Outlet } from 'react-router-dom';
 import { MoreOptionsMenu } from '../recycleBin';
-import { DocumentId } from 'podote/types';
 import { useModalStore } from '../../lib/store/modal';
 import MobileModal from '../base/MobileModal';
 import DocumentModalContent from './DocumentModalContent';
+import { Document } from '../../lib/graphql/types';
 
 interface Props {
-  id: DocumentId;
+  id: Document['id'];
 }
 
 /**
@@ -29,7 +29,7 @@ interface Props {
 function Document({ id }: Props) {
   const { modalState } = useModalStore();
 
-  const { data, loading, error } = useRetrieveDocuementQuery({
+  const { data, loading, error } = useRetrieveDocumentQuery({
     variables: {
       data: {
         id,
@@ -37,21 +37,19 @@ function Document({ id }: Props) {
     },
   });
 
-  console.log(data);
-
   return (
     <DocumentWrapper>
-      {data && data.retrieveDocuement ? (
+      {data && data.retrieveDocument ? (
         <>
           <OptionsGroup>
             <MoreOptionsMenu
-              todoId={data.retrieveDocuement.todoId}
-              documentId={data.retrieveDocuement.id}
+              todoId={data.retrieveDocument.todoId}
+              documentId={data.retrieveDocument.id}
             />
           </OptionsGroup>
           <ScrollWrapper>
-            <DocumentUpdatedAt updatedDt={data.retrieveDocuement.updatedDt} />
-            <DocumentTitle title={data.retrieveDocuement.todo?.title} />
+            <DocumentUpdatedAt updatedDt={data.retrieveDocument.updatedDt} />
+            <DocumentTitle title={data.retrieveDocument.todo?.title} />
             {/* <DocumentHashTag /> */}
             <div
               contentEditable={true}
@@ -60,7 +58,7 @@ function Document({ id }: Props) {
               suppressContentEditableWarning={true}
               placeholder={'내용을 입력하세요.'}
             >
-              {JSON.stringify(data.retrieveDocuement.content)}
+              {JSON.stringify(data.retrieveDocument.content)}
             </div>
           </ScrollWrapper>
         </>

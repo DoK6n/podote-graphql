@@ -1,56 +1,25 @@
 import styled from '@emotion/styled';
-import { Outlet } from 'react-router-dom';
-import { useRetrieveAllRemovedTodoQuery } from '../../lib/graphql/query/query.generated';
-import { useModalStore } from '../../lib/store/modal';
 import { colors } from '../../styles/colors';
+import { scrollbarStyle } from '../../styles/scrollbar';
 import { RectinglePageBlock } from '../base';
-import MobileModal from '../base/MobileModal';
-import MoreOptionsMenu from './MoreOptionsMenu';
-import RecycleBinModalContent from './RecycleBinModalContent';
+import { ListMode } from './ListModeSelector';
+import RemovedDocumentList from './RemovedDocumentList';
+import RemovedTodoList from './RemovedTodoList';
 
-function RecycleBinList() {
-  const { loading, error, data } = useRetrieveAllRemovedTodoQuery();
-  const { modalState } = useModalStore();
-
-  return (
-    <Block>
-      {data && data.retrieveAllRemovedTodo ? (
-        data.retrieveAllRemovedTodo.map((todo) => (
-          <RecycleItemBlock key={todo.id}>
-            <ContentsGroup>
-              <Text>{todo.title}</Text>
-            </ContentsGroup>
-            <OptionsGroup>
-              <MoreOptionsMenu todoId={todo.id} documentId={todo.documentId} />
-            </OptionsGroup>
-          </RecycleItemBlock>
-        ))
-      ) : (
-        <Outlet />
-      )}
-      {modalState.isModalOpen && (
-        <MobileModal menus={<RecycleBinModalContent />} />
-      )}
-    </Block>
-  );
+interface Props {
+  mode: ListMode;
 }
 
-const Text = styled.div`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 13px;
-  line-height: 1.6;
-`;
-
-const RecycleItemBlock = styled(RectinglePageBlock)`
-  height: 2.5rem;
-  border: 1px solid ${colors.border0};
-  padding: 0.6rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
+function RecycleBinList({ mode }: Props) {
+  return (
+    <>
+      <Block>
+        {mode === 'todo' && <RemovedTodoList mode={mode} />}
+        {mode === 'document' && <RemovedDocumentList mode={mode} />}
+      </Block>
+    </>
+  );
+}
 
 const Block = styled(RectinglePageBlock)`
   width: 100%;
@@ -63,10 +32,8 @@ const Block = styled(RectinglePageBlock)`
   flex-direction: column;
   padding: 1.25rem 1rem 1rem 1rem;
   transition: all 0.2s ease-in-out;
+  overflow-y: auto;
+  ${scrollbarStyle}
 `;
-
-const ContentsGroup = styled.div``;
-
-const OptionsGroup = styled.div``;
 
 export default RecycleBinList;
