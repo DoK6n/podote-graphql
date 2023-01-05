@@ -19,9 +19,6 @@ export const RoundButton = styled.button<{ delay?: number }>`
   transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   animation: ${fadeInLeft} ${({ delay = 0.1 }) => delay}s ease;
-  /* &:hover {
-    background: ${colors.border3};
-  } */
 
   &:active {
     background: transparent;
