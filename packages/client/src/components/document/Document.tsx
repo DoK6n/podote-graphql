@@ -8,10 +8,8 @@ import { MoreOptionsMenu } from '../recycleBin';
 import { useModalStore } from '../../lib/store/modal';
 import MobileModal from '../base/MobileModal';
 import DocumentModalContent from './DocumentModalContent';
-import { Document } from '../../lib/graphql/types';
-
 interface Props {
-  id: Document['id'];
+  id: string;
 }
 
 /**
