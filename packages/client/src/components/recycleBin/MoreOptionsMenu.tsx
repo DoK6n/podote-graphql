@@ -2,10 +2,7 @@ import { useCallback } from 'react';
 import { useModalStore } from '../../lib/store/modal';
 import { IconButton } from '../base';
 import { DotsVerticalRounded } from '../vectors';
-import { Todo, Document } from '../../lib/graphql/types';
-
-type TodoId = Todo['id'] | Document['todoId'];
-type DocumentId = Todo['documentId'] | Document['id'];
+import { DocumentId, TodoId } from '../../lib/types';
 
 interface Props {
   todoId?: TodoId;
