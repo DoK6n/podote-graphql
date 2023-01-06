@@ -19,9 +19,10 @@ function DocumentTitle({ title = 'Untitled' }: Props) {
 }
 
 const Title = styled.div`
-  height: 1rem;
   font-size: 1.5rem;
   margin: 1rem 2rem 2.5rem 0;
+  width: 100%;
+  word-wrap: break-word;
 `;
 
 export default DocumentTitle;
