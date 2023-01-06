@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../../hooks';
 import { useRemoveDocumentMutation } from '../../lib/graphql/mutation/mutation.generated';
 import {
   RetrieveAllRemovedDocumentsDocument,
