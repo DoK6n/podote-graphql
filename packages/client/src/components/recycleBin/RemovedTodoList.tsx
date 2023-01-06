@@ -9,7 +9,7 @@ import MobileModal from '../base/MobileModal';
 import { Checked, FillPage, Unchecked } from '../vectors';
 import { ListMode } from './ListModeSelector';
 import MoreOptionsMenu from './MoreOptionsMenu';
-import RecycleBinModalContent from './RecycleBinTodoModalContent';
+import RecycleBinTodoModalContent from './RecycleBinTodoModalContent';
 
 interface Props {
   mode: ListMode;
@@ -43,7 +43,7 @@ function RemovedTodoList({ mode }: Props) {
         <Outlet />
       )}
       {modalState.isModalOpen && (
-        <MobileModal menus={<RecycleBinModalContent />} />
+        <MobileModal menus={<RecycleBinTodoModalContent />} />
       )}
     </>
   );
