@@ -26,13 +26,16 @@ function RecycleBinTodoModalContent({}: Props) {
   const [deleteAllRemovedTodosMutation] = useDeleteAllRemovedTodosMutation();
   const [restoreRemovedTodoMutation] = useRestoreRemovedTodoMutation();
 
-  const removedDocument = useRetrieveRemovedDocumentQuery({
-    variables: {
-      data: {
-        id: modalState.documentId!,
+  let removedDocument;
+  if (modalState.documentId) {
+    removedDocument = useRetrieveRemovedDocumentQuery({
+      variables: {
+        data: {
+          id: modalState.documentId,
+        },
       },
-    },
-  });
+    });
+  }
 
   const handleDocumentDelete = async () => {
     if (!modalState.documentId) return;
@@ -131,22 +134,20 @@ function RecycleBinTodoModalContent({}: Props) {
 
   return (
     <>
-      {modalState.documentId &&
-        removedDocument.data &&
-        removedDocument.data.retrieveRemovedDocument && (
-          <>
-            <PreviewDocsCard>
-              <DocsContent>
-                {JSON.stringify(
-                  removedDocument.data.retrieveRemovedDocument.content,
-                )}
-              </DocsContent>
-            </PreviewDocsCard>
-            <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
-              <p>문서 영구삭제</p>
-            </RoundButton>
-          </>
-        )}
+      {modalState.documentId && removedDocument?.data?.retrieveRemovedDocument && (
+        <>
+          <PreviewDocsCard>
+            <DocsContent>
+              {JSON.stringify(
+                removedDocument.data.retrieveRemovedDocument.content,
+              )}
+            </DocsContent>
+          </PreviewDocsCard>
+          <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
+            <p>문서 영구삭제</p>
+          </RoundButton>
+        </>
+      )}
 
       <RoundButton delay={randomNumber()} onClick={handleTodoRestore}>
         <p>할일 복원</p>
