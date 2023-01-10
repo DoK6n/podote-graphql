@@ -3,7 +3,7 @@ import { IconButton } from '../../base';
 import { useAddNewDocumentMutation } from '../../../lib/graphql/mutation/mutation.generated';
 import {
   RetrieveAllTodosDocument,
-  RetrieveDocuementDocument,
+  // RetrieveDocumentDocument
 } from '../../../lib/graphql/query/query.generated';
 import { useNavigate } from 'react-router-dom';
 
