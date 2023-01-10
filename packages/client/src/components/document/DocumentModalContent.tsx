@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRemoveDocumentMutation } from '../../lib/graphql/mutation/mutation.generated';
 import {
   RetrieveAllRemovedDocumentsDocument,
+  RetrieveAllRemovedTodoDocument,
   RetrieveAllTodosDocument,
   useRetrieveDocumentQuery,
 } from '../../lib/graphql/query/query.generated';
@@ -34,6 +35,9 @@ function DocumentModalContent() {
       refetchQueries: [
         {
           query: RetrieveAllTodosDocument,
+        },
+        {
+          query: RetrieveAllRemovedTodoDocument,
         },
         {
           query: RetrieveAllRemovedDocumentsDocument,

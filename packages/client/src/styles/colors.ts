@@ -5,30 +5,39 @@ export const colors = {
   gray3: '#4B4B4B',
   gray4: '#2E2E2E',
   gray5: '#121212',
-  /** 사이트 임베드 Input 배경, 아이콘 버튼 color 색 */
+  /** #605679 */
   purple0: '#605679',
-  /** 검색 Input 배경, 에디터 메뉴 버튼 배경, 모바일 nav active 색 */
+  /** #483d6b*/
   purple1: '#483d6b',
-  /** Input 배경 */
+  /** #453a63 */
   purple2: '#453a63',
-  /** 드롭다운 배경 */
+  /** #413966 */
   purple3: '#413966',
-  /** 전체 배경 */
+  /** #3b305a */
   purple4: '#3b305a',
-  /** Todo 배경 */
+  /** #362e57 */
   purple5: '#362e57',
+  /** #5a4d857b */
+  purple6: '#5a4d857b',
+  /** #9480d979 */
+  purple7: '#9480d979',
+  /** #5f45c9d4 */
+  nomalPurple: '#5f45c9d4',
+  /** #A08DD6 */
   brightPurple: '#A08DD6',
+  /** #524968 */
   disabledPurple: '#524968',
-  /** 사이트 임베드 Input 테두리 색 */
+  /** #9595d9 */
   border0: '#9595d9',
-  /** 드롭다운 테두리 */
+  /** #564689 */
   border1: '#564689',
+  /** #4d3e77 */
   border2: '#4d3e77',
-  /** Todo 테두리 색 */
+  /** #413966 */
   border3: '#413966',
 
-  /** 기본 텍스트, 에디터 메뉴 버튼 fill 색 */
+  /** #abb2bf */
   text0: '#abb2bf',
-  /** 문서 헤딩 색 */
+  /** #c9d1d9 */
   text1: '#c9d1d9',
 };

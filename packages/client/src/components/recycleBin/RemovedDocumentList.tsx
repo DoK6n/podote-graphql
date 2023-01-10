@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 import { useRetrieveAllRemovedDocumentsQuery } from '../../lib/graphql/query/query.generated';
 import { useModalStore } from '../../lib/store/modal';
-import { colors } from '../../styles/colors';
-import { IconButton, RectinglePageBlock } from '../base';
+import { IconButton } from '../base';
 import MobileModal from '../base/MobileModal';
+import { PreviewCard } from '../document';
+import Preview from '../document/preview/Preview';
 import { Checked, Unchecked } from '../vectors';
 import { ListMode } from './ListModeSelector';
 import MoreOptionsMenu from './MoreOptionsMenu';
@@ -24,7 +25,7 @@ function RemovedDocumentList({ mode }: Props) {
       removedDocuments.data &&
       removedDocuments.data.retrieveAllRemovedDocuments ? (
         removedDocuments.data.retrieveAllRemovedDocuments.map((document) => (
-          <RecycleItemBlock key={document.id}>
+          <PreviewCard key={document.id}>
             <TopGroup hasTodo={document.todo ? true : false}>
               {document.todo && (
                 <TodoGroup>
@@ -39,8 +40,8 @@ function RemovedDocumentList({ mode }: Props) {
                 documentId={document.id}
               />
             </TopGroup>
-            <Content>{JSON.stringify(document.content)}</Content>
-          </RecycleItemBlock>
+            <Preview documentContent={document.content} />
+          </PreviewCard>
         ))
       ) : (
         <Outlet />
@@ -70,28 +71,6 @@ const Text = styled.div`
   font-size: 13px;
   line-height: 1.6;
   width: 80px;
-`;
-
-const Content = styled.div`
-  overflow: hidden;
-  word-wrap: break-word;
-  font-size: 13px;
-  line-height: 1.6;
-`;
-
-const RecycleItemBlock = styled(RectinglePageBlock)`
-  cursor: default;
-  height: 200px;
-  width: 140px;
-  border: 1px solid ${colors.border1};
-  padding: 0.6rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 0.5rem;
-  &:hover {
-    background-color: ${colors.purple2};
-  }
 `;
 
 const TopGroup = styled.div<{ hasTodo: boolean }>`

@@ -13,9 +13,9 @@ import {
 } from '../../lib/graphql/query/query.generated';
 import { randomNumber } from '../../lib/randomNumber';
 import { useModalStore } from '../../lib/store/modal';
-import { colors } from '../../styles/colors';
-import { scrollbarStyle } from '../../styles/scrollbar';
-import { Card, RoundButton } from '../base';
+import { RoundButton } from '../base';
+import { PreviewCard } from '../document';
+import Preview from '../document/preview/Preview';
 
 interface Props {}
 
@@ -136,13 +136,13 @@ function RecycleBinTodoModalContent({}: Props) {
     <>
       {modalState.documentId && removedDocument?.data?.retrieveRemovedDocument && (
         <>
-          <PreviewDocsCard>
-            <DocsContent>
-              {JSON.stringify(
-                removedDocument.data.retrieveRemovedDocument.content,
-              )}
-            </DocsContent>
-          </PreviewDocsCard>
+          <PreviewCard small={true}>
+            <Preview
+              documentContent={
+                removedDocument.data.retrieveRemovedDocument.content
+              }
+            />
+          </PreviewCard>
           <RoundButton delay={randomNumber()} onClick={handleDocumentDelete}>
             <p>문서 영구삭제</p>
           </RoundButton>
@@ -161,20 +161,5 @@ function RecycleBinTodoModalContent({}: Props) {
     </>
   );
 }
-
-const PreviewDocsCard = styled(Card)`
-  border: 1px solid white;
-  height: 200px;
-  width: 140px;
-  background-color: ${colors.purple4};
-  ${scrollbarStyle}
-`;
-
-const DocsContent = styled.div`
-  overflow: hidden;
-  word-wrap: break-word;
-  font-size: 13px;
-  line-height: 1.6;
-`;
 
 export default RecycleBinTodoModalContent;

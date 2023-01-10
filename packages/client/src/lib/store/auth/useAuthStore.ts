@@ -21,8 +21,8 @@ export const useAuthStore = create<AuthStore>()(
   ),
 );
 
-useAuthStore.subscribe(
-  (state) => state.userState,
-  (previousSelectedState) =>
-    console.log('[subscribe]has user ➜', previousSelectedState ? true : false),
-);
+// useAuthStore.subscribe(
+//   (state) => state.userState,
+//   (previousSelectedState) =>
+//     console.log('[subscribe]has user ➜', previousSelectedState ? true : false),
+// );

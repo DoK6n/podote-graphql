@@ -24,6 +24,14 @@ function GlobalStyles() {
           overflow-x: overlay;
 
           ${scrollbarStyle}
+          // 에디터 툴팁
+          & .MuiTooltip-tooltip {
+            background: #4d436c;
+            color: #abb2bf;
+            & .MuiTooltip-arrow {
+              color: rgb(77, 67, 108);
+            }
+          }
         }
         [contenteditable] {
           outline: 0px solid transparent;

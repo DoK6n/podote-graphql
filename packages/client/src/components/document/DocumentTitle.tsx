@@ -20,7 +20,8 @@ function DocumentTitle({ title = 'Untitled' }: Props) {
 
 const Title = styled.div`
   font-size: 1.5rem;
-  margin: 1rem 2rem 2.5rem 0;
+  margin: 1rem 0 1rem 0;
+  padding: 0 1rem 0 1rem;
   width: 100%;
   word-wrap: break-word;
 `;

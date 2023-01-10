@@ -13,6 +13,7 @@ function DocumentUpdatedDt({ updatedDt }: Props) {
 
 const Block = styled.div`
   color: #4d3e77;
+  margin: 0 1rem 0 1rem;
 `;
 
 export default DocumentUpdatedDt;

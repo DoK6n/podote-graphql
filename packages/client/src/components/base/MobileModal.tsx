@@ -67,7 +67,7 @@ const menuBox = css`
   justify-content: flex-end;
   gap: 2rem;
 
-  padding: 1rem 2rem 2rem 2rem;
+  padding: 1rem 2rem 4rem 2rem;
   border-radius: 1rem;
   color: ${colors.text1};
 `;
