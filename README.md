@@ -1,16 +1,28 @@
-# Podote v2
+> _[Podote v1 repo](https://podote.com)_
 
-`Podote` : Purple + Todolist + Note (notion, acreom, note.com 등)
+<br /><br />
 
-[Podote version 1](https://podote.com)
+# 업무를 심플하게, Podote  
 
-_이 프로젝트는 모노레포로 관리됩니다._
+> `Podote` : Purple + Todolist + Note (notion, acreom, note.com 등)
 
-## 할일에 다양한 기능이 있는 문서를 추가해서 해야할 업무를 관리하세요.
+할일에 다양한 기능이 있는 문서를 추가해서 해야할 업무를 관리하세요.  
 
 간단한 TodoList 기능으로도 사용할 수 있고,  
-사이트 임베드, 이미지, Markdown, 표 등 다양한 기능이 있는 문서를 추가할 수 있어요.
+사이트 임베드, 이미지, Markdown등 다양한 기능이 있는 문서를 추가할 수 있어요.  
 
+<br /><br /><br />
+
+# 리팩토링
+
+- 모바일웹 우선개발 ( 현재는 모바일웹만 개발된 상태 )
+- react router dom 6를 활용한 인증체크
+- graphql-codegen을 통한 타입, gql 쿼리, 커스텀훅 자동생성하도록 설정
+- 인프라 환경 이전 ( aws -> vercel )
+- ApolloClient Cache Hook
+- 모노레포 환경 구축
+
+<br /><br /><br /><br />
 
 ## commit message
 ```
