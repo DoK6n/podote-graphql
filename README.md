@@ -1,4 +1,4 @@
-> _[Podote v1 repo](https://podote.com)_
+> 이전 버전 - _[Podote v1 프론트 repo](https://github.com/DoK6n/podote)_ , _[Podote v1 서버 repo](https://github.com/DoK6n/podote-server)_
 
 <br /><br />
 
