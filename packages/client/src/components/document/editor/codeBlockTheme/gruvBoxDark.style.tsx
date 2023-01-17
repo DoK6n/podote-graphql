@@ -61,8 +61,6 @@ const gruvBoxTheme = /*@__PURE__*/ EditorView.theme(
     '.cm-selectionMatch': { backgroundColor: '#aafe661a' },
     '&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket': {
       backgroundColor: '#7b6da0',
-      borderRadius: '4px',
-      outline: '1px solid #6c5f8f',
     },
     '.cm-gutters': {
       backgroundColor: gruvboxDark.background,
