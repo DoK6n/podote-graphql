@@ -56,6 +56,7 @@ import { gruvBox } from './codeBlockTheme/gruvBoxDark.style';
 import { useCallback, useEffect, useState } from 'react';
 import { DocumentId } from '../../../lib/types';
 import DocumentSaveButton from '../DocumentSaveButton';
+import Toolbar from './toolbar/Toolbar';
 
 const initialContent: RemirrorJSON = {
   type: 'doc',
@@ -155,7 +156,8 @@ function Editor({ content, isEditable = true, documentId }: Props) {
         >
           {editable && <DocumentSaveButton id={documentId} />}
           <EditorComponent />
-          {editable && <EditorToolbar />}
+          {/* {editable && <EditorToolbar />} */}
+          {editable && <Toolbar />}
         </Remirror>
       </ThemeProvider>
     </CustomThemeStyledCss>
