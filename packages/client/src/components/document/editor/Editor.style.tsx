@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { colors } from '../../../styles/colors';
 
@@ -136,6 +136,13 @@ export const CustomThemeStyledCss = styled.div<{ editable?: boolean }>`
     overflow-y: hidden;
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
+
+  .remirror-editor.ProseMirror .ProseMirror-gapcursor:after {
+    top: -1px;
+    width: 40px;
+    border-top: 4px solid ${colors.text0};
+    animation: ${keyframes` 50% { opacity: 0; }`} 1.1s linear infinite;
   }
 
   .remirror-theme .remirror-editor-wrapper .remirror-editor code {
