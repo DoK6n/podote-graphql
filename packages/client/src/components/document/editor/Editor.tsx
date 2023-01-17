@@ -53,7 +53,7 @@ import {
 import { CustomThemeStyledCss } from './Editor.style';
 import { EditorToolbar } from './toolbar';
 import { gruvBox } from './codeBlockTheme/gruvBoxDark.style';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DocumentId } from '../../../lib/types';
 import DocumentSaveButton from '../DocumentSaveButton';
 
@@ -102,11 +102,37 @@ function Editor({ content, isEditable = true, documentId }: Props) {
     }),
   ];
 
-  const { manager, state, setState } = useRemirror({
+  const { manager, state, setState, getContext } = useRemirror({
     extensions: extensions,
     content: content ? content : initialContent,
     selection: 'end',
   });
+
+  useEffect(() => {
+    /**
+     * `cmContentTypeCast`
+     * 타입 추론에 의한 Element interface에는
+     * ContentEditable 속성 관련 interface가 상속 되어 있지 않아
+     * ContentEditable이 상속된 HTMLElement로 강제 타입 캐스팅
+     */
+    const viewDomList = getContext()?.view.dom.children;
+    if (viewDomList !== undefined) {
+      for (const cmEditor of viewDomList) {
+        if (cmEditor.classList.contains('cm-editor')) {
+          for (const cmScroller of cmEditor.children) {
+            if (cmScroller.classList.contains('cm-scroller')) {
+              for (const cmContent of cmScroller.children) {
+                if (cmContent.classList.contains('cm-content')) {
+                  const cmContentTypeCast = cmContent as HTMLElement;
+                  cmContentTypeCast.contentEditable = `${editable}`;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }, [editable]);
 
   const onChangeState = useCallback(
     (parameter: RemirrorEventListenerProps<Extension>) => {
