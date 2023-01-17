@@ -32,8 +32,7 @@ import {
   TaskListExtension,
 } from '@remirror/extension-list';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
-
-// import { bracketMatching, foldGutter, foldKeymap } from '@codemirror/language';
+import { bracketMatching } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import {
   history,
@@ -43,11 +42,11 @@ import {
   // indentLess,
 } from '@codemirror/commands';
 // import {
-//   drawSelection,
-//   highlightActiveLineGutter,
-//   highlightSpecialChars,
-//   keymap,
-//   rectangularSelection,
+  //   drawSelection,
+  //   highlightActiveLineGutter,
+  //   highlightSpecialChars,
+  //   keymap,
+  //   rectangularSelection,
 // } from '@codemirror/view';
 // import { EditorState as CodeMirrorEditorState } from '@codemirror/state';
 
@@ -99,7 +98,7 @@ function Editor({ content, isEditable = true, documentId }: Props) {
     new NodeFormattingExtension(),
     new CodeMirrorExtension({
       languages,
-      extensions: [gruvBox, history()],
+      extensions: [gruvBox, history(), bracketMatching()],
     }),
   ];
 
