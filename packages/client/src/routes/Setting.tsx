@@ -38,7 +38,7 @@ function Setting() {
     <>
       <MobileHeader title={<div>Setting</div>} />
       <SettingBlock>
-        <Button>내 계정</Button>
+        {/* <Button>내 계정</Button> */}
         <Button onClick={handleGoRecycleBin}>휴지통</Button>
       </SettingBlock>
       <Footer />
