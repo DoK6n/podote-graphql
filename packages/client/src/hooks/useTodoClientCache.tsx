@@ -1,4 +1,5 @@
 import { gql, useApolloClient } from '@apollo/client';
+import { MutableRefObject } from 'react';
 import {
   RetrieveAllTodosDocument,
   TodoEditableFragmentDoc,

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import GoDocsButton from '../GoDocsButton';
-import { memo, useRef } from 'react';
+import { memo, useState } from 'react';
 import {
   TodoRemoveButton,
   TodoEditButton,
@@ -9,7 +9,9 @@ import {
   AddTodoDocumentButton,
 } from './todoButtons';
 import { TodoItemTitle, TodoItemCheckBox } from './todoItems';
-import { Maybe, Todo } from '../../lib/graphql/types';
+import { Maybe } from '../../lib/graphql/types';
+import { colors } from '../../styles/colors';
+import { css, keyframes } from '@emotion/react';
 
 interface Props {
   id: string;
@@ -28,47 +30,64 @@ function TodoItem({
   editable,
   isDone = false,
 }: Props) {
-  const titleRef = useRef<HTMLDivElement | null>(null);
+  const [text, setText] = useState(title);
 
   return (
-    <TodoItemWrapper>
+    <TodoItemWrapper editable={editable}>
       <TodoItemCheckBoxGroup>
         <TodoItemCheckBox id={id} isDone={isDone} />
       </TodoItemCheckBoxGroup>
       <TodoItemTitleGroup>
         <TodoItemTitle
           id={id}
-          title={title}
+          title={text}
           editable={editable}
-          ref={titleRef}
+          setText={setText}
         />
-        {hasDocument && (
-          <TodoItemIconWrapper>
-            <GoDocsButton documentId={documentId} hasDocument={hasDocument} />
-          </TodoItemIconWrapper>
-        )}
       </TodoItemTitleGroup>
       <TodoItemIconWrapper>
-        {!hasDocument && <AddTodoDocumentButton todoId={id} />}
+        {!hasDocument ? <AddTodoDocumentButton todoId={id} /> : <GoDocsButton documentId={documentId} hasDocument={hasDocument} />}
         {/* {editable ? <TodoSaveButton id={id} /> : <TodoEditButton id={id} />} */}
         {!editable && <TodoEditButton id={id} />}
-        {editable && <TodoEditCancel id={id} ref={titleRef} />}
+        {editable && (
+          <TodoEditCancel
+            id={id}
+            setText={setText}
+          />
+        )}
         <TodoRemoveButton id={id} />
       </TodoItemIconWrapper>
     </TodoItemWrapper>
   );
 }
 
-const TodoItemWrapper = styled.div`
+const blinkingEffect = keyframes`
+  50% {
+    border: 1px dotted #483d6b;
+  }
+`;
+
+const TodoItemWrapper = styled.div<{ editable: boolean }>`
   gap: 5px;
   display: flex;
   align-items: center;
   border-radius: 6px;
   padding: 5px;
   margin-right: 1rem;
-  &:hover {
-    background-color: #3f3663;
-  }
+
+  ${({ editable }) =>
+    editable
+      ? css`
+          border: 1px solid ${colors.purple7};
+          animation: ${blinkingEffect} 1.3s linear infinite;
+          caret-color: ${colors.brightPurple};
+        `
+      : css`
+          &:hover {
+            background-color: #3f3663;
+          }
+          border: 1px solid #00000000;
+        `}
 `;
 
 /** 가장 좌측에 위치할 첫번째 그룹 - @example `checkBox` */

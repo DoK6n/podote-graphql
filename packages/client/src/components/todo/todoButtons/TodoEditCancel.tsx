@@ -5,17 +5,17 @@ import { Cancel } from '../../vectors';
 
 interface Props {
   id: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const TodoEditCancel = forwardRef<HTMLDivElement, Props>(({ id }, ref) => {
+function TodoEditCancel({ id, setText }: Props) {
   const { getBeforeEditTodoTitle, setUnEditable } = useTodoClientCache();
 
   const handleEditCancel = async () => {
     setUnEditable(id);
     const beforeTitle = getBeforeEditTodoTitle(id);
-    const forwardedRef = ref as MutableRefObject<HTMLDivElement | null>;
-    if (!forwardedRef.current || !beforeTitle) return;
-    forwardedRef.current.innerText = beforeTitle;
+    if (!beforeTitle) return;
+    setText(beforeTitle);
   };
 
   return (
@@ -23,6 +23,6 @@ const TodoEditCancel = forwardRef<HTMLDivElement, Props>(({ id }, ref) => {
       <Cancel size={18} />
     </IconButton>
   );
-});
+}
 
 export default TodoEditCancel;
