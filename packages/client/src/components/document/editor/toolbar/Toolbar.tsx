@@ -308,7 +308,7 @@ const AccordionBlock = styled.div<{ isToggle: boolean }>`
   display: flex;
   justify-content: space-between;
   color: ${colors.text1};
-  /* max-width: ${({ isToggle }) => (isToggle ? '11rem' : '0')}; */
+  max-width: ${({ isToggle }) => (isToggle ? '11rem' : '0')};
   min-width: ${({ isToggle }) => (isToggle ? '11rem' : '0')};
   overflow: auto;
   white-space: nowrap;
