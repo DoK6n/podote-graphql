@@ -9,6 +9,8 @@ import { useModalStore } from '../../lib/store/modal';
 import MobileModal from '../base/MobileModal';
 import DocumentModalContent from './DocumentModalContent';
 import { Editor } from './editor';
+// import DocumentSaveButton from './DocumentSaveButton';
+import { Toaster } from 'react-hot-toast';
 
 interface Props {
   id: string;
@@ -36,9 +38,11 @@ function Document({ id }: Props) {
   return (
     <>
       <Block>
+        <Toaster position="top-center" reverseOrder={false} />
         {data && data.retrieveDocument ? (
           <>
             <OptionsGroup>
+              {/* <DocumentSaveButton id={data.retrieveDocument.id} /> */}
               <MoreOptionsMenu
                 todoId={data.retrieveDocument.todoId}
                 documentId={data.retrieveDocument.id}

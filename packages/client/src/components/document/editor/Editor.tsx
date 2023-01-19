@@ -42,11 +42,11 @@ import {
   // indentLess,
 } from '@codemirror/commands';
 // import {
-  //   drawSelection,
-  //   highlightActiveLineGutter,
-  //   highlightSpecialChars,
-  //   keymap,
-  //   rectangularSelection,
+//   drawSelection,
+//   highlightActiveLineGutter,
+//   highlightSpecialChars,
+//   keymap,
+//   rectangularSelection,
 // } from '@codemirror/view';
 // import { EditorState as CodeMirrorEditorState } from '@codemirror/state';
 
