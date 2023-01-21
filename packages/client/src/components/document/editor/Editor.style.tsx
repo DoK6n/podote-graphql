@@ -121,6 +121,16 @@ export const CustomThemeStyledCss = styled.div<{ editable?: boolean }>`
   .remirror-theme h6 {
     color: ${colors.text1};
   }
+  
+  .remirror-theme h1 {
+    margin: 0.8rem 0 0.8rem 0;
+  }
+
+  .remirror-theme h2 {
+    margin: 0.2rem 0 0.2rem 0;
+  }
+
+
   .remirror-editor-wrapper {
     padding-top: 0;
   }
