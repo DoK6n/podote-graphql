@@ -1,6 +1,7 @@
 import { EditorView } from '@codemirror/view';
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
+import { colors } from '../../../../styles/colors';
 
 const gruvboxDark = {
   chalky: '#fabd2f',
@@ -35,19 +36,28 @@ const gruvBoxTheme = /*@__PURE__*/ EditorView.theme(
       padding: '1em 2em 1em 0.3em',
       margin: '0.5em 0.5em 0.5em 0',
       tabSize: '2',
+    },
+    '.cm-line': {
       fontFamily: '"Fira Code", Consolas, Monaco, "Andale Mono", monospace',
+      fontSize: 'small',
+      color: colors.text0,
+      fontWeight: 500,
     },
     '.cm-content': {
       caretColor: gruvboxDark.cursor,
     },
     '.cm-cursor, .cm-dropCursor': { borderLeftColor: gruvboxDark.cursor },
-    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
-      backgroundColor: gruvboxDark.selection,
-    },
+    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection':
+      {
+        backgroundColor: gruvboxDark.selection,
+      },
     '&.cm-editor.cm-focused': {
       outline: '1px solid #9595d9 !important',
     },
-    '.,cm-panels': { backgroundColor: gruvboxDark.darkBackground, color: gruvboxDark.ivory },
+    '.,cm-panels': {
+      backgroundColor: gruvboxDark.darkBackground,
+      color: gruvboxDark.ivory,
+    },
     '.cm-panels.cm-panels-top': { borderBottom: '2px solid black' },
     '.cm-panels.cm-panels-bottom': { borderTop: '2px solid black' },
     '.cm-searchMatch': {
@@ -114,13 +124,32 @@ The highlighting style for code in the One Dark theme.
 */
 const gruvBoxHighlightStyle = /*@__PURE__*/ HighlightStyle.define([
   { tag: tags.keyword, color: gruvboxDark.coral },
-  { tag: [tags.name, tags.deleted, tags.character, tags.propertyName, tags.macroName], color: gruvboxDark.chalky },
-  { tag: [/*@__PURE__*/ tags.function(tags.variableName), tags.labelName], color: gruvboxDark.chalky },
   {
-    tag: [tags.color, /*@__PURE__*/ tags.constant(tags.name), /*@__PURE__*/ tags.standard(tags.name)],
+    tag: [
+      tags.name,
+      tags.deleted,
+      tags.character,
+      tags.propertyName,
+      tags.macroName,
+    ],
+    color: gruvboxDark.chalky,
+  },
+  {
+    tag: [/*@__PURE__*/ tags.function(tags.variableName), tags.labelName],
+    color: gruvboxDark.chalky,
+  },
+  {
+    tag: [
+      tags.color,
+      /*@__PURE__*/ tags.constant(tags.name),
+      /*@__PURE__*/ tags.standard(tags.name),
+    ],
     color: gruvboxDark.whiskey,
   },
-  { tag: [/*@__PURE__*/ tags.definition(tags.name), tags.separator], color: gruvboxDark.invalid },
+  {
+    tag: [/*@__PURE__*/ tags.definition(tags.name), tags.separator],
+    color: gruvboxDark.invalid,
+  },
   {
     tag: [
       tags.typeName,
@@ -152,14 +181,23 @@ const gruvBoxHighlightStyle = /*@__PURE__*/ HighlightStyle.define([
   { tag: tags.strikethrough, textDecoration: 'line-through' },
   { tag: tags.link, color: gruvboxDark.stone, textDecoration: 'underline' },
   { tag: tags.heading, fontWeight: 'bold', color: gruvboxDark.coral },
-  { tag: [tags.atom, tags.bool, /*@__PURE__*/ tags.special(tags.variableName)], color: gruvboxDark.whiskey },
-  { tag: [tags.processingInstruction, tags.string, tags.inserted], color: gruvboxDark.sage },
+  {
+    tag: [tags.atom, tags.bool, /*@__PURE__*/ tags.special(tags.variableName)],
+    color: gruvboxDark.whiskey,
+  },
+  {
+    tag: [tags.processingInstruction, tags.string, tags.inserted],
+    color: gruvboxDark.sage,
+  },
   { tag: tags.invalid, color: gruvboxDark.invalid },
 ]);
 /**
 Extension to enable the One Dark theme (both the editor theme and
 the highlight style).
 */
-const gruvBox = [gruvBoxTheme, /*@__PURE__*/ syntaxHighlighting(gruvBoxHighlightStyle)];
+const gruvBox = [
+  gruvBoxTheme,
+  /*@__PURE__*/ syntaxHighlighting(gruvBoxHighlightStyle),
+];
 
 export { gruvBox, gruvBoxHighlightStyle, gruvBoxTheme };

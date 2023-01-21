@@ -80,6 +80,10 @@ export const extensionListItemStyles = css`
 `;
 
 export const CustomThemeStyledCss = styled.div<{ editable?: boolean }>`
+  @font-face {
+    font-family: Fira Code;
+    src: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&display=swap');
+  }
   width: 100%;
   padding: 1rem 0 1rem 0;
   color: ${colors.text0};
@@ -121,7 +125,7 @@ export const CustomThemeStyledCss = styled.div<{ editable?: boolean }>`
   .remirror-theme h6 {
     color: ${colors.text1};
   }
-  
+
   .remirror-theme h1 {
     margin: 0.8rem 0 0.8rem 0;
   }
@@ -129,7 +133,6 @@ export const CustomThemeStyledCss = styled.div<{ editable?: boolean }>`
   .remirror-theme h2 {
     margin: 0.2rem 0 0.2rem 0;
   }
-
 
   .remirror-editor-wrapper {
     padding-top: 0;
