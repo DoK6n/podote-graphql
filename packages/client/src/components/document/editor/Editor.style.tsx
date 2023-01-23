@@ -79,6 +79,10 @@ export const extensionListItemStyles = css`
         border-left-color: ${colors.purple7};
       }
     }
+
+  }
+  & .remirror-editor ol div.remirror-list-spine {
+    display: none;
   }
 `;
 
