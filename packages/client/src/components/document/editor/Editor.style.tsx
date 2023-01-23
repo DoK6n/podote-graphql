@@ -73,8 +73,11 @@ export const extensionListItemStyles = css`
         }
       }
     }
-    & div > ul > div.remirror-list-spine {
+    & div.remirror-list-spine {
       border-left-color: ${colors.purple1};
+      &:hover {
+        border-left-color: ${colors.purple7};
+      }
     }
   }
 `;
