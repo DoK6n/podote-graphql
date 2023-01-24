@@ -4,6 +4,7 @@ import {
   Remirror,
   useRemirror,
   ThemeProvider,
+  FloatingToolbar,
 } from '@remirror/react';
 import { Extension, RemirrorEventListenerProps, RemirrorJSON } from 'remirror';
 import {
@@ -56,7 +57,8 @@ import { gruvBox } from './codeBlockTheme/gruvBoxDark.style';
 import { useCallback, useEffect, useState } from 'react';
 import { DocumentId } from '../../../lib/types';
 import DocumentSaveButton from '../DocumentSaveButton';
-import Toolbar from './toolbar/Toolbar';
+// import Toolbar from './toolbar/Toolbar';
+import { Toolbar, FloatingLinkToolbar } from './toolbar';
 
 const initialContent: RemirrorJSON = {
   type: 'doc',
@@ -156,6 +158,7 @@ function Editor({ content, isEditable = true, documentId }: Props) {
         >
           {editable && <DocumentSaveButton id={documentId} />}
           <EditorComponent />
+          <FloatingLinkToolbar />
           {/* {editable && <EditorToolbar />} */}
           {editable && <Toolbar />}
         </Remirror>

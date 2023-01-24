@@ -14,6 +14,9 @@ export { TableMoveLeft } from '@emotion-icons/fluentui-system-filled/TableMoveLe
 export { TableMoveRight } from '@emotion-icons/fluentui-system-filled/TableMoveRight';
 export { TableDeleteColumn } from '@emotion-icons/fluentui-system-filled/TableDeleteColumn';
 export { TableDeleteRow } from '@emotion-icons/fluentui-system-filled/TableDeleteRow';
+export { Link as LinkIcon } from '@emotion-icons/fluentui-system-filled/Link';
+export { LinkDismiss as UnLinkIcon } from '@emotion-icons/fluentui-system-filled/LinkDismiss';
+export { LinkEdit as LinkEditIcon } from '@emotion-icons/fluentui-system-filled/LinkEdit';
 
 export { Page as OutlinePage } from '@emotion-icons/fluentui-system-regular/Page';
 export { GlobeSearch } from '@emotion-icons/fluentui-system-regular/GlobeSearch';

@@ -36,7 +36,7 @@ const Button = styled.button<{
   display: inline-flex;
   align-items: center;
   background-color: ${({ isActive }) =>
-    isActive ? colors.purple1 : 'transparent'};
+    isActive ? colors.purple1 : colors.purple4};
 
   &:hover {
     background-color: ${colors.purple1};
