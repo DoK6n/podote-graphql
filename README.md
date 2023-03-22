@@ -68,12 +68,12 @@ ci: ci 구성파일 및 스크립트 수정
 feat: 기능
 fix: 버그 수정
 docs: 문서
-style: 코드 의미에 영향을 주지 않는 변경사항 ( formatting )
+style: 코드 의미에 영향을 주지 않는 변경사항 ( formatting, 주석 등 )
 design: 디자인 관련 (css나 svg, img, png 파일 등)
 refactor: 코드 리팩토링
 test: 테스트 코드
 build: 시스템 또는 외부 종속성에 영향을 미치는 변경 사항 (pnpm, npm, yarn 레벨)
 revert: 롤백
 perf: 성능 개선
-chore: 그 외 자잘한 수정, 패키니 매니저 설정, 코드 수정 없이 설정 변경
+chore: 그 외 자잘한 수정, 패키지 매니저 설정, 코드 수정 없이 설정 변경
 ```
