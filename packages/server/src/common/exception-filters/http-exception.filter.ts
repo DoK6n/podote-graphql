@@ -28,14 +28,14 @@ export class HttpExceptionFilter implements GqlExceptionFilter {
           apolloException.stack,
         );
       default:
-        const ctx = host.switchToHttp();
-        const res = ctx.getResponse<Response>();
-        const status = exception.getStatus();
-        this.logger.error(
-          `${status} ➜ ${exception}`,
-          exception.cause ? exception.cause.stack : exception.stack,
-        );
-        res.status(status).json(exception.getResponse());
+        // const ctx = host.switchToHttp();
+        // const res = ctx.getResponse<Response>();
+        // const status = exception.getStatus();
+        // this.logger.error(
+        //   `${status} ➜ ${exception}`,
+        //   exception.cause ? exception.cause.stack : exception.stack,
+        // );
+        // res.status(status).json(exception.getResponse());
         break;
     }
   }
