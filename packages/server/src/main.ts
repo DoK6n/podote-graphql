@@ -7,6 +7,7 @@ import firebaseAdmin from 'firebase-admin';
 import { firebaseConfig } from '@/config';
 import cookieParser from 'cookie-parser';
 import { getMyIp } from '@/common/utils';
+import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ async function bootstrap() {
       process.env.NODE_ENV === 'production'
         ? ['log', 'error', 'warn']
         : ['log', 'debug', 'error', 'verbose', 'warn'],
+    snapshot: true,
   });
 
   const prismaService = app.get(PrismaService);
@@ -38,11 +40,11 @@ async function bootstrap() {
 
               🚀 Podote GraphQL Server ready at: ${
                 process.env.NODE_ENV === 'production'
-                  ? 'https://api.podote.click'
+                  ? 'https://api.podoteapi.link'
                   : `http://localhost:${PORT}/graphql`
               }
-              🚀 Host: ${getMyIp()}:${PORT}
-              ⭐️ front: https://podote.com
+              🚀 Host: http://${getMyIp()}:${PORT}/graphql
+              ⭐️ front: https://podote-v2-client.vercel.app
 
     `);
   });
