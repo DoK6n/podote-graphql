@@ -1,0 +1,59 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'packages/server/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_NAME: 'app_${GITHUB_SHA::6}.zip'
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_OIDC_ROLE_ARN: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+      AWS_EB_PLATFORM: ${{ secrets.AWS_EB_PLATFORM }}
+      AWS_EB_ENVIRONMENT: ${{ secrets.AWS_EB_ENVIRONMENT }}
+      AWS_EB_APP_NAME: ${{ secrets.AWS_EB_APP_NAME }}
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install EB CLI using pip
+        run: |
+          python -m pip install --upgrade pip
+          pip install awsebcli
+
+      - name: Create ZIP Package Artifact
+        run: |
+          git archive --format=zip HEAD -o ${{ env.PACKAGE_NAME }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Init EB CLI
+        run: |
+          eb init --platform "${{ env.AWS_EB_PLATFORM }}" --region "${{ env.AWS_REGION }}" ${{ env.AWS_EB_APP_NAME }}
+
+          echo "$(cat .elasticbeanstalk/config.yml | sed 's/environment: null/environment: ${{ env.AWS_EB_ENVIRONMENT }}/g')" > .elasticbeanstalk/config.yml
+          echo "$(cat .elasticbeanstalk/config.yml | sed 's/sc: null/sc: git/g')" > .elasticbeanstalk/config.yml
+
+      - name: Deploy Application to Elastic Beanstalk
+        run: |
+          eb deploy --staged --label ${{ github.sha }}
