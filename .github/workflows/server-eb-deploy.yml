@@ -4,16 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'packages/server/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'packages/server/**'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-      working-directory: './packages/server'
     env:
       PACKAGE_NAME: 'app_${GITHUB_SHA::6}.zip'
       AWS_REGION: ${{ secrets.AWS_REGION }}
